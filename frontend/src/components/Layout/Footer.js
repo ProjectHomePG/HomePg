@@ -1,6 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
-import { Mail, Phone, MapPin, Github, Twitter, Facebook } from 'lucide-react';
+import { Mail, Phone, MapPin, Code, Globe, Share2 } from 'lucide-react';
 
 /**
  * Footer component for PG Near Me.
@@ -91,13 +91,13 @@ export default function Footer() {
           
           <div className="flex space-x-5">
             <a href="#" className="text-slate-500 hover:text-white transition-colors" aria-label="Twitter">
-              <Twitter className="w-4 h-4" />
+              <Globe className="w-4 h-4" />
             </a>
             <a href="#" className="text-slate-500 hover:text-white transition-colors" aria-label="Facebook">
-              <Facebook className="w-4 h-4" />
+              <Share2 className="w-4 h-4" />
             </a>
             <a href="#" className="text-slate-500 hover:text-white transition-colors" aria-label="Github">
-              <Github className="w-4 h-4" />
+              <Code className="w-4 h-4" />
             </a>
           </div>
         </div>
