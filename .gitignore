@@ -1,0 +1,47 @@
+# Next.js Frontend Ignores
+frontend/node_modules/
+frontend/.next/
+frontend/out/
+frontend/build/
+frontend/.env*.local
+frontend/.vercel
+frontend/npm-debug.log*
+frontend/yarn-debug.log*
+frontend/yarn-error.log*
+frontend/.pnp*
+frontend/.pnp.js
+
+# Spring Boot Backend Ignores
+backend/target/
+backend/*.jar
+backend/*.war
+backend/*.zip
+backend/*.tar.gz
+backend/pom.xml.tag
+backend/pom.xml.releaseBackup
+backend/pom.xml.backup
+backend/pom.xml.restore
+backend/release.properties
+backend/dependency-reduced-pom.xml
+backend/.mvn/timing.properties
+backend/.mvn/wrapper/maven-wrapper.jar
+
+# IDE and Editor Ignores
+.idea/
+.vscode/
+*.swp
+*.swo
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.user
+.project
+.classpath
+.settings/
+.nbproject/
+*.lck
+
+# OS Ignores
+.DS_Store
+Thumbs.db
