@@ -1,8 +1,5 @@
 import React from 'react';
 import Link from 'next/link';
-<<<<<<< HEAD
-import { Mail, Phone, MapPin, Code, Globe, Share2 } from 'lucide-react';
-=======
 import { Mail, Phone, MapPin } from 'lucide-react';
 
 const Twitter = (props) => (
@@ -50,7 +47,6 @@ const Github = (props) => (
     <path d="M9 18c-4.51 2-5-2-7-2" />
   </svg>
 );
->>>>>>> 8ba213c (Solved many errors)
 
 /**
  * Footer component for PG Near Me.
@@ -141,15 +137,6 @@ export default function Footer() {
           
           <div className="flex space-x-5">
             <a href="#" className="text-slate-500 hover:text-white transition-colors" aria-label="Twitter">
-<<<<<<< HEAD
-              <Globe className="w-4 h-4" />
-            </a>
-            <a href="#" className="text-slate-500 hover:text-white transition-colors" aria-label="Facebook">
-              <Share2 className="w-4 h-4" />
-            </a>
-            <a href="#" className="text-slate-500 hover:text-white transition-colors" aria-label="Github">
-              <Code className="w-4 h-4" />
-=======
               <Twitter className="w-4 h-4" />
             </a>
             <a href="#" className="text-slate-500 hover:text-white transition-colors" aria-label="Facebook">
@@ -157,7 +144,6 @@ export default function Footer() {
             </a>
             <a href="#" className="text-slate-500 hover:text-white transition-colors" aria-label="Github">
               <Github className="w-4 h-4" />
->>>>>>> 8ba213c (Solved many errors)
             </a>
           </div>
         </div>

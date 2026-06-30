@@ -42,16 +42,6 @@
             <scope>runtime</scope>
         </dependency>
 
-<<<<<<< HEAD
-        <!-- H2 In-Memory Database -->
-        <dependency>
-            <groupId>com.h2database</groupId>
-            <artifactId>h2</artifactId>
-            <scope>runtime</scope>
-        </dependency>
-
-=======
->>>>>>> 8ba213c (Solved many errors)
         <!-- JSON Web Token (JWT) placeholder/utilities library if needed later -->
         <dependency>
             <groupId>io.jsonwebtoken</groupId>

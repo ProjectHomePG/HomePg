@@ -1,14 +1,5 @@
 import api from './api';
 
-<<<<<<< HEAD
-export const authService = {
-  login: async (email, password) => {
-    const response = await api.post('/auth/login', { email, password });
-    const { token, user } = response.data;
-
-    if (typeof window !== 'undefined') {
-      localStorage.setItem('token', token);
-=======
 // For placeholder demo mode, we simulate server authentication
 const MOCK_USER = {
   id: 1,
@@ -49,37 +40,12 @@ export const authService = {
 
     if (typeof window !== 'undefined') {
       localStorage.setItem('token', 'mock-jwt-token-xyz');
->>>>>>> 8ba213c (Solved many errors)
       localStorage.setItem('user', JSON.stringify(user));
     }
     return user;
   },
 
   register: async (name, email, password, phone, role = 'ROLE_USER') => {
-<<<<<<< HEAD
-    const response = await api.post('/auth/register', { name, email, password, phone, role });
-    const user = response.data;
-    
-    // Auto login on register by requesting a login token
-    try {
-      const loginResponse = await api.post('/auth/login', { email, password });
-      const { token } = loginResponse.data;
-      if (typeof window !== 'undefined') {
-        localStorage.setItem('token', token);
-        localStorage.setItem('user', JSON.stringify(user));
-      }
-    } catch (e) {
-      // If auto-login fails, just store the user and a dummy token so they are authenticated
-      if (typeof window !== 'undefined') {
-        localStorage.setItem('token', 'registered-token');
-        localStorage.setItem('user', JSON.stringify(user));
-      }
-    }
-    return user;
-  },
-
-  logout: async () => {
-=======
     await new Promise((resolve) => setTimeout(resolve, 800));
     const newUser = {
       id: Math.floor(Math.random() * 1000) + 10,
@@ -98,7 +64,6 @@ export const authService = {
 
   logout: async () => {
     await new Promise((resolve) => setTimeout(resolve, 200));
->>>>>>> 8ba213c (Solved many errors)
     if (typeof window !== 'undefined') {
       localStorage.removeItem('token');
       localStorage.removeItem('user');

@@ -1,31 +1,3 @@
-<<<<<<< HEAD
-import api from './api';
-
-export const reviewService = {
-  getByPgId: async (pgId) => {
-    const response = await api.get(`/reviews/pg/${pgId}`);
-    return response.data;
-  },
-
-  addReview: async (pgId, rating, comment, username) => {
-    let userId = null;
-    if (typeof window !== 'undefined') {
-      const userStr = localStorage.getItem('user');
-      if (userStr) {
-        const user = JSON.parse(userStr);
-        userId = user.id;
-      }
-    }
-    if (!userId) userId = 1; // Fallback to user ID 1 if not logged in
-
-    const response = await api.post('/reviews', {
-      pgId,
-      userId,
-      rating,
-      comment
-    });
-    return response.data;
-=======
 const MOCK_REVIEWS = {
   1: [
     { id: 101, user: "Rohan Das", rating: 5, comment: "Absolutely loved the environment! The food is hygienic and tastes like home. Very close to Manyata Gate 5.", createdAt: "2026-05-15T12:00:00Z" },
@@ -64,7 +36,6 @@ export const reviewService = {
     }
     MOCK_REVIEWS[pgId].unshift(newReview);
     return newReview;
->>>>>>> 8ba213c (Solved many errors)
   }
 };
 
