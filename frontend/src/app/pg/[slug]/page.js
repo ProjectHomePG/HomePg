@@ -3,7 +3,7 @@
 import React, { useState, useEffect, use } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { ChevronLeft, Info, Calendar, DollarSign, ShieldAlert, Award } from 'lucide-react';
+import { ChevronLeft, Info, Calendar, DollarSign, ShieldAlert, Award, MapPin } from 'lucide-react';
 import pgService from '../../../services/pgService';
 import ImageGallery from '../../../components/Details/ImageGallery';
 import Amenities from '../../../components/Details/Amenities';
