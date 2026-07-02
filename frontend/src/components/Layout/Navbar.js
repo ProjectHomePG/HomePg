@@ -29,7 +29,7 @@ export default function Navbar() {
 
   return (
     <nav className="sticky top-0 z-50 w-full border-b border-slate-200 dark:border-slate-800 bg-white/95 dark:bg-slate-900/95 backdrop-blur supports-[backdrop-filter]:bg-white/60 dark:supports-[backdrop-filter]:bg-slate-900/60 shadow-sm">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-12 xl:px-16">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <div className="flex-shrink-0">
@@ -43,7 +43,7 @@ export default function Navbar() {
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-6">
             <Link href="/search" className="flex items-center text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-primary-600 dark:hover:text-primary-500 transition-colors">
-              <Search className="w-4 h-4 mr-1" />
+              <Search className="w-5 h-5 mr-1" />
               Find PGs
             </Link>
             
@@ -51,13 +51,13 @@ export default function Navbar() {
               <>
                 {user.role === 'ROLE_ADMIN' && (
                   <Link href="/admin" className="flex items-center text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-primary-600 dark:hover:text-primary-500 transition-colors">
-                    <Shield className="w-4 h-4 mr-1" />
+                    <Shield className="w-5 h-5 mr-1" />
                     Admin Panel
                   </Link>
                 )}
                 {user.role === 'ROLE_OWNER' && (
                   <Link href="/admin" className="flex items-center text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-primary-600 dark:hover:text-primary-500 transition-colors">
-                    <PlusCircle className="w-4 h-4 mr-1" />
+                    <PlusCircle className="w-5 h-5 mr-1" />
                     My Listings
                   </Link>
                 )}
@@ -71,7 +71,7 @@ export default function Navbar() {
                     onClick={handleLogout}
                     className="flex items-center px-3 py-1.5 rounded-lg border border-slate-200 dark:border-slate-700 text-xs font-medium text-slate-600 dark:text-slate-300 hover:bg-rose-50 hover:text-rose-600 dark:hover:bg-rose-950/30 dark:hover:text-rose-400 transition-all cursor-pointer"
                   >
-                    <LogOut className="w-3.5 h-3.5 mr-1" />
+                    <LogOut className="w-4 h-4 mr-1" />
                     Sign Out
                   </button>
                 </div>
@@ -79,14 +79,14 @@ export default function Navbar() {
             ) : (
               <div className="flex items-center space-x-3 border-l border-slate-200 dark:border-slate-700 pl-6">
                 <Link href="/login" className="flex items-center text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-primary-600 dark:hover:text-primary-500 transition-colors">
-                  <LogIn className="w-4 h-4 mr-1" />
+                  <LogIn className="w-5 h-5 mr-1" />
                   Sign In
                 </Link>
                 <Link 
                   href="/register" 
                   className="inline-flex items-center px-4 py-2 rounded-full bg-primary-600 hover:bg-primary-700 text-white text-sm font-medium shadow-sm transition-all hover:shadow"
                 >
-                  <UserPlus className="w-4 h-4 mr-1.5" />
+                  <UserPlus className="w-5 h-5 mr-1.5" />
                   Sign Up
                 </Link>
               </div>
@@ -114,7 +114,7 @@ export default function Navbar() {
             onClick={() => setMobileMenuOpen(false)}
             className="flex items-center px-3 py-2.5 rounded-xl text-base font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800"
           >
-            <Search className="w-5 h-5 mr-3 text-slate-500" />
+            <Search className="w-6 h-6 mr-3 text-slate-500" />
             Find PGs
           </Link>
           
@@ -126,7 +126,7 @@ export default function Navbar() {
                   onClick={() => setMobileMenuOpen(false)}
                   className="flex items-center px-3 py-2.5 rounded-xl text-base font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800"
                 >
-                  <Shield className="w-5 h-5 mr-3 text-slate-500" />
+                  <Shield className="w-6 h-6 mr-3 text-slate-500" />
                   Dashboard ({user.role.replace('ROLE_', '')})
                 </Link>
               )}
@@ -144,7 +144,7 @@ export default function Navbar() {
                   onClick={handleLogout}
                   className="w-full flex items-center justify-center px-4 py-2.5 rounded-xl border border-rose-200 dark:border-rose-950/50 text-rose-600 dark:text-rose-400 font-semibold hover:bg-rose-50 dark:hover:bg-rose-950/20 transition-all cursor-pointer"
                 >
-                  <LogOut className="w-4 h-4 mr-2" />
+                  <LogOut className="w-5 h-5 mr-2" />
                   Sign Out
                 </button>
               </div>
@@ -156,7 +156,7 @@ export default function Navbar() {
                 onClick={() => setMobileMenuOpen(false)}
                 className="flex items-center justify-center w-full px-4 py-2.5 rounded-xl text-base font-medium text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700"
               >
-                <LogIn className="w-4 h-4 mr-2 text-slate-500" />
+                <LogIn className="w-5 h-5 mr-2 text-slate-500" />
                 Sign In
               </Link>
               <Link 
@@ -164,7 +164,7 @@ export default function Navbar() {
                 onClick={() => setMobileMenuOpen(false)}
                 className="flex items-center justify-center w-full px-4 py-2.5 rounded-xl bg-primary-600 text-white font-semibold shadow-sm"
               >
-                <UserPlus className="w-4 h-4 mr-2" />
+                <UserPlus className="w-5 h-5 mr-2" />
                 Sign Up
               </Link>
             </div>

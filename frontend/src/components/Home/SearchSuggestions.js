@@ -17,7 +17,7 @@ export default function SearchSuggestions() {
   return (
     <div className="w-full">
       <h2 className="text-xl font-bold mb-6 text-slate-800 dark:text-slate-100">Search by Category</h2>
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 lg:gap-8">
         {CATEGORIES.map((cat, idx) => {
           const Icon = cat.icon;
           return (

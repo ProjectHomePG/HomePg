@@ -12,7 +12,7 @@ export default function PGGrid({ pgs = [] }) {
   }
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-10">
       {pgs.map((pg) => (
         <PGCard key={pg.id} pg={pg} />
       ))}

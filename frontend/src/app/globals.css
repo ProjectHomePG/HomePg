@@ -8,7 +8,7 @@
   --color-primary-600: #e11d48;
   --color-primary-700: #be123c;
   --color-primary-800: #9f1239;
-  
+
   --color-card-light: #ffffff;
   --color-card-dark: #1e293b;
 
@@ -39,7 +39,7 @@
 * {
   box-sizing: border-box;
   margin: 0;
-  padding: 0;
+  padding: 3px 5px;
 }
 
 html {
@@ -104,4 +104,22 @@ body {
 .shadow-card-hover:hover {
   transform: translateY(-4px);
   box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+.w-5 {
+  width: calc(var(--spacing) * 8);
+
+}
+
+.h-5 {
+  height: calc(var(--spacing) * 10);
+
+}
+
+.w-4 {
+  width: calc(var(--spacing) * 8);
+}
+
+.h-4 {
+  height: calc(var(--spacing) * 7);
 }

@@ -35,7 +35,7 @@ export default function HomePage() {
   const recentlyAdded = [...pgs].reverse().slice(0, 3);
 
   return (
-    <div className="space-y-16">
+    <div className="space-y-16 lg:space-y-24">
       {/* 1. Hero Banner Section */}
       <HeroSection />
 
@@ -43,7 +43,7 @@ export default function HomePage() {
       <SearchSuggestions />
 
       {/* 3. Value Proposition Cards */}
-      <section className="grid grid-cols-1 md:grid-cols-3 gap-6 bg-white dark:bg-slate-800 rounded-3xl p-8 border border-slate-100 dark:border-slate-750 shadow-sm">
+      <section className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-10 bg-white dark:bg-slate-800 rounded-3xl p-8 lg:p-12 border border-slate-100 dark:border-slate-750 shadow-sm">
         <div className="flex items-start space-x-4">
           <div className="w-10 h-10 rounded-2xl bg-rose-50 dark:bg-rose-950/20 text-primary-600 flex items-center justify-center flex-shrink-0">
             <ShieldCheck className="w-5 h-5" />

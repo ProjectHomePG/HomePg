@@ -27,7 +27,7 @@ export default function SearchBar({ initialValues = {} }) {
   return (
     <form 
       onSubmit={handleSearch} 
-      className="w-full bg-white dark:bg-slate-800 rounded-2xl md:rounded-full shadow-lg p-3 md:p-2 border border-slate-100 dark:border-slate-700 flex flex-col md:flex-row items-stretch md:items-center justify-between gap-3 md:gap-1 max-w-4xl mx-auto"
+      className="w-full bg-white dark:bg-slate-800 rounded-2xl md:rounded-full shadow-lg p-3 md:p-2 border border-slate-100 dark:border-slate-700 flex flex-col md:flex-row flex-wrap md:flex-nowrap items-stretch md:items-center justify-center gap-3 md:gap-1 max-w-5xl mx-auto"
     >
       {/* Location Input */}
       <div className="flex items-center px-4 py-2 flex-grow space-x-3 border-b md:border-b-0 md:border-r border-slate-100 dark:border-slate-700">
