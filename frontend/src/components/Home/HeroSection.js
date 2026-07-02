@@ -16,7 +16,7 @@ export default function HeroSection() {
       <div className="relative max-w-[1200px] mx-auto text-center px-4 sm:px-6 lg:px-10" style={{ justifySelf: 'center' }}>
         <h1 className="text-4xl sm:text-6xl font-extrabold tracking-tight mb-6 lg:mb-8">
           Find Your Perfect{" "}
-          <span className="bg-gradient-to-r from-primary-400 to-rose-300 bg-clip-text text-transparent">
+          <span className="bg-gradient-to-r from-primary-500 to-rose-500 bg-clip-text text-transparent">
             Paying Guest
           </span>{" "}
           Stay
