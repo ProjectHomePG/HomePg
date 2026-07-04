@@ -42,8 +42,9 @@ export default function RegisterPage() {
   };
 
   return (
-    <div className="max-w-md mx-auto my-12">
-      <div className="bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-850 rounded-3xl p-8 shadow-sm space-y-6">
+    <div className="flex-1 flex items-center justify-center">
+      <div className="w-full max-w-md py-8">
+        <div className="bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-850 rounded-3xl p-8 shadow-sm space-y-6">
         <div className="text-center space-y-2">
           <span className="text-2xl font-bold bg-gradient-to-r from-primary-600 to-rose-500 bg-clip-text text-transparent block">
             PG Near Me
@@ -165,6 +166,7 @@ export default function RegisterPage() {
           <Link href="/login" className="text-primary-600 font-bold hover:underline">
             Sign In
           </Link>
+          </div>
         </div>
       </div>
     </div>

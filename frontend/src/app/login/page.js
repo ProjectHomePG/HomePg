@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { LogIn, Mail, Lock, ShieldCheck, ArrowRight, User, ShieldAlert } from 'lucide-react';
+import { LogIn, Mail, Lock, ShieldCheck, ArrowRight, User, ShieldAlert, ChevronDown } from 'lucide-react';
 import authService from '../../services/authService';
 
 /**
@@ -16,6 +16,7 @@ export default function LoginPage() {
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [showQuickLogin, setShowQuickLogin] = useState(false);
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -46,9 +47,10 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="max-w-md mx-auto my-12 space-y-6">
-      {/* Login Card */}
-      <div className="bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-850 rounded-3xl p-8 shadow-sm space-y-6">
+    <div className="flex-1 flex items-center justify-center">
+      <div className="w-full max-w-md space-y-6 py-8">
+        {/* Login Card */}
+        <div className="bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-850 rounded-3xl p-8 shadow-sm space-y-6">
         <div className="text-center space-y-2">
           <span className="text-2xl font-bold bg-gradient-to-r from-primary-600 to-rose-500 bg-clip-text text-transparent block">
             PG Near Me
@@ -117,12 +119,20 @@ export default function LoginPage() {
 
       {/* Quick Access Mock Login shortcuts for testing */}
       <div className="bg-slate-50 dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-3xl p-6 space-y-3">
-        <h4 className="text-[10px] font-bold text-slate-450 uppercase tracking-wider flex items-center">
-          <ShieldCheck className="w-4 h-4 mr-1.5 text-primary-500" />
-          Sandbox Role Testing Shortcuts
-        </h4>
-        <p className="text-[10px] text-slate-400">Click any user role below to load pre-filled credentials:</p>
-        <div className="grid grid-cols-3 gap-2">
+        <button
+          onClick={() => setShowQuickLogin(!showQuickLogin)}
+          className="w-full flex items-center justify-between text-[10px] font-bold text-slate-450 uppercase tracking-wider cursor-pointer"
+        >
+          <span className="flex items-center">
+            <ShieldCheck className="w-4 h-4 mr-1.5 text-primary-500" />
+            Sandbox Role Testing Shortcuts
+          </span>
+          <ChevronDown className={`w-4 h-4 transition-transform ${showQuickLogin ? 'rotate-180' : ''}`} />
+        </button>
+        {showQuickLogin && (
+          <>
+            <p className="text-[10px] text-slate-400">Click any user role below to load pre-filled credentials:</p>
+            <div className="grid grid-cols-3 gap-2">
           <button 
             onClick={() => handleQuickLogin('john@example.com')}
             className="p-2 text-[10px] font-bold bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl hover:bg-slate-50 cursor-pointer text-slate-700 dark:text-slate-200 text-center"
@@ -141,6 +151,9 @@ export default function LoginPage() {
           >
             System Admin
           </button>
+        </div>
+          </>
+        )}
         </div>
       </div>
     </div>
