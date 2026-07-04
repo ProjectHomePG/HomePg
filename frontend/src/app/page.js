@@ -46,7 +46,7 @@ export default function HomePage() {
       <section className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-10 bg-white dark:bg-slate-800 rounded-3xl p-8 lg:p-12 border border-slate-100 dark:border-slate-750 shadow-sm">
         <div className="flex items-start space-x-4">
           <div className="w-10 h-10 rounded-2xl bg-rose-50 dark:bg-rose-950/20 text-primary-600 flex items-center justify-center flex-shrink-0">
-            <ShieldCheck className="w-5 h-5" />
+            <ShieldCheck className="w-7 h-7" />
           </div>
           <div>
             <h4 className="text-sm font-bold text-slate-850 dark:text-slate-200">100% Verified Owners</h4>
@@ -56,7 +56,7 @@ export default function HomePage() {
         
         <div className="flex items-start space-x-4 border-t md:border-t-0 md:border-x border-slate-100 dark:border-slate-700 pt-6 md:pt-0 md:px-6">
           <div className="w-10 h-10 rounded-2xl bg-emerald-50 dark:bg-emerald-950/20 text-emerald-600 flex items-center justify-center flex-shrink-0">
-            <Building2 className="w-5 h-5" />
+            <Building2 className="w-6 h-6" />
           </div>
           <div>
             <h4 className="text-sm font-bold text-slate-850 dark:text-slate-200">Fully Managed Co-Living</h4>
@@ -66,7 +66,7 @@ export default function HomePage() {
 
         <div className="flex items-start space-x-4 border-t md:border-t-0 pt-6 md:pt-0 pl-0 md:pl-6">
           <div className="w-10 h-10 rounded-2xl bg-blue-50 dark:bg-blue-950/20 text-blue-600 flex items-center justify-center flex-shrink-0">
-            <MapPin className="w-5 h-5" />
+            <MapPin className="w-6 h-6" />
           </div>
           <div>
             <h4 className="text-sm font-bold text-slate-850 dark:text-slate-200">Near Transit Hubs</h4>

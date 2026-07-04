@@ -27,7 +27,7 @@ export default function SearchSuggestions() {
               className="flex flex-col items-center justify-center p-6 bg-white dark:bg-slate-850 rounded-2xl border border-slate-100 dark:border-slate-800 shadow-sm hover:shadow-md hover:border-primary-100 dark:hover:border-slate-700 transition-all hover:scale-[1.02] text-center cursor-pointer group"
             >
               <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${cat.color} flex items-center justify-center text-white mb-3 shadow-md group-hover:scale-110 transition-transform`}>
-                <Icon className="w-6 h-6" />
+                <Icon className="w-8 h-8" />
               </div>
               <span className="text-sm font-semibold text-slate-800 dark:text-slate-200">{cat.name}</span>
               <span className="text-xs text-slate-400 mt-1">Browse nearby</span>
