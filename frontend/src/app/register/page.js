@@ -91,13 +91,13 @@ export default function RegisterPage() {
           <div className="space-y-2">
             <label className="block text-xs font-bold text-slate-400 uppercase tracking-wider">Full Name</label>
             <div className="relative">
-              <User className="absolute left-3 top-3.5 w-4 h-4 text-slate-400" />
+              <User className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
               <input
                 type="text"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 placeholder="John Doe"
-                className="w-full bg-slate-50 dark:bg-slate-900 text-xs font-semibold pl-10 pr-4 py-3.5 rounded-xl border border-slate-100 dark:border-slate-700 outline-none focus:border-primary-500 transition-colors"
+                className="w-full bg-slate-50 dark:bg-slate-900 text-xs font-semibold pl-4 pr-10 py-3.5 rounded-xl border border-slate-100 dark:border-slate-700 outline-none focus:border-primary-500 transition-colors"
                 required
               />
             </div>
@@ -107,13 +107,13 @@ export default function RegisterPage() {
           <div className="space-y-2">
             <label className="block text-xs font-bold text-slate-400 uppercase tracking-wider">Email Address</label>
             <div className="relative">
-              <Mail className="absolute left-3 top-3.5 w-4 h-4 text-slate-400" />
+              <Mail className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
               <input
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="john@example.com"
-                className="w-full bg-slate-50 dark:bg-slate-900 text-xs font-semibold pl-10 pr-4 py-3.5 rounded-xl border border-slate-100 dark:border-slate-700 outline-none focus:border-primary-500 transition-colors"
+                className="w-full bg-slate-50 dark:bg-slate-900 text-xs font-semibold pl-4 pr-10 py-3.5 rounded-xl border border-slate-100 dark:border-slate-700 outline-none focus:border-primary-500 transition-colors"
                 required
               />
             </div>
@@ -123,13 +123,13 @@ export default function RegisterPage() {
           <div className="space-y-2">
             <label className="block text-xs font-bold text-slate-400 uppercase tracking-wider">Phone Number</label>
             <div className="relative">
-              <Phone className="absolute left-3 top-3.5 w-4 h-4 text-slate-400" />
+              <Phone className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
               <input
                 type="tel"
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
                 placeholder="+91 99999 88888"
-                className="w-full bg-slate-50 dark:bg-slate-900 text-xs font-semibold pl-10 pr-4 py-3.5 rounded-xl border border-slate-100 dark:border-slate-700 outline-none focus:border-primary-500 transition-colors"
+                className="w-full bg-slate-50 dark:bg-slate-900 text-xs font-semibold pl-4 pr-10 py-3.5 rounded-xl border border-slate-100 dark:border-slate-700 outline-none focus:border-primary-500 transition-colors"
                 required
               />
             </div>
@@ -139,13 +139,13 @@ export default function RegisterPage() {
           <div className="space-y-2">
             <label className="block text-xs font-bold text-slate-400 uppercase tracking-wider">Password</label>
             <div className="relative">
-              <Lock className="absolute left-3 top-3.5 w-4 h-4 text-slate-400" />
+              <Lock className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
               <input
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="••••••••"
-                className="w-full bg-slate-50 dark:bg-slate-900 text-xs font-semibold pl-10 pr-4 py-3.5 rounded-xl border border-slate-100 dark:border-slate-700 outline-none focus:border-primary-500 transition-colors"
+                className="w-full bg-slate-50 dark:bg-slate-900 text-xs font-semibold pl-4 pr-10 py-3.5 rounded-xl border border-slate-100 dark:border-slate-700 outline-none focus:border-primary-500 transition-colors"
                 required
               />
             </div>
