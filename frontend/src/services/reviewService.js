@@ -1,3 +1,5 @@
+import api from './api';
+
 const MOCK_REVIEWS = {
   1: [
     { id: 101, user: "Rohan Das", rating: 5, comment: "Absolutely loved the environment! The food is hygienic and tastes like home. Very close to Manyata Gate 5.", createdAt: "2026-05-15T12:00:00Z" },
@@ -17,25 +19,42 @@ const MOCK_REVIEWS = {
 
 export const reviewService = {
   getByPgId: async (pgId) => {
-    await new Promise((resolve) => setTimeout(resolve, 300));
-    return MOCK_REVIEWS[pgId] || [];
+    try {
+      const response = await api.get(`/reviews/pg/${pgId}`);
+      return response.data;
+    } catch (error) {
+      console.warn("Reviews API failed, using mock reviews:", error);
+      await new Promise((resolve) => setTimeout(resolve, 300));
+      return MOCK_REVIEWS[pgId] || [];
+    }
   },
 
-  addReview: async (pgId, rating, comment, username) => {
-    await new Promise((resolve) => setTimeout(resolve, 500));
-    const newReview = {
-      id: Math.floor(Math.random() * 1000) + 500,
-      user: username || "Anonymous Guest",
-      rating: Number(rating),
-      comment,
-      createdAt: new Date().toISOString()
-    };
+  addReview: async (pgId, rating, comment, userId, username) => {
+    try {
+      const response = await api.post('/reviews', {
+        pgId: Number(pgId),
+        userId: Number(userId),
+        rating: Number(rating),
+        comment
+      });
+      return response.data;
+    } catch (error) {
+      console.warn("Add Review API failed, using mock fallback:", error);
+      await new Promise((resolve) => setTimeout(resolve, 500));
+      const newReview = {
+        id: Math.floor(Math.random() * 1000) + 500,
+        user: username || "Anonymous Guest",
+        rating: Number(rating),
+        comment,
+        createdAt: new Date().toISOString()
+      };
 
-    if (!MOCK_REVIEWS[pgId]) {
-      MOCK_REVIEWS[pgId] = [];
+      if (!MOCK_REVIEWS[pgId]) {
+        MOCK_REVIEWS[pgId] = [];
+      }
+      MOCK_REVIEWS[pgId].unshift(newReview);
+      return newReview;
     }
-    MOCK_REVIEWS[pgId].unshift(newReview);
-    return newReview;
   }
 };
 

@@ -63,7 +63,7 @@ export default function Footer() {
           {/* Brand Column */}
           <div className="space-y-4">
             <span className="text-xl font-bold text-white bg-gradient-to-r from-primary-500 to-rose-400 bg-clip-text text-transparent">
-              PG Near Me
+              Livio
             </span>
             <p className="text-sm text-slate-400 leading-relaxed">
               Find premium, verified Paying Guest accommodations near you. We offer convenient coliving options close to major colleges, corporate offices, and transit hubs.
@@ -118,7 +118,7 @@ export default function Footer() {
               </li>
               <li className="flex items-center text-slate-400">
                 <Mail className="w-4 h-4 mr-2.5 text-primary-500" />
-                <span>support@pgnearme.com</span>
+                <span>support@livio.com</span>
               </li>
               <li className="flex items-center text-slate-400">
                 <MapPin className="w-4 h-4 mr-2.5 text-primary-500" />
@@ -132,7 +132,7 @@ export default function Footer() {
         {/* Bottom Socials & Copyright */}
         <div className="mt-12 pt-8 border-t border-slate-800 flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0 text-xs">
           <div className="text-slate-500">
-            &copy; {currentYear} PG Near Me. All rights reserved. Made for PG hunting made easy.
+            &copy; {currentYear} Livio. All rights reserved. Made for PG hunting made easy.
           </div>
           
           <div className="flex space-x-5">

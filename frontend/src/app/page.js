@@ -10,7 +10,7 @@ import PGGrid from '../components/Search/PGGrid';
 import LoadingSkeleton from '../components/Shared/LoadingSkeleton';
 
 /**
- * Home page for PG Near Me.
+ * Home page for Livio.
  * Integrates Hero banner, categories, and PG listings.
  */
 export default function HomePage() {

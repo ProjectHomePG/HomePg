@@ -38,7 +38,8 @@ export default function ReviewList({ pgId }) {
 
     try {
       const username = currentUser ? currentUser.name : "Anonymous Guest";
-      const newReview = await reviewService.addReview(pgId, rating, comment, username);
+      const userId = currentUser ? currentUser.id : 1;
+      const newReview = await reviewService.addReview(pgId, rating, comment, userId, username);
       setReviews([newReview, ...reviews]);
       setComment('');
       setRating(5);

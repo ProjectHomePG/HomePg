@@ -14,7 +14,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata = {
-  title: "PG Near Me - Find Paying Guest Accommodations Instantly",
+  title: "Livio - Find Paying Guest Accommodations Instantly",
   description: "Find premium, verified PG (Paying Guest) rooms and co-living accommodations near tech parks, colleges, metro stations, and hospitals.",
 };
 

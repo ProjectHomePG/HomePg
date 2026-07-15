@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { Home, Search, LogIn, UserPlus, LogOut, Menu, X, PlusCircle, Dashboard, Shield, Settings, HelpCircle } from 'lucide-react';
+import { Search, LogIn, UserPlus, LogOut, Menu, X, PlusCircle, Shield } from 'lucide-react';
 import authService from '../../services/authService';
 
 /**
@@ -35,7 +35,7 @@ export default function Navbar() {
           <div className="flex-shrink-0">
             <Link href="/" className="flex items-center space-x-2">
               <span className="text-2xl font-bold bg-gradient-to-r from-primary-600 to-rose-500 bg-clip-text text-transparent">
-                PG Near Me
+                Livio
               </span>
             </Link>
           </div>

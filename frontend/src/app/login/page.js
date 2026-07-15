@@ -53,7 +53,7 @@ export default function LoginPage() {
         <div className="bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-850 rounded-3xl p-8 shadow-sm space-y-6">
         <div className="text-center space-y-2">
           <span className="text-2xl font-bold bg-gradient-to-r from-primary-600 to-rose-500 bg-clip-text text-transparent block">
-            PG Near Me
+            Livio
           </span>
           <h2 className="text-lg font-black text-slate-805 dark:text-slate-100">Welcome Back</h2>
           <p className="text-xs text-slate-400">Sign in to search properties and manage listings.</p>
@@ -110,7 +110,7 @@ export default function LoginPage() {
         </form>
 
         <div className="text-center text-xs text-slate-450 border-t border-slate-100 dark:border-slate-700 pt-4">
-          New to PG Near Me?{' '}
+          New to Livio?{' '}
           <Link href="/register" className="text-primary-600 font-bold hover:underline">
             Create an account
           </Link>

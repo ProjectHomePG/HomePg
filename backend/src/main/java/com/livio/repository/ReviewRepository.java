@@ -1,0 +1,12 @@
+package com.livio.repository;
+
+import com.livio.entity.Review;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+import java.util.List;
+
+@Repository
+public interface ReviewRepository extends JpaRepository<Review, Long> {
+    List<Review> findByPgId(Long pgId);
+    List<Review> findByPgIdOrderByCreatedAtDesc(Long pgId);
+}

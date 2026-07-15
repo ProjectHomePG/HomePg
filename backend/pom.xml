@@ -8,11 +8,11 @@
         <version>3.2.5</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>com.pgnearme</groupId>
-    <artifactId>pg-near-me-backend</artifactId>
+    <groupId>com.livio</groupId>
+    <artifactId>livio-backend</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>PG Near Me Backend</name>
-    <description>Backend API for PG Near Me web application</description>
+    <name>Livio Backend</name>
+    <description>Backend API for Livio PG-finder platform</description>
     <properties>
         <java.version>17</java.version>
     </properties>
@@ -42,23 +42,17 @@
             <scope>runtime</scope>
         </dependency>
 
-        <!-- JSON Web Token (JWT) placeholder/utilities library if needed later -->
+        <!-- H2 Database -->
         <dependency>
-            <groupId>io.jsonwebtoken</groupId>
-            <artifactId>jjwt-api</artifactId>
-            <version>0.12.5</version>
-        </dependency>
-        <dependency>
-            <groupId>io.jsonwebtoken</groupId>
-            <artifactId>jjwt-impl</artifactId>
-            <version>0.12.5</version>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
             <scope>runtime</scope>
         </dependency>
+
+        <!-- Jackson Datatype Hibernate 6 to handle lazy proxies serialization -->
         <dependency>
-            <groupId>io.jsonwebtoken</groupId>
-            <artifactId>jjwt-jackson</artifactId>
-            <version>0.12.5</version>
-            <scope>runtime</scope>
+            <groupId>com.fasterxml.jackson.datatype</groupId>
+            <artifactId>jackson-datatype-hibernate6</artifactId>
         </dependency>
 
         <!-- Test dependencies -->
