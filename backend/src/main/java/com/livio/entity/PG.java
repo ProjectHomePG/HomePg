@@ -61,6 +61,14 @@ public class PG {
     @JsonIgnoreProperties("pg")
     private List<Image> images = new ArrayList<>();
 
+    @OneToMany(mappedBy = "pg", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+    @JsonIgnoreProperties("pg")
+    private List<Review> reviews = new ArrayList<>();
+
+    @OneToMany(mappedBy = "pg", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+    @JsonIgnoreProperties("pg")
+    private List<Inquiry> inquiries = new ArrayList<>();
+
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
         name = "pg_amenities",
@@ -267,5 +275,21 @@ public class PG {
 
     public void setReviewsCount(Integer reviewsCount) {
         this.reviewsCount = reviewsCount;
+    }
+
+    public List<Review> getReviews() {
+        return reviews;
+    }
+
+    public void setReviews(List<Review> reviews) {
+        this.reviews = reviews;
+    }
+
+    public List<Inquiry> getInquiries() {
+        return inquiries;
+    }
+
+    public void setInquiries(List<Inquiry> inquiries) {
+        this.inquiries = inquiries;
     }
 }

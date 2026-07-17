@@ -18,9 +18,9 @@ const MOCK_PGS = [
     reviewsCount: 34,
     rules: "No outside guests after 10 PM. Silent hours from 11 PM to 6 AM. ID verification mandatory. No pets allowed.",
     images: [
-      { url: "/images/room-1.png", isPrimary: true },
-      { url: "/images/room-2.png", isPrimary: false },
-      { url: "/images/room-3.png", isPrimary: false }
+      { url: "https://images.unsplash.com/photo-1598928506311-c55ded91a20c?auto=format&fit=crop&w=800&q=80", isPrimary: true },
+      { url: "https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?auto=format&fit=crop&w=800&q=80", isPrimary: false },
+      { url: "https://images.unsplash.com/photo-1505691938895-1758d7feb511?auto=format&fit=crop&w=800&q=80", isPrimary: false }
     ],
     amenities: [
       { name: "WiFi", icon: "Wifi" },
@@ -58,9 +58,9 @@ const MOCK_PGS = [
     reviewsCount: 22,
     rules: "In-time 10:30 PM. No male visitors allowed in room area. Maintain cleanliness in common kitchen. Rent to be paid by 5th.",
     images: [
-      { url: "/images/room-4.png", isPrimary: true },
-      { url: "/images/room-2.png", isPrimary: false },
-      { url: "/images/room-5.png", isPrimary: false }
+      { url: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?auto=format&fit=crop&w=800&q=80", isPrimary: true },
+      { url: "https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?auto=format&fit=crop&w=800&q=80", isPrimary: false },
+      { url: "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&w=800&q=80", isPrimary: false }
     ],
     amenities: [
       { name: "WiFi", icon: "Wifi" },
@@ -98,9 +98,9 @@ const MOCK_PGS = [
     reviewsCount: 41,
     rules: "Respect community members. Keep pet policy strictly validated. No loud noise after midnight. Smoking in designated areas only.",
     images: [
-      { url: "/images/room-5.png", isPrimary: true },
-      { url: "/images/room-1.png", isPrimary: false },
-      { url: "/images/room-3.png", isPrimary: false }
+      { url: "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&w=800&q=80", isPrimary: true },
+      { url: "https://images.unsplash.com/photo-1598928506311-c55ded91a20c?auto=format&fit=crop&w=800&q=80", isPrimary: false },
+      { url: "https://images.unsplash.com/photo-1505691938895-1758d7feb511?auto=format&fit=crop&w=800&q=80", isPrimary: false }
     ],
     amenities: [
       { name: "WiFi", icon: "Wifi" },
@@ -138,8 +138,8 @@ const MOCK_PGS = [
     reviewsCount: 15,
     rules: "Entry close by 10 PM. No alcohol permitted inside premises. Keep study areas quiet. Clean beds daily.",
     images: [
-      { url: "/images/room-2.png", isPrimary: true },
-      { url: "/images/room-3.png", isPrimary: false }
+      { url: "https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?auto=format&fit=crop&w=800&q=80", isPrimary: true },
+      { url: "https://images.unsplash.com/photo-1505691938895-1758d7feb511?auto=format&fit=crop&w=800&q=80", isPrimary: false }
     ],
     amenities: [
       { name: "WiFi", icon: "Wifi" },
@@ -291,7 +291,7 @@ export const pgService = {
         rating: 5.0,
         reviewsCount: 0,
         images: pgData.images || [
-          { url: "/images/room-1.png", isPrimary: true }
+          { url: "https://images.unsplash.com/photo-1598928506311-c55ded91a20c?auto=format&fit=crop&w=800&q=80", isPrimary: true }
         ],
         amenities: pgData.amenities || [
           { name: "WiFi", icon: "Wifi" }

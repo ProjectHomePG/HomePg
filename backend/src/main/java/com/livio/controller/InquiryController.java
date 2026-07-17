@@ -19,13 +19,13 @@ public class InquiryController {
     private InquiryService inquiryService;
 
     @PostMapping
-    public ResponseEntity<?> submit(@RequestBody Map<String, String> request) {
+    public ResponseEntity<?> submit(@RequestBody Map<String, Object> request) {
         try {
-            Long pgId = Long.valueOf(request.get("pgId"));
-            String name = request.get("name");
-            String email = request.get("email");
-            String phone = request.get("phone");
-            String message = request.get("message");
+            Long pgId = Long.valueOf(request.get("pgId").toString());
+            String name = request.get("name") != null ? request.get("name").toString() : null;
+            String email = request.get("email") != null ? request.get("email").toString() : null;
+            String phone = request.get("phone") != null ? request.get("phone").toString() : null;
+            String message = request.get("message") != null ? request.get("message").toString() : null;
 
             Inquiry inquiry = inquiryService.submit(pgId, name, email, phone, message);
             return ResponseEntity.ok(inquiry);

@@ -26,6 +26,9 @@ backend/dependency-reduced-pom.xml
 backend/.mvn/timing.properties
 backend/.mvn/wrapper/maven-wrapper.jar
 
+# H2 Local Data files
+backend/data/
+
 # IDE and Editor Ignores
 .idea/
 .vscode/

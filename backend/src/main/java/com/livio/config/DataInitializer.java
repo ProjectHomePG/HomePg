@@ -166,20 +166,20 @@ public class DataInitializer implements CommandLineRunner {
             pgRepository.save(pg4);
 
             // Seed Images (need saved PG objects references)
-            imageRepository.save(new Image("/images/room-1.png", true, pg1));
-            imageRepository.save(new Image("/images/room-2.png", false, pg1));
-            imageRepository.save(new Image("/images/room-3.png", false, pg1));
+            imageRepository.save(new Image("https://images.unsplash.com/photo-1598928506311-c55ded91a20c?auto=format&fit=crop&w=800&q=80", true, pg1));
+            imageRepository.save(new Image("https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?auto=format&fit=crop&w=800&q=80", false, pg1));
+            imageRepository.save(new Image("https://images.unsplash.com/photo-1505691938895-1758d7feb511?auto=format&fit=crop&w=800&q=80", false, pg1));
 
-            imageRepository.save(new Image("/images/room-4.png", true, pg2));
-            imageRepository.save(new Image("/images/room-2.png", false, pg2));
-            imageRepository.save(new Image("/images/room-5.png", false, pg2));
+            imageRepository.save(new Image("https://images.unsplash.com/photo-1586023492125-27b2c045efd7?auto=format&fit=crop&w=800&q=80", true, pg2));
+            imageRepository.save(new Image("https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?auto=format&fit=crop&w=800&q=80", false, pg2));
+            imageRepository.save(new Image("https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&w=800&q=80", false, pg2));
 
-            imageRepository.save(new Image("/images/room-5.png", true, pg3));
-            imageRepository.save(new Image("/images/room-1.png", false, pg3));
-            imageRepository.save(new Image("/images/room-3.png", false, pg3));
+            imageRepository.save(new Image("https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&w=800&q=80", true, pg3));
+            imageRepository.save(new Image("https://images.unsplash.com/photo-1598928506311-c55ded91a20c?auto=format&fit=crop&w=800&q=80", false, pg3));
+            imageRepository.save(new Image("https://images.unsplash.com/photo-1505691938895-1758d7feb511?auto=format&fit=crop&w=800&q=80", false, pg3));
 
-            imageRepository.save(new Image("/images/room-2.png", true, pg4));
-            imageRepository.save(new Image("/images/room-3.png", false, pg4));
+            imageRepository.save(new Image("https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?auto=format&fit=crop&w=800&q=80", true, pg4));
+            imageRepository.save(new Image("https://images.unsplash.com/photo-1505691938895-1758d7feb511?auto=format&fit=crop&w=800&q=80", false, pg4));
 
             // Seed Reviews
             Review rev1 = new Review(5, "Absolutely loved the environment! The food is hygienic and tastes like home. Very close to Manyata Gate 5.", customer, pg1);

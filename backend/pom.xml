@@ -49,6 +49,13 @@
             <scope>runtime</scope>
         </dependency>
 
+        <!-- PostgreSQL Driver -->
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+
         <!-- Jackson Datatype Hibernate 6 to handle lazy proxies serialization -->
         <dependency>
             <groupId>com.fasterxml.jackson.datatype</groupId>
