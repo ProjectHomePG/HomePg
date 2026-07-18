@@ -1,13 +1,13 @@
 services:
-  # 1. Spring Boot Backend Web Service
+  # Unified Frontend + Backend Web Service
   - type: web
-    name: livio-backend
+    name: livio-app
     runtime: docker
-    dockerContext: ./backend
-    dockerfilePath: ./backend/Dockerfile
+    dockerContext: .
+    dockerfilePath: Dockerfile
     plan: free
     envVars:
-      # Inject connection details from the managed Postgres database
+      # Optional: Connect to PostgreSQL if it is created, else falls back to H2
       - key: SPRING_DATASOURCE_URL
         fromDatabase:
           name: livio-db
@@ -25,19 +25,7 @@ services:
       - key: SPRING_PROFILES_ACTIVE
         value: prod
 
-  # 2. Next.js Frontend Web Service
-  - type: web
-    name: livio-frontend
-    runtime: docker
-    dockerContext: ./frontend
-    dockerfilePath: ./frontend/Dockerfile
-    plan: free
-    envVars:
-      # Pass the backend host domain to the frontend build
-      - key: NEXT_PUBLIC_API_URL
-        value: /api
-
 databases:
-  # 3. Managed PostgreSQL Database
+  # Managed PostgreSQL Database
   - name: livio-db
     plan: free

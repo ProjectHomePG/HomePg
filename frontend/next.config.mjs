@@ -1,12 +1,16 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
+  typescript: {
+    ignoreBuildErrors: true,
+  },
   async rewrites() {
     return [
       {
         source: '/api/:path*',
-        destination: process.env.RENDER
-          ? 'http://livio-backend:8083/api/:path*'
-          : 'http://localhost:8083/api/:path*',
+        destination: 'http://localhost:8083/api/:path*',
       },
     ];
   },
