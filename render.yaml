@@ -35,7 +35,7 @@ services:
     envVars:
       # Pass the backend host domain to the frontend build
       - key: NEXT_PUBLIC_API_URL
-        value: https://livio-backend.onrender.com/api
+        value: /api
 
 databases:
   # 3. Managed PostgreSQL Database
