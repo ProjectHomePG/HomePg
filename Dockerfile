@@ -7,7 +7,7 @@ COPY backend/src ./src
 RUN mvn clean package -DskipTests
 
 # Stage 2: Build Frontend (Next.js)
-FROM node:18-alpine AS frontend-builder
+FROM node:20-alpine AS frontend-builder
 WORKDIR /build/frontend
 COPY frontend/package*.json ./
 RUN npm ci
