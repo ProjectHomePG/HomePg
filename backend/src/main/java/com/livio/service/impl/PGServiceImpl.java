@@ -2,7 +2,6 @@ package com.livio.service.impl;
 
 import com.livio.entity.Image;
 import com.livio.entity.PG;
-import com.livio.entity.Review;
 import com.livio.repository.PGRepository;
 import com.livio.repository.ReviewRepository;
 import com.livio.service.PGService;
@@ -10,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 public class PGServiceImpl implements PGService {
@@ -95,20 +96,46 @@ public class PGServiceImpl implements PGService {
     @Override
     public List<PG> getAll() {
         List<PG> pgs = pgRepository.findAll();
-        for (PG pg : pgs) {
-            populateRatingsAndReviews(pg);
-        }
+        populateRatingsAndReviews(pgs);
         return pgs;
     }
 
     private void populateRatingsAndReviews(PG pg) {
-        List<Review> reviews = reviewRepository.findByPgIdOrderByCreatedAtDesc(pg.getId());
-        pg.setReviewsCount(reviews.size());
-        if (reviews.isEmpty()) {
-            pg.setRating(5.0);
+        List<Object[]> summaryList = reviewRepository.getRatingSummaryForPg(pg.getId());
+        if (summaryList != null && !summaryList.isEmpty() && summaryList.get(0)[0] != null) {
+            Object[] summary = summaryList.get(0);
+            Double avgRating = (Double) summary[0];
+            Long count = (Long) summary[1];
+            pg.setReviewsCount(count.intValue());
+            pg.setRating(Math.round(avgRating * 10.0) / 10.0);
         } else {
-            double avg = reviews.stream().mapToInt(Review::getRating).average().orElse(5.0);
-            pg.setRating(Math.round(avg * 10.0) / 10.0);
+            pg.setReviewsCount(0);
+            pg.setRating(5.0);
+        }
+    }
+
+    private void populateRatingsAndReviews(List<PG> pgs) {
+        if (pgs == null || pgs.isEmpty()) {
+            return;
+        }
+        List<Object[]> summaries = reviewRepository.getRatingSummaries();
+        Map<Long, Object[]> summaryMap = summaries.stream()
+                .collect(Collectors.toMap(
+                        row -> (Long) row[0],
+                        row -> row
+                ));
+
+        for (PG pg : pgs) {
+            Object[] summary = summaryMap.get(pg.getId());
+            if (summary != null) {
+                Double avgRating = (Double) summary[1];
+                Long count = (Long) summary[2];
+                pg.setReviewsCount(count.intValue());
+                pg.setRating(Math.round(avgRating * 10.0) / 10.0);
+            } else {
+                pg.setReviewsCount(0);
+                pg.setRating(5.0);
+            }
         }
     }
 }
