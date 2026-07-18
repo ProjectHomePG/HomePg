@@ -4,7 +4,7 @@ services:
     name: livio-backend
     runtime: docker
     dockerContext: ./backend
-    dockerfilePath: Dockerfile
+    dockerfilePath: ./backend/Dockerfile
     plan: free
     envVars:
       # Inject connection details from the managed Postgres database
@@ -30,7 +30,7 @@ services:
     name: livio-frontend
     runtime: docker
     dockerContext: ./frontend
-    dockerfilePath: Dockerfile
+    dockerfilePath: ./frontend/Dockerfile
     plan: free
     envVars:
       # Pass the backend host domain to the frontend build
