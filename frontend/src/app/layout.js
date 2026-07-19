@@ -14,8 +14,27 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata = {
-  title: "Livio - Find Paying Guest Accommodations Instantly",
+  metadataBase: new URL("http://localhost:8082"), // TODO: Replace with production domain
+  title: {
+    default: "Livio - Find Paying Guest Accommodations Instantly",
+    template: "%s | Livio",
+  },
   description: "Find premium, verified PG (Paying Guest) rooms and co-living accommodations near tech parks, colleges, metro stations, and hospitals.",
+  keywords: ["PG", "Paying Guest", "Co-living", "Hostel", "Student Accommodation", "Rooms for rent"],
+  authors: [{ name: "Livio" }],
+  openGraph: {
+    title: "Livio - Find Paying Guest Accommodations",
+    description: "Find premium, verified PG rooms and co-living accommodations.",
+    url: "http://localhost:8082",
+    siteName: "Livio",
+    locale: "en_IN",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Livio - Find Paying Guest Accommodations",
+    description: "Find premium, verified PG rooms and co-living accommodations.",
+  },
 };
 
 export default function RootLayout({ children }) {

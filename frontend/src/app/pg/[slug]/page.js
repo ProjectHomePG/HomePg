@@ -65,6 +65,33 @@ export default function PGDetailsPage({ params }) {
 
   return (
     <div className="space-y-8">
+      {/* Schema.org JSON-LD for Rich Snippets */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Accommodation",
+            "name": pg.title,
+            "description": pg.description,
+            "image": pg.images?.map(img => img.url) || [],
+            "address": {
+              "@type": "PostalAddress",
+              "streetAddress": pg.address,
+              "addressLocality": pg.city,
+              "addressRegion": pg.state,
+              "postalCode": pg.zipCode,
+              "addressCountry": "IN"
+            },
+            "offers": {
+              "@type": "Offer",
+              "price": pg.price,
+              "priceCurrency": "INR"
+            }
+          })
+        }}
+      />
+      
       {/* Breadcrumbs / Back button */}
       <div>
         <button
