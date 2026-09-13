@@ -29,13 +29,20 @@ export default function PGCard({ pg }) {
 
       {/* Image / Thumbnail Container */}
       <div className="relative aspect-video w-full bg-gradient-to-br from-rose-50 to-primary-100 dark:from-slate-700 dark:to-slate-800 overflow-hidden">
-        {/* We use gradient placeholder styles inside the card */}
-        <div className="absolute inset-0 flex items-center justify-center text-slate-400 dark:text-slate-500 font-medium">
-          <span className="text-xs tracking-wider uppercase bg-white/90 dark:bg-slate-900/90 py-1.5 px-3 rounded-full shadow-sm">
-            {pg.sharingType} sharing
-          </span>
-        </div>
-        
+        {pg.images && pg.images.length > 0 ? (
+          <img
+            src={pg.images.find(img => img.isPrimary)?.url || pg.images[0].url}
+            alt={pg.title}
+            className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+          />
+        ) : (
+          <div className="absolute inset-0 flex items-center justify-center text-slate-400 dark:text-slate-500 font-medium">
+            <span className="text-xs tracking-wider uppercase bg-white/90 dark:bg-slate-900/90 py-1.5 px-3 rounded-full shadow-sm">
+              {pg.sharingType} sharing
+            </span>
+          </div>
+        )}
+
         {/* Absolute Gender Tag */}
         <span className={`absolute bottom-4 left-4 text-xs font-bold px-3 py-1 rounded-full shadow-sm ${getGenderBadge(pg.genderType)}`}>
           {pg.genderType}

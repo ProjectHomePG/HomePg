@@ -31,8 +31,8 @@ export default function HomePage() {
     loadData();
   }, []);
 
-  const featuredPgs = pgs.slice(0, 3);
-  const recentlyAdded = [...pgs].reverse().slice(0, 3);
+  const featuredPgs = pgs.slice(0, 6);
+  const recentlyAdded = [...pgs].reverse().slice(0, 6);
 
   return (
     <div className="space-y-16 lg:space-y-24">
@@ -91,7 +91,7 @@ export default function HomePage() {
         </div>
 
         {loading ? (
-          <LoadingSkeleton type="GRID" count={3} />
+          <LoadingSkeleton type="GRID" count={6} />
         ) : (
           <PGGrid pgs={featuredPgs} />
         )}
@@ -113,7 +113,7 @@ export default function HomePage() {
         </div>
 
         {loading ? (
-          <LoadingSkeleton type="GRID" count={3} />
+          <LoadingSkeleton type="GRID" count={6} />
         ) : (
           <PGGrid pgs={recentlyAdded} />
         )}

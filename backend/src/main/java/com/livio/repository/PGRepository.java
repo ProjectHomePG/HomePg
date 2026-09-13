@@ -11,9 +11,12 @@ import java.util.Optional;
 @Repository
 public interface PGRepository extends JpaRepository<PG, Long> {
     Optional<PG> findBySlug(String slug);
+    Optional<PG> findByGooglePlaceId(String googlePlaceId);
+    boolean existsByGooglePlaceId(String googlePlaceId);
     List<PG> findByCityIgnoreCase(String city);
     List<PG> findByGenderType(String genderType);
     List<PG> findByPriceLessThanEqual(Double price);
+    List<PG> findBySource(String source);
 
     @Query("SELECT DISTINCT p FROM PG p LEFT JOIN p.nearbyPlaces np WHERE " +
            "(:query IS NULL OR :query = '' OR " +

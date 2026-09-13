@@ -47,6 +47,27 @@ public class PG {
     @Column(name = "sharing_type")
     private String sharingType; // e.g. SINGLE, DOUBLE, TRIPLE, etc.
 
+    @Column(name = "google_place_id", unique = true)
+    private String googlePlaceId;
+
+    @Column(name = "phone")
+    private String phone;
+
+    @Column(name = "website", length = 2000)
+    private String website;
+
+    @Column(name = "latitude")
+    private Double latitude;
+
+    @Column(name = "longitude")
+    private Double longitude;
+
+    @Column(name = "google_maps_url")
+    private String googleMapsUrl;
+
+    @Column(name = "source")
+    private String source; // GOOGLE_MAPS, OSM, MANUAL
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "owner_id", nullable = false)
     private User owner;
@@ -61,11 +82,11 @@ public class PG {
     @JsonIgnoreProperties("pg")
     private List<Image> images = new ArrayList<>();
 
-    @OneToMany(mappedBy = "pg", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+    @OneToMany(mappedBy = "pg", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
     @JsonIgnoreProperties("pg")
     private List<Review> reviews = new ArrayList<>();
 
-    @OneToMany(mappedBy = "pg", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+    @OneToMany(mappedBy = "pg", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
     @JsonIgnoreProperties("pg")
     private List<Inquiry> inquiries = new ArrayList<>();
 
@@ -103,6 +124,7 @@ public class PG {
         this.genderType = genderType;
         this.sharingType = sharingType;
         this.owner = owner;
+        this.source = "MANUAL";
     }
 
     @PrePersist
@@ -211,6 +233,62 @@ public class PG {
 
     public void setSharingType(String sharingType) {
         this.sharingType = sharingType;
+    }
+
+    public String getGooglePlaceId() {
+        return googlePlaceId;
+    }
+
+    public void setGooglePlaceId(String googlePlaceId) {
+        this.googlePlaceId = googlePlaceId;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getWebsite() {
+        return website;
+    }
+
+    public void setWebsite(String website) {
+        this.website = website;
+    }
+
+    public Double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(Double latitude) {
+        this.latitude = latitude;
+    }
+
+    public Double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(Double longitude) {
+        this.longitude = longitude;
+    }
+
+    public String getGoogleMapsUrl() {
+        return googleMapsUrl;
+    }
+
+    public void setGoogleMapsUrl(String googleMapsUrl) {
+        this.googleMapsUrl = googleMapsUrl;
+    }
+
+    public String getSource() {
+        return source;
+    }
+
+    public void setSource(String source) {
+        this.source = source;
     }
 
     public User getOwner() {

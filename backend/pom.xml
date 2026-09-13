@@ -56,6 +56,13 @@
             <scope>runtime</scope>
         </dependency>
 
+        <!-- OpenCSV for CSV parsing -->
+        <dependency>
+            <groupId>com.opencsv</groupId>
+            <artifactId>opencsv</artifactId>
+            <version>5.9</version>
+        </dependency>
+
         <!-- Jackson Datatype Hibernate 6 to handle lazy proxies serialization -->
         <dependency>
             <groupId>com.fasterxml.jackson.datatype</groupId>

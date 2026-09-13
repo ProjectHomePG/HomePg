@@ -3,7 +3,7 @@
 import React, { useState, useEffect, use } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { ChevronLeft, Info, Calendar, DollarSign, ShieldAlert, Award, MapPin } from 'lucide-react';
+import { ChevronLeft, Info, Calendar, DollarSign, ShieldAlert, Award, MapPin, Star } from 'lucide-react';
 import pgService from '../../../services/pgService';
 import ImageGallery from '../../../components/Details/ImageGallery';
 import Amenities from '../../../components/Details/Amenities';
@@ -130,6 +130,19 @@ export default function PGDetailsPage({ params }) {
               <MapPin className="w-4 h-4 mr-1 text-primary-500 flex-shrink-0" />
               {pg.address}, {pg.city}, {pg.state}
             </p>
+            {pg.reviews && pg.reviews.length > 0 && (
+              <div className="flex items-center gap-2">
+                <div className="flex items-center gap-1 bg-amber-50 dark:bg-amber-950/30 text-amber-700 dark:text-amber-300 px-2.5 py-1 rounded-full border border-amber-100 dark:border-amber-900/30">
+                  <Star className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
+                  <span className="text-xs font-bold">
+                    {(pg.reviews.reduce((a, r) => a + r.rating, 0) / pg.reviews.length).toFixed(1)}
+                  </span>
+                </div>
+                <span className="text-[10px] text-slate-400">
+                  {pg.reviews.length} Google review{pg.reviews.length !== 1 ? 's' : ''}
+                </span>
+              </div>
+            )}
           </div>
 
           <hr className="border-slate-100 dark:border-slate-800" />

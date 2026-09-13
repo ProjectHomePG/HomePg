@@ -20,7 +20,7 @@ function SearchPageContent() {
   const [loading, setLoading] = useState(true);
   const [mapViewActive, setMapViewActive] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 3;
+  const itemsPerPage = 9;
 
   // Filter variables reflecting URL params
   const [filters, setFilters] = useState({
@@ -137,7 +137,7 @@ function SearchPageContent() {
         {/* Results List */}
         <div className="lg:col-span-3 space-y-6">
           {loading ? (
-            <LoadingSkeleton type="GRID" count={3} />
+            <LoadingSkeleton type="GRID" count={9} />
           ) : mapViewActive ? (
             <div className="space-y-6">
               <MapView pgs={pgs} height="h-[500px]" />
