@@ -19,12 +19,29 @@ public class SearchController {
     @GetMapping
     public ResponseEntity<List<PG>> search(
             @RequestParam(required = false) String query,
+            @RequestParam(required = false) String city,
             @RequestParam(required = false) String gender,
             @RequestParam(required = false) String sharing,
-            @RequestParam(required = false) Double minPrice,
-            @RequestParam(required = false) Double maxPrice) {
-        
-        List<PG> results = searchService.search(query, gender, sharing, minPrice, maxPrice);
+            @RequestParam(required = false) String minPrice,
+            @RequestParam(required = false) String maxPrice,
+            @RequestParam(required = false) String amenity) {
+
+        Double parsedMinPrice = parsePrice(minPrice);
+        Double parsedMaxPrice = parsePrice(maxPrice);
+
+        List<PG> results = searchService.search(query, city, gender, sharing, parsedMinPrice, parsedMaxPrice, amenity);
         return ResponseEntity.ok(results);
     }
+
+    private Double parsePrice(String priceStr) {
+        if (priceStr == null || priceStr.trim().isEmpty() || priceStr.equalsIgnoreCase("undefined") || priceStr.equalsIgnoreCase("null")) {
+            return null;
+        }
+        try {
+            return Double.parseDouble(priceStr.trim());
+        } catch (NumberFormatException e) {
+            return null;
+        }
+    }
 }
+

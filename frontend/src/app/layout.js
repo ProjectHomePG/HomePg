@@ -16,9 +16,10 @@ const geistMono = Geist_Mono({
 export const metadata = {
   metadataBase: new URL("http://localhost:8082"), // TODO: Replace with production domain
   title: {
-    default: "Livio - Find Paying Guest Accommodations Instantly",
+    default: "Livio - Verified PG & Co-Living Accommodations",
     template: "%s | Livio",
   },
+
   description: "Find premium, verified PG (Paying Guest) rooms and co-living accommodations near tech parks, colleges, metro stations, and hospitals.",
   keywords: ["PG", "Paying Guest", "Co-living", "Hostel", "Student Accommodation", "Rooms for rent"],
   authors: [{ name: "Livio" }],

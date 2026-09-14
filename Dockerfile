@@ -17,10 +17,14 @@ RUN npm run build
 
 # Stage 3: Runner (Java + Node)
 FROM eclipse-temurin:17-jdk-alpine
-# Install Node.js and npm in Alpine
-RUN apk add --no-cache nodejs npm
+# Install Node.js, npm, and curl in Alpine
+RUN apk add --no-cache nodejs npm curl
 
 WORKDIR /app
+
+# Copy and setup persistent database/images directory
+COPY data ./data
+RUN mkdir -p data/images && chmod -R 777 data
 
 # Copy Backend files
 COPY --from=backend-builder /build/backend/target/livio-backend-0.0.1-SNAPSHOT.jar backend.jar
@@ -32,7 +36,8 @@ COPY --from=frontend-builder /build/frontend/.next ./.next
 COPY --from=frontend-builder /build/frontend/public ./public
 COPY --from=frontend-builder /build/frontend/next.config.mjs ./next.config.mjs
 
-# Expose Next.js port
+# Default port configuration
+ENV PORT=8082
 EXPOSE 8082
 
 # Script to start both
@@ -40,3 +45,4 @@ COPY start.sh .
 RUN chmod +x start.sh
 
 CMD ["./start.sh"]
+
