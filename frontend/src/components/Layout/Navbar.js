@@ -5,10 +5,11 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { Search, LogIn, UserPlus, LogOut, Menu, X, PlusCircle, Shield } from 'lucide-react';
 import authService from '../../services/authService';
+import ThemeToggle from '../Shared/ThemeToggle';
 
 /**
- * Navbar component for PG Near Me.
- * Provides sticky header navigation, role-based controls, and responsive layout.
+ * Navbar component for Livio.
+ * Provides sticky header navigation, role-based controls, theme toggle, and responsive layout.
  */
 export default function Navbar() {
   const router = useRouter();
@@ -16,7 +17,6 @@ export default function Navbar() {
   const [user, setUser] = useState(null);
 
   useEffect(() => {
-    // Check user auth state on load
     setUser(authService.getCurrentUser());
   }, []);
 
@@ -91,10 +91,16 @@ export default function Navbar() {
                 </Link>
               </div>
             )}
+
+            {/* Theme Toggle */}
+            <div className="border-l border-slate-200 dark:border-slate-700 pl-6">
+              <ThemeToggle />
+            </div>
           </div>
 
           {/* Mobile menu button */}
-          <div className="flex md:hidden">
+          <div className="flex md:hidden items-center gap-2">
+            <ThemeToggle />
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               className="inline-flex items-center justify-center p-2 rounded-lg text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 focus:outline-none"

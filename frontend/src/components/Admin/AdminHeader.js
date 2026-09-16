@@ -17,7 +17,7 @@ export default function AdminHeader({ title = "Overview", subtitle = "Manage lis
   return (
     <header className="flex flex-col sm:flex-row sm:items-center sm:justify-between pb-6 border-b border-slate-200 dark:border-slate-800 gap-4 mb-6">
       <div>
-        <h1 className="text-2xl font-black text-slate-850 dark:text-slate-100">{title}</h1>
+        <h1 className="text-2xl font-black text-slate-800 dark:text-slate-100">{title}</h1>
         <p className="text-xs text-slate-400 mt-1">{subtitle}</p>
       </div>
 

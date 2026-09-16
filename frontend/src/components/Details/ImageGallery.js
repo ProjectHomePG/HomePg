@@ -48,13 +48,13 @@ export default function ImageGallery({ images = [] }) {
           Photo Gallery
         </h1>
         <div className="flex space-x-2">
-          <button className="flex items-center text-xs font-bold px-3.5 py-2 border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 rounded-xl hover:bg-slate-50 text-slate-700 dark:text-slate-300 shadow-sm cursor-pointer">
+          <button className="flex items-center text-xs font-bold px-3.5 py-2 border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 shadow-sm cursor-pointer">
             <Share2 className="w-3.5 h-3.5 mr-1.5" />
             Share
           </button>
           <button
             onClick={() => setLiked(!liked)}
-            className={`flex items-center text-xs font-bold px-3.5 py-2 border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 rounded-xl hover:bg-slate-50 transition-colors shadow-sm cursor-pointer ${liked ? 'text-rose-500 border-rose-200' : 'text-slate-700 dark:text-slate-300'}`}
+            className={`flex items-center text-xs font-bold px-3.5 py-2 border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors shadow-sm cursor-pointer ${liked ? 'text-rose-500 border-rose-200' : 'text-slate-700 dark:text-slate-300'}`}
           >
             <Heart className={`w-3.5 h-3.5 mr-1.5 ${liked ? 'fill-rose-500 text-rose-500' : ''}`} />
             {liked ? 'Saved' : 'Save'}

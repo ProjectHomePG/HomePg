@@ -50,7 +50,7 @@ export default function AdminLayout({ children }) {
   return (
     <div className="flex flex-col md:flex-row gap-8 items-start w-full">
       <AdminSidebar />
-      <div className="flex-grow w-full bg-white dark:bg-slate-850 p-6 md:p-8 rounded-3xl border border-slate-100 dark:border-slate-800 shadow-sm min-h-[500px]">
+      <div className="flex-grow w-full bg-white dark:bg-slate-800 p-6 md:p-8 rounded-3xl border border-slate-100 dark:border-slate-800 shadow-sm min-h-[500px]">
         {children}
       </div>
     </div>

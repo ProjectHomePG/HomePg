@@ -22,9 +22,20 @@ public class SearchServiceImpl implements SearchService {
 
     @Override
     public List<PG> search(String query, String gender, String sharing, Double minPrice, Double maxPrice) {
-        List<PG> results = pgRepository.searchPGs(query, gender, sharing, minPrice, maxPrice);
+        String cleanQuery = (query == null || query.isBlank()) ? null : query.trim();
+        String cleanGender = sanitizeFilter(gender);
+        String cleanSharing = sanitizeFilter(sharing);
+
+        List<PG> results = pgRepository.searchPGs(cleanQuery, cleanGender, cleanSharing, minPrice, maxPrice);
         populateRatingsAndReviews(results);
         return results;
+    }
+
+    private String sanitizeFilter(String value) {
+        if (value == null || value.isBlank()) return null;
+        String trimmed = value.trim();
+        if (trimmed.equalsIgnoreCase("ALL") || trimmed.isEmpty()) return null;
+        return trimmed;
     }
 
     private void populateRatingsAndReviews(List<PG> pgs) {

@@ -43,13 +43,13 @@ export default function HomePage() {
       <SearchSuggestions />
 
       {/* 3. Value Proposition Cards */}
-      <section className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-10 bg-white dark:bg-slate-800 rounded-3xl p-8 lg:p-12 border border-slate-100 dark:border-slate-750 shadow-sm">
+      <section className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-10 bg-white dark:bg-slate-800 rounded-3xl p-8 lg:p-12 border border-slate-100 dark:border-slate-700 shadow-sm">
         <div className="flex items-start space-x-4">
           <div className="w-10 h-10 rounded-2xl bg-rose-50 dark:bg-rose-950/20 text-primary-600 flex items-center justify-center flex-shrink-0">
             <ShieldCheck className="w-7 h-7" />
           </div>
           <div>
-            <h4 className="text-sm font-bold text-slate-850 dark:text-slate-200">100% Verified Owners</h4>
+            <h4 className="text-sm font-bold text-slate-800 dark:text-slate-200">100% Verified Owners</h4>
             <p className="text-xs text-slate-400 mt-1">Direct listings verified by our ground team.</p>
           </div>
         </div>
@@ -59,7 +59,7 @@ export default function HomePage() {
             <Building2 className="w-6 h-6" />
           </div>
           <div>
-            <h4 className="text-sm font-bold text-slate-850 dark:text-slate-200">Fully Managed Co-Living</h4>
+            <h4 className="text-sm font-bold text-slate-800 dark:text-slate-200">Fully Managed Co-Living</h4>
             <p className="text-xs text-slate-400 mt-1">Zero hassle setups including meals, WiFi & cleaning.</p>
           </div>
         </div>
@@ -69,7 +69,7 @@ export default function HomePage() {
             <MapPin className="w-6 h-6" />
           </div>
           <div>
-            <h4 className="text-sm font-bold text-slate-850 dark:text-slate-200">Near Transit Hubs</h4>
+            <h4 className="text-sm font-bold text-slate-800 dark:text-slate-200">Near Transit Hubs</h4>
             <p className="text-xs text-slate-400 mt-1">Walkable distance to metro lines and IT corridors.</p>
           </div>
         </div>
@@ -80,7 +80,7 @@ export default function HomePage() {
         <div className="flex items-center justify-between">
           <div>
             <span className="text-[10px] font-extrabold text-primary-600 uppercase tracking-wider block">Editor's Choice</span>
-            <h2 className="text-xl font-bold text-slate-850 dark:text-slate-100 flex items-center mt-1">
+            <h2 className="text-xl font-bold text-slate-800 dark:text-slate-100 flex items-center mt-1">
               <Sparkles className="w-5 h-5 mr-2 text-primary-500" />
               Featured Stays
             </h2>
@@ -102,7 +102,7 @@ export default function HomePage() {
         <div className="flex items-center justify-between">
           <div>
             <span className="text-[10px] font-extrabold text-slate-400 uppercase tracking-wider block">New Listings</span>
-            <h2 className="text-xl font-bold text-slate-850 dark:text-slate-100 flex items-center mt-1">
+            <h2 className="text-xl font-bold text-slate-800 dark:text-slate-100 flex items-center mt-1">
               <Clock className="w-5 h-5 mr-2 text-primary-500" />
               Recently Added Stays
             </h2>
