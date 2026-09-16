@@ -1,6 +1,27 @@
 version: '3.8'
 
 services:
+  postgres:
+    image: postgres:15-alpine
+    container_name: livio-postgres
+    environment:
+      POSTGRES_DB: livio_db
+      POSTGRES_USER: livio_user
+      POSTGRES_PASSWORD: livio_secure_password_2024
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U livio_user"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+    restart: unless-stopped
+    networks:
+      - livio-network
+
   backend:
     build:
       context: ./backend
@@ -8,13 +29,26 @@ services:
     container_name: livio-backend
     ports:
       - "8083:8083"
-    volumes:
-      # Map the data folder on the host machine to keep database data persistent
-      - ./backend/data:/app/data
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:h2:file:./data/livio_db;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/livio_db
+      - SPRING_DATASOURCE_USERNAME=livio_user
+      - SPRING_DATASOURCE_PASSWORD=livio_secure_password_2024
+      - SPRING_DATASOURCE_DRIVER_CLASS_NAME=org.postgresql.Driver
       - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+      - SPRING_JPA_DATABASE_PLATFORM=org.hibernate.dialect.PostgreSQLDialect
+      - SERVER_SERVLET_CONTEXT_PATH=/
+    depends_on:
+      postgres:
+        condition: service_healthy
     restart: unless-stopped
+    networks:
+      - livio-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8083/api/pgs"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 20s
 
   frontend:
     build:
@@ -24,8 +58,18 @@ services:
     ports:
       - "8082:8082"
     environment:
-      # Browser-facing API endpoint URL targeting the host port
       - NEXT_PUBLIC_API_URL=http://localhost:8083/api
+      - DOCKER_ENVIRONMENT=true
     depends_on:
-      - backend
+      backend:
+        condition: service_healthy
     restart: unless-stopped
+    networks:
+      - livio-network
+
+networks:
+  livio-network:
+    driver: bridge
+
+volumes:
+  postgres_data:
