@@ -73,7 +73,7 @@ export default function ReviewList({ pgId }) {
           </div>
           <div className="border-l border-slate-200 dark:border-slate-700 pl-4 space-y-1">
             <RatingStars rating={Number(avgRating)} size={4} />
-            <span className="text-xs text-slate-500 dark:text-slate-450 block">{reviews.length} reviews</span>
+            <span className="text-xs text-slate-500 dark:text-slate-400 block">{reviews.length} reviews</span>
           </div>
         </div>
       </div>
@@ -90,7 +90,7 @@ export default function ReviewList({ pgId }) {
       </div>
 
       {/* Add Review Form */}
-      <form onSubmit={handleSubmitReview} className="p-6 bg-white dark:bg-slate-850 rounded-3xl border border-slate-100 dark:border-slate-800 shadow-sm space-y-4">
+      <form onSubmit={handleSubmitReview} className="p-6 bg-white dark:bg-slate-800 rounded-3xl border border-slate-100 dark:border-slate-800 shadow-sm space-y-4">
         <h4 className="font-bold text-sm text-slate-800 dark:text-slate-100 uppercase tracking-wider">Leave a Review</h4>
         
         {/* Rating Select */}

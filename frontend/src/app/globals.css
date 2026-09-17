@@ -1,30 +1,15 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 @theme {
   --color-primary-50: #fff1f2;
   --color-primary-100: #ffe4e6;
   --color-primary-200: #fecdd3;
-  --color-primary-300: #fbcdd0;
-  --color-primary-400: #f8a4aa;
   --color-primary-500: #f43f5e;
   --color-primary-600: #e11d48;
   --color-primary-700: #be123c;
   --color-primary-800: #9f1239;
-  --color-primary-900: #881337;
-  --color-primary-950: #500724;
-
-  --color-slate-50: #f8fafc;
-  --color-slate-100: #f1f5f9;
-  --color-slate-200: #e2e8f0;
-  --color-slate-300: #cbd5e1;
-  --color-slate-400: #94a3b8;
-  --color-slate-500: #64748b;
-  --color-slate-600: #475569;
-  --color-slate-700: #334155;
-  --color-slate-800: #1e293b;
-  --color-slate-850: #0f172a;
-  --color-slate-900: #0f172a;
-  --color-slate-950: #020617;
 
   --color-card-light: #ffffff;
   --color-card-dark: #1e293b;
@@ -43,20 +28,16 @@
   --border: #e2e8f0;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0f172a;
-    --foreground: #f8fafc;
-    --card: #1e293b;
-    --card-foreground: #f8fafc;
-    --border: #334155;
-  }
+.dark {
+  --background: #0f172a;
+  --foreground: #f8fafc;
+  --card: #1e293b;
+  --card-foreground: #f8fafc;
+  --border: #334155;
 }
 
 * {
   box-sizing: border-box;
-  margin: 0;
-  padding: 0;
 }
 
 html {
@@ -70,7 +51,6 @@ body {
   display: flex;
   flex-direction: column;
   overflow-x: hidden;
-  font-family: 'Inter', system-ui, -apple-system, sans-serif;
 }
 
 /* Custom premium scrollbar */
@@ -88,10 +68,8 @@ body {
   border-radius: 9999px;
 }
 
-@media (prefers-color-scheme: dark) {
-  ::-webkit-scrollbar-thumb {
-    background: #475569;
-  }
+.dark ::-webkit-scrollbar-thumb {
+  background: #475569;
 }
 
 ::-webkit-scrollbar-thumb:hover {
@@ -105,10 +83,8 @@ body {
   -webkit-backdrop-filter: blur(8px);
 }
 
-@media (prefers-color-scheme: dark) {
-  .glass-effect {
-    background: rgba(15, 23, 42, 0.8);
-  }
+.dark .glass-effect {
+  background: rgba(15, 23, 42, 0.8);
 }
 
 .shadow-soft {
@@ -122,47 +98,4 @@ body {
 .shadow-card-hover:hover {
   transform: translateY(-4px);
   box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-}
-
-/* Consistent icon sizing */
-.icon-xs {
-  width: 0.75rem;
-  height: 0.75rem;
-}
-
-.icon-sm {
-  width: 1rem;
-  height: 1rem;
-}
-
-.icon-md {
-  width: 1.5rem;
-  height: 1.5rem;
-}
-
-.icon-lg {
-  width: 2rem;
-  height: 2rem;
-}
-
-.icon-xl {
-  width: 2.5rem;
-  height: 2.5rem;
-}
-
-/* Responsive container */
-.container-custom {
-  width: 100%;
-  max-width: 1280px;
-  margin-left: auto;
-  margin-right: auto;
-  padding-left: 1rem;
-  padding-right: 1rem;
-}
-
-@media (min-width: 1024px) {
-  .container-custom {
-    padding-left: 2rem;
-    padding-right: 2rem;
-  }
 }

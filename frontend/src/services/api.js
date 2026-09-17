@@ -1,29 +1,14 @@
 import axios from 'axios';
 
-// Determine API base URL based on environment
-const getApiUrl = () => {
-  // Browser environment (Next.js Client Component)
-  if (typeof window !== 'undefined') {
-    return process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8083/api';
-  }
-  
-  // SSR/Node.js environment
-  // In Docker, use container name; locally use localhost
-  const isDocker = process.env.DOCKER_ENVIRONMENT === 'true';
-  if (isDocker) {
-    return 'http://livio-backend:8083/api';
-  }
-  return process.env.INTERNAL_API_URL || 'http://localhost:8083/api';
-};
-
-const API_BASE_URL = getApiUrl();
+// In production (single-port), API calls go through Next.js rewrites at the same origin.
+// In development, they proxy to the backend at 127.0.0.1:8083.
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || '/api';
 
 const api = axios.create({
   baseURL: API_BASE_URL,
   headers: {
     'Content-Type': 'application/json',
   },
-  timeout: 10000, // 10 second timeout
 });
 
 // Request interceptor to inject JWT token from localStorage if available
@@ -40,20 +25,15 @@ api.interceptors.request.use(
   (error) => Promise.reject(error)
 );
 
-// Response interceptor for error handling
+// Response interceptor for better error messages
 api.interceptors.response.use(
   (response) => response,
   (error) => {
-    if (error.response?.status === 401) {
-      // Handle unauthorized access
-      if (typeof window !== 'undefined') {
-        localStorage.removeItem('token');
-        window.location.href = '/login';
-      }
+    if (error.code === 'ECONNREFUSED' || error.message?.includes('Network Error')) {
+      console.error('Backend server is not reachable. Please ensure the backend is running.');
     }
     return Promise.reject(error);
   }
 );
 
 export default api;
-export { API_BASE_URL };

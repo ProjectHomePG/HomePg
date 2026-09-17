@@ -97,7 +97,7 @@ export default function AdminDashboardPage() {
           <div className="overflow-x-auto">
             <table className="w-full text-left border-collapse">
               <thead>
-                <tr className="bg-slate-50 dark:bg-slate-900 text-[10px] font-bold text-slate-450 uppercase tracking-wider border-b border-slate-100 dark:border-slate-800">
+                <tr className="bg-slate-50 dark:bg-slate-900 text-[10px] font-bold text-slate-400 uppercase tracking-wider border-b border-slate-100 dark:border-slate-800">
                   <th className="p-4 pl-6">Property Title</th>
                   <th className="p-4">Location</th>
                   <th className="p-4">Policy / Sharing</th>
@@ -117,7 +117,7 @@ export default function AdminDashboardPage() {
                     <td className="p-4">
                       <span className="capitalize">{pg.genderType.toLowerCase()}</span> / <span className="lowercase">{pg.sharingType}</span>
                     </td>
-                    <td className="p-4 font-extrabold text-slate-850 dark:text-slate-100">₹{pg.price.toLocaleString('en-IN')}</td>
+                    <td className="p-4 font-extrabold text-slate-800 dark:text-slate-100">₹{pg.price.toLocaleString('en-IN')}</td>
                     <td className="p-4 pr-6 text-right flex justify-end items-center space-x-2">
                       <Link
                         href={`/admin/edit-pg/${pg.id}`}

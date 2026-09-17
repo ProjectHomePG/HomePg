@@ -1,29 +1,27 @@
 #!/bin/sh
 
-# Start the Spring Boot backend in the background
-echo "Starting Spring Boot backend on port 8083..."
-java -jar backend.jar &
-BACKEND_PID=$!
+# Ensure data directory exists
+mkdir -p /app/data
 
-# Wait for backend to be healthy
+# Start the Spring Boot backend in the background (IPv4 only)
+echo "Starting Spring Boot backend on port 8083..."
+java -Djava.net.preferIPv4Stack=true -jar backend.jar &
+
+# Wait for backend to be ready (check IPv4 explicitly)
 echo "Waiting for backend to bind to port 8083..."
-MAX_RETRIES=25
-COUNT=0
-while [ $COUNT -lt $MAX_RETRIES ]; do
-  if curl -s http://localhost:8083/ > /dev/null 2>&1; then
-    echo "Backend is up and responsive on port 8083!"
-    break
+RETRIES=30
+until curl -sf http://127.0.0.1:8083/ > /dev/null 2>&1; do
+  RETRIES=$((RETRIES - 1))
+  if [ $RETRIES -le 0 ]; then
+    echo "ERROR: Backend failed to start within timeout"
+    exit 1
   fi
-  sleep 1
-  COUNT=$((COUNT + 1))
+  echo "  Backend not ready, waiting... ($RETRIES retries left)"
+  sleep 2
 done
 
-if [ $COUNT -eq $MAX_RETRIES ]; then
-  echo "Warning: Backend did not respond within ${MAX_RETRIES}s. Proceeding with frontend startup..."
-fi
+echo "Backend is ready on port 8083"
 
-# Determine port for Next.js (Render provides $PORT, fallback to 8082)
-APP_PORT="${PORT:-8082}"
-echo "Starting Next.js frontend on port ${APP_PORT}..."
-exec npx next start -p "${APP_PORT}"
-
+# Start Next.js frontend in the foreground
+echo "Starting Next.js frontend on port ${PORT:-8082}..."
+npm run start

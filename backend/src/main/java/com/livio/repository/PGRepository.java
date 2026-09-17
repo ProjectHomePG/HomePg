@@ -18,25 +18,20 @@ public interface PGRepository extends JpaRepository<PG, Long> {
     List<PG> findByPriceLessThanEqual(Double price);
     List<PG> findBySource(String source);
 
-    @Query("SELECT DISTINCT p FROM PG p LEFT JOIN p.nearbyPlaces np LEFT JOIN p.amenities a WHERE " +
+    @Query("SELECT DISTINCT p FROM PG p " +
+           "WHERE " +
            "(:query IS NULL OR :query = '' OR " +
            " LOWER(p.title) LIKE LOWER(CONCAT('%', :query, '%')) OR " +
            " LOWER(p.city) LIKE LOWER(CONCAT('%', :query, '%')) OR " +
            " LOWER(p.state) LIKE LOWER(CONCAT('%', :query, '%')) OR " +
-           " LOWER(p.address) LIKE LOWER(CONCAT('%', :query, '%')) OR " +
-           " LOWER(np.name) LIKE LOWER(CONCAT('%', :query, '%'))) AND " +
-           "(:city IS NULL OR :city = '' OR LOWER(p.city) = LOWER(:city)) AND " +
-           "(:gender IS NULL OR :gender = '' OR :gender = 'ALL' OR LOWER(p.genderType) = LOWER(:gender)) AND " +
-           "(:sharing IS NULL OR :sharing = '' OR :sharing = 'ALL' OR LOWER(p.sharingType) = LOWER(:sharing)) AND " +
-           "(:minPrice IS NULL OR p.price >= :minPrice) AND " +
-           "(:maxPrice IS NULL OR p.price <= :maxPrice) AND " +
-           "(:amenity IS NULL OR :amenity = '' OR LOWER(a.name) LIKE LOWER(CONCAT('%', :amenity, '%')))")
+           " LOWER(p.address) LIKE LOWER(CONCAT('%', :query, '%'))) " +
+           "AND (:gender IS NULL OR :gender = '' OR :gender = 'ALL' OR LOWER(p.genderType) = LOWER(:gender)) " +
+           "AND (:sharing IS NULL OR :sharing = '' OR :sharing = 'ALL' OR LOWER(p.sharingType) = LOWER(:sharing)) " +
+           "AND (:minPrice IS NULL OR p.price >= :minPrice) " +
+           "AND (:maxPrice IS NULL OR p.price <= :maxPrice)")
     List<PG> searchPGs(@Param("query") String query,
-                       @Param("city") String city,
                        @Param("gender") String gender,
                        @Param("sharing") String sharing,
                        @Param("minPrice") Double minPrice,
-                       @Param("maxPrice") Double maxPrice,
-                       @Param("amenity") String amenity);
+                       @Param("maxPrice") Double maxPrice);
 }
-

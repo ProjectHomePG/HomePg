@@ -17,10 +17,9 @@ export default function SearchBar({ initialValues = {} }) {
   const handleSearch = (e) => {
     e.preventDefault();
     const params = new URLSearchParams();
-    if (query && query.trim()) params.set('query', query.trim());
-    if (gender && gender !== 'ALL') params.set('gender', gender);
+    if (query.trim()) params.set('query', query.trim());
+    if (gender !== 'ALL') params.set('gender', gender);
     if (budget) params.set('maxPrice', budget);
-
     router.push(`/search?${params.toString()}`);
   };
 
@@ -29,7 +28,7 @@ export default function SearchBar({ initialValues = {} }) {
       onSubmit={handleSearch} 
       className="w-full bg-white dark:bg-slate-800 rounded-2xl md:rounded-full shadow-lg p-3 md:p-2 border border-slate-100 dark:border-slate-700 flex flex-col md:flex-row flex-wrap md:flex-nowrap items-stretch md:items-center justify-center gap-3 md:gap-1 max-w-5xl mx-auto"
     >
-      {/* Location / Name Input */}
+      {/* Location Input */}
       <div className="flex items-center px-4 py-2 flex-grow space-x-3 border-b md:border-b-0 md:border-r border-slate-100 dark:border-slate-700">
         <MapPin className="w-5 h-5 text-primary-500 flex-shrink-0" />
         <div className="w-full">
@@ -37,12 +36,11 @@ export default function SearchBar({ initialValues = {} }) {
             type="text"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            placeholder="Search PG name (e.g. Dublin, Zolo), city, or area..."
+            placeholder="Search by city, college, office, metro..."
             className="w-full text-sm font-semibold text-slate-800 dark:text-slate-100 placeholder-slate-400 bg-transparent border-none outline-none focus:ring-0 p-0"
           />
         </div>
       </div>
-
 
       {/* Gender Type */}
       <div className="flex items-center px-4 py-2 md:w-48 space-x-3 border-b md:border-b-0 md:border-r border-slate-100 dark:border-slate-700">

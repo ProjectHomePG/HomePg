@@ -24,7 +24,7 @@ export default function SearchSuggestions() {
             <Link 
               key={idx} 
               href={`/search?query=${encodeURIComponent(cat.query)}`}
-              className="flex flex-col items-center justify-center p-6 bg-white dark:bg-slate-850 rounded-2xl border border-slate-100 dark:border-slate-800 shadow-sm hover:shadow-md hover:border-primary-100 dark:hover:border-slate-700 transition-all hover:scale-[1.02] text-center cursor-pointer group"
+              className="flex flex-col items-center justify-center p-6 bg-white dark:bg-slate-800 rounded-2xl border border-slate-100 dark:border-slate-800 shadow-sm hover:shadow-md hover:border-primary-100 dark:hover:border-slate-700 transition-all hover:scale-[1.02] text-center cursor-pointer group"
             >
               <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${cat.color} flex items-center justify-center text-white mb-3 shadow-md group-hover:scale-110 transition-transform`}>
                 <Icon className="w-8 h-8" />

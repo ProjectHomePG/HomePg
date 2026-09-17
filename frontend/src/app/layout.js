@@ -2,6 +2,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Navbar from "../components/Layout/Navbar";
 import Footer from "../components/Layout/Footer";
+import { ThemeProvider } from "../context/ThemeContext";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -14,7 +15,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata = {
-  metadataBase: new URL("http://localhost:8082"), // TODO: Replace with production domain
+  metadataBase: new URL("http://localhost:8082"),
   title: {
     default: "Livio - Verified PG & Co-Living Accommodations",
     template: "%s | Livio",
@@ -43,13 +44,23 @@ export default function RootLayout({ children }) {
     <html
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      suppressHydrationWarning
     >
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){try{var t=localStorage.getItem('livio-theme');if(t==='dark'||(!t&&matchMedia('(prefers-color-scheme:dark)').matches)){document.documentElement.classList.add('dark')}else{document.documentElement.classList.remove('dark')}}catch(e){}})();`,
+          }}
+        />
+      </head>
       <body className="min-h-full flex flex-col bg-bg-light dark:bg-bg-dark text-slate-800 dark:text-slate-200">
-        <Navbar />
-        <main className="flex-grow w-full max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-12 xl:px-16 py-8">
-          {children}
-        </main>
-        <Footer />
+        <ThemeProvider>
+          <Navbar />
+          <main className="flex-grow w-full max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-12 xl:px-16 py-8">
+            {children}
+          </main>
+          <Footer />
+        </ThemeProvider>
       </body>
     </html>
   );

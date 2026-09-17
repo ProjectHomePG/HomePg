@@ -33,7 +33,7 @@ export default function AdminSettingsPage() {
         </div>
       )}
 
-      <form onSubmit={handleSave} className="bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-850 rounded-3xl p-6 md:p-8 space-y-6 shadow-sm">
+      <form onSubmit={handleSave} className="bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-800 rounded-3xl p-6 md:p-8 space-y-6 shadow-sm">
         
         {/* Section 1: Notifications */}
         <div className="space-y-4">

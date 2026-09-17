@@ -52,7 +52,7 @@ export default function PGForm({ initialData = null, onSubmit, submitting = fals
   };
 
   return (
-    <form onSubmit={handleSubmit} className="bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-850 rounded-3xl p-6 md:p-8 shadow-sm space-y-6">
+    <form onSubmit={handleSubmit} className="bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-800 rounded-3xl p-6 md:p-8 shadow-sm space-y-6">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         
         {/* Title */}

@@ -88,12 +88,12 @@ export default function AdminInquiriesPage() {
               </div>
 
               {/* Inquiry Message */}
-              <div className="bg-slate-50 dark:bg-slate-900 rounded-2xl p-4 text-xs font-semibold text-slate-700 dark:text-slate-300 italic border border-slate-100 dark:border-slate-850">
+              <div className="bg-slate-50 dark:bg-slate-900 rounded-2xl p-4 text-xs font-semibold text-slate-700 dark:text-slate-300 italic border border-slate-100 dark:border-slate-800">
                 "{inq.message}"
               </div>
 
               {/* Contact Channels */}
-              <div className="flex flex-wrap items-center gap-4 text-xs font-semibold pt-2 border-t border-slate-100 dark:border-slate-850">
+              <div className="flex flex-wrap items-center gap-4 text-xs font-semibold pt-2 border-t border-slate-100 dark:border-slate-800">
                 <a href={`mailto:${inq.email}`} className="flex items-center text-slate-500 hover:text-primary-600 transition-colors">
                   <Mail className="w-4 h-4 mr-1.5 text-primary-500" />
                   {inq.email}

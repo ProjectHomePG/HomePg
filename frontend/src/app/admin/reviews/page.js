@@ -41,7 +41,7 @@ export default function AdminReviewsPage() {
           >
             <div className="space-y-2 flex-1">
               <div className="flex items-center space-x-3 flex-wrap gap-1">
-                <h4 className="font-extrabold text-sm text-slate-850 dark:text-slate-200">{rev.user}</h4>
+                <h4 className="font-extrabold text-sm text-slate-800 dark:text-slate-200">{rev.user}</h4>
                 <span className="text-[10px] text-slate-400">on {rev.pgTitle}</span>
                 {rev.flag && (
                   <span className="text-[9px] font-bold text-rose-600 bg-rose-100 dark:bg-rose-950/40 dark:text-rose-400 px-2 py-0.5 rounded-full flex items-center">
@@ -53,7 +53,7 @@ export default function AdminReviewsPage() {
 
               <RatingStars rating={rev.rating} size={3.5} />
               
-              <p className="text-xs text-slate-650 dark:text-slate-350 italic leading-relaxed">
+              <p className="text-xs text-slate-600 dark:text-slate-300 italic leading-relaxed">
                 "{rev.comment}"
               </p>
             </div>

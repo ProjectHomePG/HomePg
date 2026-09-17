@@ -7,7 +7,6 @@ import com.livio.service.SearchService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -23,33 +22,20 @@ public class SearchServiceImpl implements SearchService {
 
     @Override
     public List<PG> search(String query, String gender, String sharing, Double minPrice, Double maxPrice) {
-        return search(query, null, gender, sharing, minPrice, maxPrice, null);
+        String cleanQuery = (query == null || query.isBlank()) ? null : query.trim();
+        String cleanGender = sanitizeFilter(gender);
+        String cleanSharing = sanitizeFilter(sharing);
+
+        List<PG> results = pgRepository.searchPGs(cleanQuery, cleanGender, cleanSharing, minPrice, maxPrice);
+        populateRatingsAndReviews(results);
+        return results;
     }
 
-    @Override
-    public List<PG> search(String query, String city, String gender, String sharing, Double minPrice, Double maxPrice, String amenity) {
-        String cleanQuery = (query != null && !query.trim().isEmpty()) ? query.trim() : null;
-        String cleanCity = (city != null && !city.trim().isEmpty() && !city.equalsIgnoreCase("ALL")) ? city.trim() : null;
-        String cleanGender = (gender != null && !gender.trim().isEmpty() && !gender.equalsIgnoreCase("ALL")) ? gender.trim() : null;
-        String cleanSharing = (sharing != null && !sharing.trim().isEmpty() && !sharing.equalsIgnoreCase("ALL")) ? sharing.trim() : null;
-        String cleanAmenity = (amenity != null && !amenity.trim().isEmpty()) ? amenity.trim() : null;
-
-        List<PG> results = pgRepository.searchPGs(cleanQuery, cleanCity, cleanGender, cleanSharing, minPrice, maxPrice, cleanAmenity);
-        populateRatingsAndReviews(results);
-
-        // If a search query is provided, sort by relevance (exact title matches first)
-        if (cleanQuery != null) {
-            final String qLower = cleanQuery.toLowerCase();
-            results.sort(Comparator.comparingInt((PG pg) -> {
-                String titleLower = pg.getTitle() != null ? pg.getTitle().toLowerCase() : "";
-                if (titleLower.equals(qLower)) return 0;
-                if (titleLower.startsWith(qLower)) return 1;
-                if (titleLower.contains(qLower)) return 2;
-                return 3;
-            }));
-        }
-
-        return results;
+    private String sanitizeFilter(String value) {
+        if (value == null || value.isBlank()) return null;
+        String trimmed = value.trim();
+        if (trimmed.equalsIgnoreCase("ALL") || trimmed.isEmpty()) return null;
+        return trimmed;
     }
 
     private void populateRatingsAndReviews(List<PG> pgs) {
@@ -77,4 +63,3 @@ public class SearchServiceImpl implements SearchService {
         }
     }
 }
-

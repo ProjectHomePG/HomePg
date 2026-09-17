@@ -123,7 +123,7 @@ export default function PGDetailsPage({ params }) {
               </span>
             </div>
             
-            <h1 className="text-2xl sm:text-3xl font-black text-slate-850 dark:text-slate-100">
+            <h1 className="text-2xl sm:text-3xl font-black text-slate-800 dark:text-slate-100">
               {pg.title}
             </h1>
             <p className="text-sm font-semibold text-slate-500 dark:text-slate-400 flex items-center">
@@ -152,7 +152,7 @@ export default function PGDetailsPage({ params }) {
             <h2 className="text-lg font-bold text-slate-800 dark:text-slate-100 uppercase tracking-wider text-xs">
               About this accommodation
             </h2>
-            <p className="text-sm text-slate-600 dark:text-slate-350 leading-relaxed">
+            <p className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
               {pg.description}
             </p>
           </div>
@@ -194,10 +194,10 @@ export default function PGDetailsPage({ params }) {
               <span className="text-xs text-slate-400">Monthly Rent</span>
               <div>
                 <span className="text-2xl font-black">₹{pg.price.toLocaleString('en-IN')}</span>
-                <span className="text-[10px] text-slate-450 block -mt-1 text-right">no extra maintenance</span>
+                <span className="text-[10px] text-slate-400 block -mt-1 text-right">no extra maintenance</span>
               </div>
             </div>
-            <div className="border-t border-slate-850 pt-3 flex items-center space-x-2 text-[10px] text-slate-400">
+            <div className="border-t border-slate-800 pt-3 flex items-center space-x-2 text-[10px] text-slate-400">
               <Info className="w-3.5 h-3.5 text-primary-400 flex-shrink-0" />
               <span>Includes daily cleaning & power backup fuel.</span>
             </div>

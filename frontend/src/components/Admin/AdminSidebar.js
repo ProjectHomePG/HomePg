@@ -42,7 +42,7 @@ export default function AdminSidebar() {
               className={`flex items-center space-x-3 px-4 py-3 rounded-2xl text-xs font-bold transition-all cursor-pointer ${
                 isActive
                   ? 'bg-primary-600 text-white shadow-sm'
-                  : 'text-slate-600 dark:text-slate-350 hover:bg-slate-50 dark:hover:bg-slate-700/50'
+                  : 'text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700/50'
               }`}
             >
               <Icon className="w-4.5 h-4.5" />
