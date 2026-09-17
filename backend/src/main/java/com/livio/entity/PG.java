@@ -78,6 +78,27 @@ public class PG {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "property_type", length = 32)
+    private PropertyType propertyType = PropertyType.PG;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status", length = 32)
+    private PropertyStatus status = PropertyStatus.APPROVED;
+
+    @Column(name = "deposit_amount")
+    private Double depositAmount = 5000.0;
+
+    @Column(name = "maintenance_charges")
+    private Double maintenanceCharges = 0.0;
+
+    @Column(name = "cancellation_policy", columnDefinition = "TEXT")
+    private String cancellationPolicy = "Free cancellation within 24 hours before check-in date.";
+
+    @OneToMany(mappedBy = "pg", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnoreProperties("pg")
+    private List<Room> rooms = new ArrayList<>();
+
     @OneToMany(mappedBy = "pg", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
     @JsonIgnoreProperties("pg")
     private List<Image> images = new ArrayList<>();
@@ -86,7 +107,7 @@ public class PG {
     @JsonIgnoreProperties("pg")
     private List<Review> reviews = new ArrayList<>();
 
-    @OneToMany(mappedBy = "pg", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
+    @OneToMany(mappedBy = "pg", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnoreProperties("pg")
     private List<Inquiry> inquiries = new ArrayList<>();
 
@@ -369,5 +390,53 @@ public class PG {
 
     public void setInquiries(List<Inquiry> inquiries) {
         this.inquiries = inquiries;
+    }
+
+    public PropertyType getPropertyType() {
+        return propertyType;
+    }
+
+    public void setPropertyType(PropertyType propertyType) {
+        this.propertyType = propertyType;
+    }
+
+    public PropertyStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(PropertyStatus status) {
+        this.status = status;
+    }
+
+    public Double getDepositAmount() {
+        return depositAmount;
+    }
+
+    public void setDepositAmount(Double depositAmount) {
+        this.depositAmount = depositAmount;
+    }
+
+    public Double getMaintenanceCharges() {
+        return maintenanceCharges;
+    }
+
+    public void setMaintenanceCharges(Double maintenanceCharges) {
+        this.maintenanceCharges = maintenanceCharges;
+    }
+
+    public String getCancellationPolicy() {
+        return cancellationPolicy;
+    }
+
+    public void setCancellationPolicy(String cancellationPolicy) {
+        this.cancellationPolicy = cancellationPolicy;
+    }
+
+    public List<Room> getRooms() {
+        return rooms;
+    }
+
+    public void setRooms(List<Room> rooms) {
+        this.rooms = rooms;
     }
 }

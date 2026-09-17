@@ -28,6 +28,15 @@ public class User {
     @Column(nullable = false)
     private UserRole role = UserRole.ROLE_USER;
 
+    @Column(name = "profile_picture", length = 1000)
+    private String profilePicture;
+
+    @Column(name = "bio", length = 1000)
+    private String bio;
+
+    @Column(name = "city")
+    private String city;
+
     @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;
 
@@ -116,6 +125,30 @@ public class User {
 
     public LocalDateTime getUpdatedAt() {
         return updatedAt;
+    }
+
+    public String getProfilePicture() {
+        return profilePicture;
+    }
+
+    public void setProfilePicture(String profilePicture) {
+        this.profilePicture = profilePicture;
+    }
+
+    public String getBio() {
+        return bio;
+    }
+
+    public void setBio(String bio) {
+        this.bio = bio;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
     }
 
     public void setUpdatedAt(LocalDateTime updatedAt) {
