@@ -64,7 +64,7 @@ public class DataSourceConfig {
 
         // Fallback to robust persistent file-based H2 database
         logger.info("Using embedded persistent H2 database (./data/livio_db)");
-        String h2Url = "jdbc:h2:file:./data/livio_db;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE;AUTO_SERVER=TRUE";
+        String h2Url = "jdbc:h2:file:./data/livio_db;DB_CLOSE_DELAY=-1;AUTO_SERVER=TRUE";
         return DataSourceBuilder.create()
                 .url(h2Url)
                 .username("sa")
