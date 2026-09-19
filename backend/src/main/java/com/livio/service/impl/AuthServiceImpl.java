@@ -3,6 +3,7 @@ package com.livio.service.impl;
 import com.livio.entity.User;
 import com.livio.entity.UserRole;
 import com.livio.repository.UserRepository;
+import com.livio.security.JwtUtils;
 import com.livio.service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,6 +15,9 @@ public class AuthServiceImpl implements AuthService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private JwtUtils jwtUtils;
 
     @Override
     public User register(String name, String email, String password, String phone, UserRole role) {
@@ -35,7 +39,7 @@ public class AuthServiceImpl implements AuthService {
                     || (("password".equals(stored) || "password123".equals(stored))
                         && ("password".equals(password) || "password123".equals(password)));
             if (matches) {
-                return "mock-jwt-token-placeholder-value-xyz";
+                return jwtUtils.generateToken(user.getEmail(), user.getRole().name(), user.getId());
             }
         }
         throw new RuntimeException("Invalid email or password!");

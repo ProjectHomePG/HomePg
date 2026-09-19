@@ -6,6 +6,7 @@ import com.livio.repository.ReviewRepository;
 import com.livio.service.SearchService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Map;
@@ -21,12 +22,27 @@ public class SearchServiceImpl implements SearchService {
     private ReviewRepository reviewRepository;
 
     @Override
+    @Transactional(readOnly = true)
     public List<PG> search(String query, String gender, String sharing, Double minPrice, Double maxPrice) {
         String cleanQuery = (query == null || query.isBlank()) ? null : query.trim();
         String cleanGender = sanitizeFilter(gender);
         String cleanSharing = sanitizeFilter(sharing);
 
         List<PG> results = pgRepository.searchPGs(cleanQuery, cleanGender, cleanSharing, minPrice, maxPrice);
+        populateRatingsAndReviews(results);
+        return results;
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<PG> search(String query, String city, String gender, String sharing, Double minPrice, Double maxPrice, String amenity) {
+        String cleanQuery = (query == null || query.isBlank()) ? null : query.trim();
+        String cleanCity = sanitizeFilter(city);
+        String cleanGender = sanitizeFilter(gender);
+        String cleanSharing = sanitizeFilter(sharing);
+        String cleanAmenity = sanitizeFilter(amenity);
+
+        List<PG> results = pgRepository.searchPGsFiltered(cleanQuery, cleanCity, cleanGender, cleanSharing, minPrice, maxPrice, cleanAmenity);
         populateRatingsAndReviews(results);
         return results;
     }

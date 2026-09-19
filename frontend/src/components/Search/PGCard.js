@@ -60,7 +60,7 @@ export default function PGCard({ pg }) {
             </span>
             <span className="flex items-center text-amber-500 font-bold bg-amber-50 dark:bg-amber-950/20 px-2 py-0.5 rounded">
               <Star className="w-3 h-3 fill-amber-500 mr-1" />
-              {pg.rating.toFixed(1)}
+              {(pg.rating ?? 0).toFixed(1)}
             </span>
           </div>
 

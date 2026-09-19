@@ -48,8 +48,13 @@ public interface PGRepository extends JpaRepository<PG, Long> {
            "AND (:sharing IS NULL OR :sharing = '' OR :sharing = 'ALL' OR LOWER(p.sharingType) = LOWER(:sharing)) " +
            "AND (:minPrice IS NULL OR p.price >= :minPrice) " +
            "AND (:maxPrice IS NULL OR p.price <= :maxPrice) " +
+<<<<<<< HEAD
            "AND (:amenity IS NULL OR :amenity = '' OR LOWER(a.name) LIKE LOWER(CONCAT('%', :amenity, '%')))")
     List<PG> searchPGsAdvanced(@Param("query") String query,
+=======
+           "AND (:amenity IS NULL OR :amenity = '' OR LOWER(a.name) = LOWER(:amenity))")
+    List<PG> searchPGsFiltered(@Param("query") String query,
+>>>>>>> 29d935c056ea467b729b7384825dc2a9a607e06b
                                @Param("city") String city,
                                @Param("gender") String gender,
                                @Param("sharing") String sharing,
