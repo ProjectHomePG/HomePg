@@ -96,7 +96,7 @@ public class PG {
     private String cancellationPolicy = "Free cancellation within 24 hours before check-in date.";
 
     @OneToMany(mappedBy = "pg", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonIgnoreProperties("pg")
+    @com.fasterxml.jackson.annotation.JsonIgnore
     private List<Room> rooms = new ArrayList<>();
 
     @OneToMany(mappedBy = "pg", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
@@ -108,7 +108,7 @@ public class PG {
     private List<Review> reviews = new ArrayList<>();
 
     @OneToMany(mappedBy = "pg", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonIgnoreProperties("pg")
+    @com.fasterxml.jackson.annotation.JsonIgnore
     private List<Inquiry> inquiries = new ArrayList<>();
 
     @ManyToMany(fetch = FetchType.EAGER)

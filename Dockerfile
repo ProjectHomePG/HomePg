@@ -35,7 +35,7 @@ COPY --from=frontend-builder /build/frontend/public ./public
 COPY --from=frontend-builder /build/frontend/next.config.mjs ./next.config.mjs
 
 # Copy shared database if it exists
-COPY data/livio_db.mv.db* /app/data/ 2>/dev/null || true
+COPY data/ /app/data/
 
 # Expose Next.js port (single port deployment)
 EXPOSE 8082
