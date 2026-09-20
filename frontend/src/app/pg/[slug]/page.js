@@ -3,8 +3,9 @@
 import React, { useState, useEffect, use } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { ChevronLeft, Info, Calendar, DollarSign, ShieldAlert, Award, MapPin, Star } from 'lucide-react';
+import { ChevronLeft, Info, Calendar, DollarSign, ShieldAlert, Award, MapPin, Star, Trash2, Pencil } from 'lucide-react';
 import pgService from '../../../services/pgService';
+import authService from '../../../services/authService';
 import ImageGallery from '../../../components/Details/ImageGallery';
 import Amenities from '../../../components/Details/Amenities';
 import ReviewList from '../../../components/Details/ReviewList';
@@ -24,6 +25,23 @@ export default function PGDetailsPage({ params }) {
   const [pg, setPg] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [user, setUser] = useState(null);
+
+  const isAdmin = user?.role === 'ROLE_ADMIN' || user?.role === 'ROLE_OWNER';
+
+  useEffect(() => {
+    setUser(authService.getCurrentUser());
+  }, []);
+
+  const handleDelete = async () => {
+    if (!confirm('Are you sure you want to delete this listing? This action cannot be undone.')) return;
+    try {
+      await pgService.delete(pg.id);
+      router.push('/admin');
+    } catch (err) {
+      alert(err.message || 'Failed to delete listing.');
+    }
+  };
 
   useEffect(() => {
     async function loadDetails() {
@@ -202,6 +220,26 @@ export default function PGDetailsPage({ params }) {
               <span>Includes daily cleaning & power backup fuel.</span>
             </div>
           </div>
+
+          {/* Admin Actions */}
+          {isAdmin && (
+            <div className="bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-800 rounded-3xl p-4 shadow-sm flex gap-3">
+              <Link
+                href={`/admin/edit-pg/${pg.id}`}
+                className="flex-1 inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 text-xs font-bold text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors"
+              >
+                <Pencil className="w-3.5 h-3.5" />
+                Edit
+              </Link>
+              <button
+                onClick={handleDelete}
+                className="flex-1 inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl border border-rose-200 dark:border-rose-900/40 text-xs font-bold text-rose-600 dark:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/30 transition-colors cursor-pointer"
+              >
+                <Trash2 className="w-3.5 h-3.5" />
+                Delete
+              </button>
+            </div>
+          )}
 
           {/* Owner Inquiry Form */}
           <ContactOwner pgId={pg.id} owner={pg.owner} />
