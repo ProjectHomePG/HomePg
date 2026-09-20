@@ -284,7 +284,8 @@ public class GoogleMapsImportService {
 
     private PG updatePgEntity(PG pg, String[] row, String placeId, String title, String defaultCity, User owner) {
         pg.setTitle(title.trim());
-        pg.setAddress(safeGet(row, COL_ADDRESS));
+        String addr = safeGet(row, COL_ADDRESS);
+        pg.setAddress(addr != null ? addr : "Address not provided");
         pg.setPhone(safeGet(row, COL_PHONE));
         String website = safeGet(row, COL_WEBSITE);
         if (website != null && website.length() > 255) {
@@ -394,7 +395,8 @@ public class GoogleMapsImportService {
         PG pg = new PG();
 
         pg.setTitle(title.trim());
-        pg.setAddress(safeGet(row, COL_ADDRESS));
+        String addr = safeGet(row, COL_ADDRESS);
+        pg.setAddress(addr != null ? addr : "Address not provided");
         pg.setOwner(owner);
         pg.setSource("GOOGLE_MAPS");
         pg.setGooglePlaceId(placeId.trim());

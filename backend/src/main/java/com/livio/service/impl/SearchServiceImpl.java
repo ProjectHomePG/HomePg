@@ -42,7 +42,7 @@ public class SearchServiceImpl implements SearchService {
         String cleanSharing = sanitizeFilter(sharing);
         String cleanAmenity = sanitizeFilter(amenity);
 
-        List<PG> results = pgRepository.searchPGsFiltered(cleanQuery, cleanCity, cleanGender, cleanSharing, minPrice, maxPrice, cleanAmenity);
+        List<PG> results = pgRepository.searchPGsAdvanced(cleanQuery, cleanCity, cleanGender, cleanSharing, minPrice, maxPrice, cleanAmenity);
         populateRatingsAndReviews(results);
         return results;
     }
@@ -78,4 +78,5 @@ public class SearchServiceImpl implements SearchService {
             }
         }
     }
+
 }
