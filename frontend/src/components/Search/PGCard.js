@@ -81,9 +81,13 @@ export default function PGCard({ pg }) {
         <div className="flex items-center justify-between pt-4 border-t border-slate-100 dark:border-slate-700">
           <div>
             <span className="text-lg font-extrabold text-slate-900 dark:text-slate-100">
-              ₹{pg.price.toLocaleString('en-IN')}
+              ₹{(pg.priceTriple || pg.priceDouble || pg.price || 0).toLocaleString('en-IN')}
             </span>
-            <span className="text-[10px] text-slate-400 block -mt-1">/ month onwards</span>
+            <span className="text-[10px] text-slate-400 block -mt-1">
+              {(pg.priceSingle && pg.priceTriple && pg.priceSingle !== pg.priceTriple) 
+                ? `approx ₹${pg.priceTriple.toLocaleString('en-IN')}–₹${pg.priceSingle.toLocaleString('en-IN')}/month`
+                : '/ month approx'}
+            </span>
           </div>
 
           <Link

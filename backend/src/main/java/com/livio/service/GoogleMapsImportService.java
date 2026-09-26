@@ -14,6 +14,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.livio.entity.Image;
@@ -49,6 +50,7 @@ public class GoogleMapsImportService {
     private static final int COL_LATITUDE = 13;
     private static final int COL_LONGITUDE = 14;
     private static final int COL_THUMBNAIL = 19;
+    private static final int COL_PRICE_RANGE = 21;
     private static final int COL_PLACE_ID = 24;
     private static final int COL_IMAGES = 25;
     private static final int COL_COMPLETE_ADDRESS = 30;
@@ -96,6 +98,7 @@ public class GoogleMapsImportService {
         public List<String> skippedIds = new ArrayList<>();
     }
 
+    @Transactional
     public ImportResult importFromCsv(MultipartFile file, String defaultCity) {
         ImportResult result = new ImportResult();
 
@@ -299,6 +302,16 @@ public class GoogleMapsImportService {
         pg.setCity(city);
         pg.setState(CITY_STATE_MAP.getOrDefault(city.toLowerCase(), "Unknown"));
         pg.setGenderType(inferGenderType(title));
+
+        String priceRange = safeGet(row, COL_PRICE_RANGE);
+        Double singlePrice = parsePriceRange(priceRange, city, "SINGLE");
+        Double doublePrice = parsePriceRange(priceRange, city, "DOUBLE");
+        Double triplePrice = parsePriceRange(priceRange, city, "TRIPLE");
+        pg.setPrice(singlePrice);
+        pg.setPriceSingle(singlePrice);
+        pg.setPriceDouble(doublePrice);
+        pg.setPriceTriple(triplePrice);
+
         pg.setDescription("Imported from Google Maps: " + title);
 
         pg.getImages().clear();
@@ -414,10 +427,18 @@ public class GoogleMapsImportService {
         pg.setCity(city);
         pg.setState(CITY_STATE_MAP.getOrDefault(city.toLowerCase(), "Unknown"));
 
+        String sharingType = "SINGLE";
         pg.setSlug(generateSlug(title, placeId));
-        pg.setPrice(0.0);
+        String priceRange = safeGet(row, COL_PRICE_RANGE);
+        Double singlePrice = parsePriceRange(priceRange, city, "SINGLE");
+        Double doublePrice = parsePriceRange(priceRange, city, "DOUBLE");
+        Double triplePrice = parsePriceRange(priceRange, city, "TRIPLE");
+        pg.setPrice(singlePrice); // default to single price
+        pg.setPriceSingle(singlePrice);
+        pg.setPriceDouble(doublePrice);
+        pg.setPriceTriple(triplePrice);
         pg.setGenderType(inferGenderType(title));
-        pg.setSharingType("SINGLE");
+        pg.setSharingType(sharingType);
         pg.setDescription("Imported from Google Maps: " + title);
         pg.setRules("Standard PG rules apply. Contact owner for details.");
 
@@ -552,6 +573,52 @@ public class GoogleMapsImportService {
         String baseSlug = title.toLowerCase().replaceAll("[^a-z0-9]+", "-").replaceAll("(^-|-$)", "");
         String shortId = placeId.length() > 8 ? placeId.substring(placeId.length() - 8) : placeId;
         return baseSlug + "-" + shortId;
+    }
+
+    private Double parsePriceRange(String priceRange, String city, String sharingType) {
+        if (priceRange != null && !priceRange.trim().isEmpty()) {
+            String cleaned = priceRange.trim();
+            String[] parts = cleaned.split("[\\-–—]");
+            if (parts.length >= 1) {
+                String firstPart = parts[0].replaceAll("[^0-9.]", "");
+                try {
+                    double val = Double.parseDouble(firstPart);
+                    if (val > 100) return val;
+                } catch (NumberFormatException ignored) {}
+            }
+        }
+        return estimatePrice(city, sharingType);
+    }
+
+    private Double estimatePrice(String city, String sharingType) {
+        String cityKey = city != null ? city.toLowerCase() : "bangalore";
+        String sharing = sharingType != null ? sharingType.toUpperCase() : "SINGLE";
+
+        Map<String, Double> basePrices = new HashMap<>();
+        basePrices.put("mumbai", 15000.0);
+        basePrices.put("bangalore", 10000.0);
+        basePrices.put("bengaluru", 10000.0);
+        basePrices.put("delhi", 12000.0);
+        basePrices.put("pune", 8000.0);
+        basePrices.put("hyderabad", 9000.0);
+        basePrices.put("chennai", 8500.0);
+        basePrices.put("kolkata", 7000.0);
+        basePrices.put("gurugram", 14000.0);
+        basePrices.put("gurgaon", 14000.0);
+        basePrices.put("noida", 9000.0);
+        basePrices.put("ghaziabad", 7000.0);
+
+        double base = basePrices.getOrDefault(cityKey, 10000.0);
+
+        double multiplier = switch (sharing) {
+            case "SINGLE" -> 1.3;
+            case "DOUBLE" -> 1.0;
+            case "TRIPLE" -> 0.75;
+            case "QUAD" -> 0.6;
+            default -> 1.0;
+        };
+
+        return Math.round(base * multiplier / 500.0) * 500.0;
     }
 
     private String safeGet(String[] row, int index) {

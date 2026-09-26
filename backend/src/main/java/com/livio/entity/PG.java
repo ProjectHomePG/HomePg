@@ -35,6 +35,15 @@ public class PG {
     @Column(name = "zip_code")
     private String zipCode;
 
+    @Column(name = "price_single")
+    private Double priceSingle;
+
+    @Column(name = "price_double")
+    private Double priceDouble;
+
+    @Column(name = "price_triple")
+    private Double priceTriple;
+
     @Column(nullable = false)
     private Double price;
 
@@ -230,6 +239,30 @@ public class PG {
 
     public void setPrice(Double price) {
         this.price = price;
+    }
+
+    public Double getPriceSingle() {
+        return priceSingle;
+    }
+
+    public void setPriceSingle(Double priceSingle) {
+        this.priceSingle = priceSingle;
+    }
+
+    public Double getPriceDouble() {
+        return priceDouble;
+    }
+
+    public void setPriceDouble(Double priceDouble) {
+        this.priceDouble = priceDouble;
+    }
+
+    public Double getPriceTriple() {
+        return priceTriple;
+    }
+
+    public void setPriceTriple(Double priceTriple) {
+        this.priceTriple = priceTriple;
     }
 
     public String getRules() {

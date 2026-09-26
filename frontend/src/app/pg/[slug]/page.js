@@ -208,16 +208,23 @@ export default function PGDetailsPage({ params }) {
           
           {/* Quick Pricing Summary */}
           <div className="bg-slate-900 text-white rounded-3xl p-6 shadow-md space-y-3">
-            <div className="flex justify-between items-baseline">
-              <span className="text-xs text-slate-400">Monthly Rent</span>
-              <div>
-                <span className="text-2xl font-black">₹{pg.price.toLocaleString('en-IN')}</span>
-                <span className="text-[10px] text-slate-400 block -mt-1 text-right">no extra maintenance</span>
+            <div className="grid grid-cols-3 gap-2 text-center">
+              <div className="bg-white/5 rounded-xl p-3">
+                <div className="text-xs text-slate-400 uppercase tracking-wider">Single</div>
+                <div className="text-lg font-black text-primary-400">₹{pg.priceSingle?.toLocaleString('en-IN') || pg.price?.toLocaleString('en-IN')}</div>
+              </div>
+              <div className="bg-white/5 rounded-xl p-3">
+                <div className="text-xs text-slate-400 uppercase tracking-wider">Double</div>
+                <div className="text-lg font-black text-primary-400">₹{pg.priceDouble?.toLocaleString('en-IN') || pg.price?.toLocaleString('en-IN')}</div>
+              </div>
+              <div className="bg-white/5 rounded-xl p-3">
+                <div className="text-xs text-slate-400 uppercase tracking-wider">Triple</div>
+                <div className="text-lg font-black text-primary-400">₹{pg.priceTriple?.toLocaleString('en-IN') || pg.price?.toLocaleString('en-IN')}</div>
               </div>
             </div>
             <div className="border-t border-slate-800 pt-3 flex items-center space-x-2 text-[10px] text-slate-400">
               <Info className="w-3.5 h-3.5 text-primary-400 flex-shrink-0" />
-              <span>Includes daily cleaning & power backup fuel.</span>
+              <span>Approx. prices. Includes daily cleaning & power backup. Final price may vary.</span>
             </div>
           </div>
 
