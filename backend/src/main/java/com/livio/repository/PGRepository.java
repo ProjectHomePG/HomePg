@@ -17,6 +17,7 @@ public interface PGRepository extends JpaRepository<PG, Long> {
     List<PG> findByGenderType(String genderType);
     List<PG> findByPriceLessThanEqual(Double price);
     List<PG> findBySource(String source);
+    List<PG> findByOwnerId(Long ownerId);
 
     @Query("SELECT DISTINCT p FROM PG p " +
            "WHERE " +

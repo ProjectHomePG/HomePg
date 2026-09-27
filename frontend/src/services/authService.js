@@ -115,7 +115,8 @@ export const authService = {
 
   isAuthenticated: () => {
     if (typeof window !== 'undefined') {
-      return localStorage.getItem('token') !== null;
+      const token = localStorage.getItem('token');
+      return token !== null && !token.startsWith('mock-');
     }
     return false;
   }

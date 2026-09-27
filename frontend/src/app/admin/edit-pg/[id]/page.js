@@ -2,51 +2,99 @@
 
 import React, { useState, useEffect, use } from 'react';
 import { useRouter } from 'next/navigation';
-import { ShieldAlert } from 'lucide-react';
+import { ShieldAlert, Loader2 } from 'lucide-react';
 import pgService from '../../../../services/pgService';
+import authService from '../../../../services/authService';
 import AdminHeader from '../../../../components/Admin/AdminHeader';
 import PGForm from '../../../../components/Admin/PGForm';
 
 /**
  * AdminEditPG page.
  * Loads and edits details of an existing PG stay based on route ID parameters.
+ * Owners use /api/owner/pgs/{id}; Admins use /api/pgs/{id}
  */
 export default function AdminEditPGPage({ params }) {
-  // Unwrap dynamic params promise
   const resolvedParams = use(params);
   const router = useRouter();
   const [pg, setPg] = useState(null);
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState(null);
+  const [userRole, setUserRole] = useState(null);
+  const [userId, setUserId] = useState(null);
+  const [initialized, setInitialized] = useState(false);
 
   const { id } = resolvedParams;
 
   useEffect(() => {
-    async function loadData() {
-      try {
-        const data = await pgService.getById(id);
-        setPg(data);
-      } catch (err) {
-        setError(err.message || "Failed to fetch PG stay details.");
-      } finally {
-        setLoading(false);
-      }
+    const user = authService.getCurrentUser();
+    console.log('Edit page - current user:', user);
+    
+    if (!user) {
+      console.log('No user found, redirecting to login');
+      router.push('/login');
+      return;
     }
+    
+    if (user.role !== 'ROLE_ADMIN' && user.role !== 'ROLE_OWNER') {
+      console.log('Invalid role for edit page:', user.role);
+      router.push('/admin');
+      return;
+    }
+    
+    setUserRole(user.role);
+    setUserId(user.id);
+    setInitialized(true);
     loadData();
-  }, [id]);
+  }, [id, router]);
+
+  const loadData = async () => {
+    if (!initialized) return;
+    
+    try {
+      const data = await pgService.getById(id);
+      // Check if owner is trying to edit someone else's PG
+      if (userRole === 'ROLE_OWNER' && data.owner?.id !== userId) {
+        console.log('Owner trying to edit another owner\'s PG');
+        router.push('/admin');
+        return;
+      }
+      setPg(data);
+    } catch (err) {
+      console.error("Failed to load PG:", err);
+      if (err.response?.status === 403) {
+        router.push('/admin');
+        return;
+      }
+      setError(err.message || "Failed to fetch PG stay details.");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const handleSubmit = async (formData) => {
     setSubmitting(true);
     setError(null);
     try {
-      await pgService.update(id, formData);
+      if (userRole === 'ROLE_ADMIN') {
+        await pgService.update(id, formData);
+      } else if (userRole === 'ROLE_OWNER') {
+        await pgService.updateMyPG(id, formData);
+      }
       router.push('/admin');
     } catch (err) {
       setError(err.message || "Failed to update PG stay listing.");
       setSubmitting(false);
     }
   };
+
+  if (!initialized) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <Loader2 className="w-8 h-8 animate-spin text-primary-600" />
+      </div>
+    );
+  }
 
   if (loading) {
     return <div className="py-12 text-center text-xs font-semibold text-slate-400 animate-pulse">Loading listing configurations...</div>;
@@ -55,9 +103,9 @@ export default function AdminEditPGPage({ params }) {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <AdminHeader 
-        title="Edit PG Stay" 
-        subtitle={`Update details and configuration for: ${pg ? pg.title : 'Stay'}`} 
+      <AdminHeader
+        title="Edit PG Stay"
+        subtitle={`Update details and configuration for: ${pg ? pg.title : 'Stay'}`}
       />
 
       {error && (
@@ -68,10 +116,10 @@ export default function AdminEditPGPage({ params }) {
       )}
 
       {pg && (
-        <PGForm 
-          initialData={pg} 
-          onSubmit={handleSubmit} 
-          submitting={submitting} 
+        <PGForm
+          initialData={pg}
+          onSubmit={handleSubmit}
+          submitting={submitting}
         />
       )}
     </div>

@@ -1,26 +1,46 @@
 "use client";
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { ShieldCheck, ShieldAlert } from 'lucide-react';
 import pgService from '../../../services/pgService';
+import authService from '../../../services/authService';
 import AdminHeader from '../../../components/Admin/AdminHeader';
 import PGForm from '../../../components/Admin/PGForm';
 
 /**
  * AdminAddPG page.
  * Renders the forms to add new PG stays.
+ * Owners use /api/owner/pgs; Admins use /api/pgs
  */
 export default function AdminAddPGPage() {
   const router = useRouter();
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState(null);
+  const [userRole, setUserRole] = useState(null);
+
+  useEffect(() => {
+    const user = authService.getCurrentUser();
+    if (!user) {
+      router.push('/login');
+      return;
+    }
+    if (user.role !== 'ROLE_ADMIN' && user.role !== 'ROLE_OWNER') {
+      router.push('/');
+      return;
+    }
+    setUserRole(user.role);
+  }, [router]);
 
   const handleSubmit = async (formData) => {
     setSubmitting(true);
     setError(null);
     try {
-      await pgService.create(formData);
+      if (userRole === 'ROLE_ADMIN') {
+        await pgService.create(formData);
+      } else if (userRole === 'ROLE_OWNER') {
+        await pgService.createMyPG(formData);
+      }
       router.push('/admin');
     } catch (err) {
       setError(err.message || "Failed to create stay listing.");
@@ -28,12 +48,20 @@ export default function AdminAddPGPage() {
     }
   };
 
+  if (!userRole) {
+    return (
+      <div className="flex items-center justify-center min-h-[400px]">
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary-600" />
+      </div>
+    );
+  }
+
   return (
     <div className="space-y-6">
       {/* Header */}
-      <AdminHeader 
-        title="Add PG Stay" 
-        subtitle="Create a new Paying Guest stay listing on the portal." 
+      <AdminHeader
+        title="Add PG Stay"
+        subtitle="Create a new Paying Guest stay listing on the portal."
       />
 
       {error && (

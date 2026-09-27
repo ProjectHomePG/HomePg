@@ -1,12 +1,19 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { Star, MapPin, Users, Heart } from 'lucide-react';
+import { useRouter } from 'next/navigation';
+import { Star, MapPin, Heart } from 'lucide-react';
+import authService from '@/services/authService';
+import pgService from '@/services/pgService';
 
 /**
  * PGCard component.
  * Renders individual list items with image previews, details, ratings, and price tags.
  */
 export default function PGCard({ pg }) {
+  const router = useRouter();
+  const [isFavorite, setIsFavorite] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+
   // Determine gender badge styles
   const getGenderBadge = (gender) => {
     switch (gender) {
@@ -19,12 +26,64 @@ export default function PGCard({ pg }) {
     }
   };
 
+  useEffect(() => {
+    checkFavoriteStatus();
+  }, [pg.id]);
+
+  const checkFavoriteStatus = async () => {
+    if (authService.isAuthenticated()) {
+      try {
+        const status = await pgService.checkFavoriteStatus(pg.id);
+        setIsFavorite(status);
+      } catch (error) {
+        console.warn('Failed to check favorite status:', error);
+      }
+    }
+  };
+
+  const handleFavoriteClick = async (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    if (!authService.isAuthenticated()) {
+      router.push('/login');
+      return;
+    }
+
+    setIsLoading(true);
+    try {
+      if (isFavorite) {
+        await pgService.removeFavorite(pg.id);
+        setIsFavorite(false);
+      } else {
+        await pgService.addFavorite(pg.id);
+        setIsFavorite(true);
+      }
+    } catch (error) {
+      console.error('Failed to toggle favorite:', error);
+      const errorMessage = error.response?.data?.error || error.message || 'Failed to update favorite. Please try again.';
+      alert(errorMessage);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return (
     <div className="group flex flex-col bg-white dark:bg-slate-800 rounded-3xl border border-slate-100 dark:border-slate-800 overflow-hidden shadow-sm hover:shadow-lg shadow-card-hover relative">
       
       {/* Save Button */}
-      <button className="absolute top-4 right-4 z-10 p-2 rounded-full bg-white/80 hover:bg-white dark:bg-slate-800/80 dark:hover:bg-slate-800 backdrop-blur text-slate-500 hover:text-rose-500 transition-colors shadow-sm cursor-pointer">
-        <Heart className="w-4 h-4" />
+      <button
+        onClick={handleFavoriteClick}
+        disabled={isLoading}
+        className="absolute top-4 right-4 z-10 p-2 rounded-full bg-white/80 hover:bg-white dark:bg-slate-800/80 dark:hover:bg-slate-800 backdrop-blur transition-colors shadow-sm cursor-pointer disabled:cursor-wait"
+        aria-label={isFavorite ? 'Remove from favorites' : 'Add to favorites'}
+      >
+        <Heart
+          className={`w-4 h-4 transition-all duration-200 ${
+            isFavorite ? 'fill-rose-500 text-rose-500' : 'text-slate-500 hover:text-rose-500'
+          }`}
+          strokeWidth={isFavorite ? 0 : 2}
+        />
       </button>
 
       {/* Image / Thumbnail Container */}

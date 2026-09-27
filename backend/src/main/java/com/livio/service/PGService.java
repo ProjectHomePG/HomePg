@@ -10,4 +10,6 @@ public interface PGService {
     PG getById(Long id);
     PG getBySlug(String slug);
     List<PG> getAll();
+    List<PG> getByOwner(Long ownerId);
+    boolean isOwner(Long pgId, Long userId);
 }

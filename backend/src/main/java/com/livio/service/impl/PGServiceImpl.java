@@ -100,6 +100,19 @@ public class PGServiceImpl implements PGService {
         return pgs;
     }
 
+    @Override
+    public List<PG> getByOwner(Long ownerId) {
+        List<PG> pgs = pgRepository.findByOwnerId(ownerId);
+        populateRatingsAndReviews(pgs);
+        return pgs;
+    }
+
+    @Override
+    public boolean isOwner(Long pgId, Long userId) {
+        PG pg = pgRepository.findById(pgId).orElse(null);
+        return pg != null && pg.getOwner() != null && pg.getOwner().getId().equals(userId);
+    }
+
     private void populateRatingsAndReviews(PG pg) {
         List<Object[]> summaryList = reviewRepository.getRatingSummaryForPg(pg.getId());
         if (summaryList != null && !summaryList.isEmpty() && summaryList.get(0)[0] != null) {

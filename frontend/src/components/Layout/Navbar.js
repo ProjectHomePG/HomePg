@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { Search, LogIn, UserPlus, LogOut, Menu, X, PlusCircle, Shield } from 'lucide-react';
+import { Search, LogIn, UserPlus, LogOut, Menu, X, PlusCircle, Shield, Heart } from 'lucide-react';
 import authService from '../../services/authService';
 import ThemeToggle from '../Shared/ThemeToggle';
 
@@ -49,6 +49,10 @@ export default function Navbar() {
             
             {user ? (
               <>
+                <Link href="/favorites" className="flex items-center text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-primary-600 dark:hover:text-primary-500 transition-colors">
+                  <Heart className="w-5 h-5 mr-1" />
+                  Favorites
+                </Link>
                 {user.role === 'ROLE_ADMIN' && (
                   <Link href="/admin" className="flex items-center text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-primary-600 dark:hover:text-primary-500 transition-colors">
                     <Shield className="w-5 h-5 mr-1" />
@@ -126,6 +130,14 @@ export default function Navbar() {
           
           {user ? (
             <>
+              <Link 
+                href="/favorites"
+                onClick={() => setMobileMenuOpen(false)}
+                className="flex items-center px-3 py-2.5 rounded-xl text-base font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800"
+              >
+                <Heart className="w-6 h-6 mr-3 text-slate-500" />
+                Favorites
+              </Link>
               {(user.role === 'ROLE_ADMIN' || user.role === 'ROLE_OWNER') && (
                 <Link 
                   href="/admin"

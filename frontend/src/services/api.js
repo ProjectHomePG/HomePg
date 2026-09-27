@@ -16,7 +16,8 @@ api.interceptors.request.use(
   (config) => {
     if (typeof window !== 'undefined') {
       const token = localStorage.getItem('token');
-      if (token) {
+      // Don't send mock tokens to the backend
+      if (token && !token.startsWith('mock-')) {
         config.headers.Authorization = `Bearer ${token}`;
       }
     }

@@ -253,6 +253,87 @@ export const pgService = {
       console.warn("Submit Inquiry API failed:", error.message);
       throw new Error("Server unavailable. Please try again later.");
     }
+  },
+
+  addFavorite: async (pgId) => {
+    try {
+      const response = await api.post(`/favorites/${pgId}`);
+      return response.data;
+    } catch (error) {
+      console.warn("Add favorite API failed:", error.message);
+      throw error;
+    }
+  },
+
+  removeFavorite: async (pgId) => {
+    try {
+      const response = await api.delete(`/favorites/${pgId}`);
+      return response.data;
+    } catch (error) {
+      console.warn("Remove favorite API failed:", error.message);
+      throw error;
+    }
+  },
+
+  getFavorites: async () => {
+    try {
+      const response = await api.get('/favorites');
+      return response.data;
+    } catch (error) {
+      console.warn("Get favorites API failed:", error.message);
+      return [];
+    }
+  },
+
+  checkFavoriteStatus: async (pgId) => {
+    try {
+      const response = await api.get(`/favorites/${pgId}/status`);
+      return response.data.isFavorite;
+    } catch (error) {
+      console.warn("Check favorite status API failed:", error.message);
+      return false;
+    }
+  },
+
+  // Owner-specific APIs
+  getMyPGs: async () => {
+    try {
+      const response = await api.get('/owner/pgs');
+      return response.data;
+    } catch (error) {
+      console.warn("Get my PGs API failed:", error.message);
+      return [];
+    }
+  },
+
+  createMyPG: async (pgData) => {
+    try {
+      const response = await api.post('/owner/pgs', pgData);
+      return response.data;
+    } catch (error) {
+      console.warn("Create my PG API failed:", error.message);
+      throw error;
+    }
+  },
+
+  updateMyPG: async (pgId, pgData) => {
+    try {
+      const response = await api.put(`/owner/pgs/${pgId}`, pgData);
+      return response.data;
+    } catch (error) {
+      console.warn("Update my PG API failed:", error.message);
+      throw error;
+    }
+  },
+
+  deleteMyPG: async (pgId) => {
+    try {
+      const response = await api.delete(`/owner/pgs/${pgId}`);
+      return response.data;
+    } catch (error) {
+      console.warn("Delete my PG API failed:", error.message);
+      throw error;
+    }
   }
 };
 

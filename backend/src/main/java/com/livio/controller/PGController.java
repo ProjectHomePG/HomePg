@@ -4,6 +4,7 @@ import com.livio.entity.PG;
 import com.livio.service.PGService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -46,6 +47,7 @@ public class PGController {
     }
 
     @PostMapping
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> create(@RequestBody PG pg) {
         try {
             return ResponseEntity.ok(pgService.create(pg));
@@ -57,6 +59,7 @@ public class PGController {
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> update(@PathVariable Long id, @RequestBody PG pgDetails) {
         try {
             return ResponseEntity.ok(pgService.update(id, pgDetails));
@@ -68,6 +71,7 @@ public class PGController {
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> delete(@PathVariable Long id) {
         try {
             pgService.delete(id);

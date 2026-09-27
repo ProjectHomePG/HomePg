@@ -2,80 +2,154 @@
 
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { Plus, Edit3, Trash2, Home, Star, MessageSquare } from 'lucide-react';
+import { useRouter } from 'next/navigation';
+import { Plus, Edit3, Trash2, Home, Star, MessageSquare, Loader2 } from 'lucide-react';
 import pgService from '../../services/pgService';
+import authService from '../../services/authService';
 import AdminHeader from '../../components/Admin/AdminHeader';
 import DashboardCard from '../../components/Admin/DashboardCard';
 
 /**
  * AdminDashboard page.
  * Aggregates listing statistics and displays table of current property items.
+ * Owners see only their listings; Admins see all listings.
  */
 export default function AdminDashboardPage() {
+  const router = useRouter();
   const [pgs, setPgs] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [userRole, setUserRole] = useState(null);
+  const [initialized, setInitialized] = useState(false);
 
   useEffect(() => {
-    async function loadAdminData() {
-      try {
-        const data = await pgService.getAll();
-        setPgs(data);
-      } catch (err) {
-        console.error("Failed to load admin PGs:", err);
-      } finally {
-        setLoading(false);
-      }
+    const user = authService.getCurrentUser();
+    const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null;
+    console.log('Admin page - current user:', user);
+    console.log('Admin page - token:', token ? 'present' : 'missing');
+    
+    if (!user) {
+      console.log('No user found, redirecting to login');
+      router.push('/login');
+      return;
     }
-    loadAdminData();
-  }, []);
+    
+    if (user.role !== 'ROLE_ADMIN' && user.role !== 'ROLE_OWNER') {
+      console.log('Invalid role for admin page:', user.role);
+      router.push('/');
+      return;
+    }
+    
+    setUserRole(user.role);
+    setInitialized(true);
+  }, [router]);
 
-  const handleDelete = async (id) => {
-    if (confirm("Are you sure you want to delete this listing?")) {
-      try {
-        await pgService.delete(id);
-        setPgs(pgs.filter(p => p.id !== id));
-      } catch (err) {
-        console.error("Failed to delete PG:", err);
+  useEffect(() => {
+    if (initialized) {
+      loadData();
+    }
+  }, [initialized, userRole, router]);
+
+  const loadData = async () => {
+    if (!initialized) return;
+    console.log('Admin page - loading data for role:', userRole);
+    
+    try {
+      let data;
+      if (userRole === 'ROLE_ADMIN') {
+        console.log('Calling pgService.getAll()');
+        data = await pgService.getAll();
+      } else if (userRole === 'ROLE_OWNER') {
+        console.log('Calling pgService.getMyPGs()');
+        data = await pgService.getMyPGs();
+      } else {
+        router.push('/');
+        return;
       }
+      console.log('Admin page - loaded', data.length, 'PGs');
+      setPgs(data);
+    } catch (err) {
+      console.error("Failed to load PGs:", err);
+      // If API call fails (e.g., 403), redirect to home
+      if (err.response?.status === 403) {
+        router.push('/');
+        return;
+      }
+    } finally {
+      setLoading(false);
     }
   };
+
+  const handleDelete = async (id) => {
+    if (!confirm("Are you sure you want to delete this listing?")) return;
+    try {
+      if (userRole === 'ROLE_ADMIN') {
+        await pgService.delete(id);
+      } else if (userRole === 'ROLE_OWNER') {
+        await pgService.deleteMyPG(id);
+      }
+      setPgs(pgs.filter(p => p.id !== id));
+    } catch (err) {
+      console.error("Failed to delete PG:", err);
+      alert("Failed to delete listing. Please try again.");
+    }
+  };
+
+  const isOwner = userRole === 'ROLE_OWNER';
+  const isAdmin = userRole === 'ROLE_ADMIN';
+
+  // Show loading while checking auth
+  if (!initialized) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <Loader2 className="w-8 h-8 animate-spin text-primary-600" />
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-8">
       {/* 1. Admin Header */}
-      <AdminHeader 
-        title="Dashboard Overview" 
-        subtitle="Manage and edit Paying Guest accommodations." 
+      <AdminHeader
+        title={isAdmin ? "Dashboard Overview" : "My Listings"}
+        subtitle={isAdmin
+          ? "Manage and edit all Paying Guest accommodations."
+          : "Manage your listed properties."}
       />
 
       {/* 2. Statistical summary widgets */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-        <DashboardCard 
-          title="Total Properties" 
-          value={pgs.length.toString()} 
-          icon="Home" 
-          color="text-blue-600 bg-blue-50 dark:bg-slate-900" 
+        <DashboardCard
+          title="Total Properties"
+          value={pgs.length.toString()}
+          icon="Home"
+          color="text-blue-600 bg-blue-50 dark:bg-slate-900"
         />
-        <DashboardCard 
-          title="Active Inquiries" 
-          value="12" 
-          icon="MessageSquare" 
-          trend="+3 new today" 
-          color="text-primary-600 bg-primary-50 dark:bg-slate-900" 
+        <DashboardCard
+          title="Active Inquiries"
+          value="12"
+          icon="MessageSquare"
+          trend="+3 new today"
+          color="text-primary-600 bg-primary-50 dark:bg-slate-900"
         />
-        <DashboardCard 
-          title="Average Rating" 
-          value="4.6 ★" 
-          icon="Star" 
-          color="text-amber-500 bg-amber-50 dark:bg-slate-900" 
+        <DashboardCard
+          title="Average Rating"
+          value="4.6 ★"
+          icon="Star"
+          color="text-amber-500 bg-amber-50 dark:bg-slate-900"
         />
       </div>
 
       {/* 3. Listings Section Header */}
       <div className="flex items-center justify-between pt-4">
         <div>
-          <h3 className="font-extrabold text-sm uppercase tracking-wider text-slate-800 dark:text-slate-200">Current Listings</h3>
-          <p className="text-[10px] text-slate-400">Add, edit, or remove properties from the portal.</p>
+          <h3 className="font-extrabold text-sm uppercase tracking-wider text-slate-800 dark:text-slate-200">
+            {isAdmin ? "All Listings" : "Your Listings"}
+          </h3>
+          <p className="text-[10px] text-slate-400">
+            {isAdmin
+              ? "Add, edit, or remove properties from the portal."
+              : "Add, edit, or remove your listed properties."}
+          </p>
         </div>
 
         <Link
@@ -90,9 +164,16 @@ export default function AdminDashboardPage() {
       {/* 4. Listings Table */}
       <div className="bg-white dark:bg-slate-800 rounded-3xl border border-slate-100 dark:border-slate-800 overflow-hidden shadow-sm">
         {loading ? (
-          <div className="p-8 text-center text-xs font-semibold text-slate-400 animate-pulse">Fetching stays...</div>
+          <div className="p-8 text-center text-xs font-semibold text-slate-400 animate-pulse">
+            <Loader2 className="w-5 h-5 mx-auto mb-2 animate-spin" />
+            Fetching stays...
+          </div>
         ) : pgs.length === 0 ? (
-          <div className="p-12 text-center text-xs text-slate-500 italic">No PG stays listed under your owner profile yet. Click "Add PG Stay" to get started!</div>
+          <div className="p-12 text-center text-xs text-slate-500 italic">
+            {isAdmin
+              ? "No PG stays found in the system."
+              : "No PG stays listed under your profile yet. Click \"Add PG Stay\" to get started!"}
+          </div>
         ) : (
           <div className="overflow-x-auto">
             <table className="w-full text-left border-collapse">
