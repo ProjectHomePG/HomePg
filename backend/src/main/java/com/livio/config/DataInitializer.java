@@ -14,6 +14,7 @@ import com.livio.repository.ReviewRepository;
 import com.livio.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -36,8 +37,12 @@ public class DataInitializer implements CommandLineRunner {
     @Autowired
     private ImageRepository imageRepository;
 
+    @Autowired
+    private JdbcTemplate jdbcTemplate;
+
     @Override
     public void run(String... args) throws Exception {
+        relaxInquiryPgConstraint();
         if (userRepository.count() == 0) {
             // Seed Users
             User customer = new User("John Doe", "john@example.com", "password", "+91 98765 43210", UserRole.ROLE_USER);
@@ -309,6 +314,20 @@ public class DataInitializer implements CommandLineRunner {
                 "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?auto=format&fit=crop&w=800&q=80"
             );
             reviewRepository.save(new Review(4, "Safe hostel for students and working women in Noida.", customer, pg12));
+        }
+    }
+
+    private void relaxInquiryPgConstraint() {
+        String[] statements = {
+            "ALTER TABLE inquiries ALTER COLUMN pg_id DROP NOT NULL",
+            "ALTER TABLE inquiries MODIFY pg_id BIGINT NULL"
+        };
+        for (String statement : statements) {
+            try {
+                jdbcTemplate.execute(statement);
+                return;
+            } catch (Exception ignored) {
+            }
         }
     }
 

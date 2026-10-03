@@ -21,13 +21,23 @@ public class InquiryController {
     @PostMapping
     public ResponseEntity<?> submit(@RequestBody Map<String, Object> request) {
         try {
-            Long pgId = Long.valueOf(request.get("pgId").toString());
+            Long pgId = request.get("pgId") != null && !request.get("pgId").toString().isBlank()
+                    ? Long.valueOf(request.get("pgId").toString())
+                    : null;
             String name = request.get("name") != null ? request.get("name").toString() : null;
             String email = request.get("email") != null ? request.get("email").toString() : null;
-            String phone = request.get("phone") != null ? request.get("phone").toString() : null;
-            String message = request.get("message") != null ? request.get("message").toString() : null;
+            String phone = request.get("phone") != null ? request.get("phone").toString() : "";
+            String message = request.get("message") != null ? request.get("message").toString() : "";
 
-            Inquiry inquiry = inquiryService.submit(pgId, name, email, phone, message);
+            if (name == null || name.isBlank() || email == null || email.isBlank()) {
+                Map<String, String> error = new HashMap<>();
+                error.put("error", "Name and email are required.");
+                return ResponseEntity.badRequest().body(error);
+            }
+
+            Inquiry inquiry = pgId != null
+                    ? inquiryService.submit(pgId, name, email, phone, message)
+                    : inquiryService.submitContact(name, email, phone, message);
             return ResponseEntity.ok(inquiry);
         } catch (Exception e) {
             Map<String, String> error = new HashMap<>();

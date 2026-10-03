@@ -29,6 +29,12 @@ public class InquiryServiceImpl implements InquiryService {
     }
 
     @Override
+    public Inquiry submitContact(String name, String email, String phone, String message) {
+        Inquiry inquiry = new Inquiry(name, email, phone, message, null, "PENDING");
+        return inquiryRepository.save(inquiry);
+    }
+
+    @Override
     public List<Inquiry> getByPgId(Long pgId) {
         return inquiryRepository.findByPgIdOrderByCreatedAtDesc(pgId);
     }

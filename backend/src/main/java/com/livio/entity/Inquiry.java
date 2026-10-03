@@ -24,7 +24,7 @@ public class Inquiry {
     private String message;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "pg_id", nullable = false)
+    @JoinColumn(name = "pg_id", nullable = true)
     private PG pg;
 
     @Column(nullable = false)

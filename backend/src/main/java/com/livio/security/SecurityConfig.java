@@ -72,6 +72,8 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.GET, "/api/pgs/**").permitAll()
                 .requestMatchers(HttpMethod.GET, "/api/reviews/**").permitAll()
                 .requestMatchers(HttpMethod.POST, "/api/inquiries/**").permitAll()
+                .requestMatchers(HttpMethod.GET, "/api/inquiries").hasRole("ADMIN")
+                .requestMatchers(HttpMethod.PUT, "/api/inquiries/**").hasRole("ADMIN")
                 // Owner endpoints - authenticated users with OWNER role
                 .requestMatchers("/api/owner/**").hasRole("OWNER")
                 // Admin specific endpoints
