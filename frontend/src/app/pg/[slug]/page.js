@@ -249,7 +249,7 @@ export default function PGDetailsPage({ params }) {
           )}
 
           {/* Owner Inquiry Form */}
-          <ContactOwner pgId={pg.id} owner={pg.owner} />
+          <ContactOwner pgId={pg.id} />
 
           {/* Rules Card */}
           <div className="bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-800 rounded-3xl p-6 shadow-sm space-y-3">

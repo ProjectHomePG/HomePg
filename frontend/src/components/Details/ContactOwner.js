@@ -1,14 +1,14 @@
 "use client";
 
 import React, { useState } from 'react';
-import { User, Phone, Mail, Send, CheckCircle2 } from 'lucide-react';
+import { Send, CheckCircle2 } from 'lucide-react';
 import pgService from '../../services/pgService';
 
 /**
  * ContactOwner component.
- * Displays owner credentials and houses the booking inquiry form.
+ * Houses the booking inquiry form.
  */
-export default function ContactOwner({ pgId, owner = {} }) {
+export default function ContactOwner({ pgId }) {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
@@ -37,17 +37,6 @@ export default function ContactOwner({ pgId, owner = {} }) {
 
   return (
     <div className="bg-white dark:bg-slate-800 rounded-3xl border border-slate-100 dark:border-slate-800 p-6 shadow-sm space-y-6">
-      {/* Host profile summary */}
-      <div className="flex items-center space-x-4 pb-4 border-b border-slate-100 dark:border-slate-700">
-        <div className="w-12 h-12 rounded-full bg-gradient-to-br from-rose-400 to-primary-600 flex items-center justify-center text-white text-lg font-extrabold shadow-sm">
-          {owner.name ? owner.name.charAt(0) : 'O'}
-        </div>
-        <div>
-          <span className="text-[10px] uppercase font-extrabold text-slate-400 tracking-wider">Property Owner</span>
-          <h3 className="font-extrabold text-base text-slate-800 dark:text-slate-100">{owner.name || "PG Landlord"}</h3>
-        </div>
-      </div>
-
       {success ? (
         <div className="bg-emerald-50 dark:bg-emerald-950/20 border border-emerald-100 dark:border-emerald-900/30 p-5 rounded-2xl text-center space-y-3">
           <CheckCircle2 className="w-8 h-8 text-emerald-500 mx-auto" />

@@ -4,18 +4,14 @@ import React, { useState, useEffect } from 'react';
 import ReviewCard from './ReviewCard';
 import RatingStars from './RatingStars';
 import reviewService from '../../services/reviewService';
-import authService from '../../services/authService';
 
 /**
  * ReviewList component.
- * Displays overall rating metrics, list of review cards, and dynamic submit form.
+ * Displays overall rating metrics and list of review cards.
  */
 export default function ReviewList({ pgId }) {
   const [reviews, setReviews] = useState([]);
-  const [rating, setRating] = useState(5);
-  const [comment, setComment] = useState('');
   const [loading, setLoading] = useState(true);
-  const [currentUser, setCurrentUser] = useState(null);
 
   useEffect(() => {
     async function loadReviews() {
@@ -29,24 +25,7 @@ export default function ReviewList({ pgId }) {
       }
     }
     loadReviews();
-    setCurrentUser(authService.getCurrentUser());
   }, [pgId]);
-
-  const handleSubmitReview = async (e) => {
-    e.preventDefault();
-    if (!comment.trim()) return;
-
-    try {
-      const username = currentUser ? currentUser.name : "Anonymous Guest";
-      const userId = currentUser ? currentUser.id : 1;
-      const newReview = await reviewService.addReview(pgId, rating, comment, userId, username);
-      setReviews([newReview, ...reviews]);
-      setComment('');
-      setRating(5);
-    } catch (err) {
-      console.error("Failed to submit review:", err);
-    }
-  };
 
   if (loading) {
     return <div className="text-sm font-semibold text-slate-500 animate-pulse py-4">Loading feedback...</div>;
@@ -81,54 +60,13 @@ export default function ReviewList({ pgId }) {
       {/* Review list */}
       <div className="space-y-4">
         {reviews.length === 0 ? (
-          <p className="text-sm text-slate-500 italic">No reviews written for this accommodation yet. Be the first to share your experience!</p>
+          <p className="text-sm text-slate-500 italic">No reviews yet for this accommodation.</p>
         ) : (
           reviews.map((rev) => (
             <ReviewCard key={rev.id} review={rev} />
           ))
         )}
       </div>
-
-      {/* Add Review Form */}
-      <form onSubmit={handleSubmitReview} className="p-6 bg-white dark:bg-slate-800 rounded-3xl border border-slate-100 dark:border-slate-800 shadow-sm space-y-4">
-        <h4 className="font-bold text-sm text-slate-800 dark:text-slate-100 uppercase tracking-wider">Leave a Review</h4>
-        
-        {/* Rating Select */}
-        <div className="flex items-center space-x-3">
-          <span className="text-xs font-semibold text-slate-500">Your Rating:</span>
-          <div className="flex space-x-1">
-            {[1, 2, 3, 4, 5].map((star) => (
-              <button
-                key={star}
-                type="button"
-                onClick={() => setRating(star)}
-                className="text-amber-500 focus:outline-none cursor-pointer"
-              >
-                <span className={`text-xl ${star <= rating ? 'opacity-100' : 'opacity-30'}`}>★</span>
-              </button>
-            ))}
-          </div>
-        </div>
-
-        {/* Comment Input */}
-        <div>
-          <textarea
-            value={comment}
-            onChange={(e) => setComment(e.target.value)}
-            placeholder="Tell us about your stay, food quality, hygiene standards..."
-            rows={3}
-            className="w-full bg-slate-50 dark:bg-slate-900 text-sm font-medium p-4 rounded-2xl border border-slate-100 dark:border-slate-800 outline-none focus:border-primary-500 transition-colors resize-none"
-            required
-          />
-        </div>
-
-        <button
-          type="submit"
-          className="px-6 py-2.5 rounded-xl bg-primary-600 hover:bg-primary-700 text-white font-bold text-xs shadow-md transition-colors cursor-pointer"
-        >
-          Post Review
-        </button>
-      </form>
     </div>
   );
 }

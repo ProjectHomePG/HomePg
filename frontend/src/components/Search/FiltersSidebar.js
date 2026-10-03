@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from 'react';
-import { Filter, RotateCcw, ShieldCheck, X, ChevronDown, ChevronUp } from 'lucide-react';
+import { Filter, RotateCcw, X, ChevronDown, ChevronUp } from 'lucide-react';
 
 const AMENITIES_LIST = [
   { id: 'WiFi', label: 'WiFi' },
@@ -224,15 +224,6 @@ export default function FiltersSidebar({ filters, onFilterChange, onReset }) {
             ))}
           </div>
         )}
-      </div>
-
-      {/* Safety Badge */}
-      <div className="p-4 bg-gradient-to-r from-emerald-50 to-teal-50 dark:from-emerald-950/30 dark:to-teal-950/30 rounded-2xl border border-emerald-100 dark:border-emerald-900/50 flex items-start space-x-3 mt-4">
-        <ShieldCheck className="w-6 h-6 text-emerald-600 dark:text-emerald-500 flex-shrink-0 mt-0.5" />
-        <div>
-          <span className="text-sm font-bold text-emerald-900 dark:text-emerald-100 block">Verified Stays Only</span>
-          <span className="text-xs text-emerald-700 dark:text-emerald-400 mt-1 block">All locations undergo 10-point owner background checks.</span>
-        </div>
       </div>
     </aside>
   );

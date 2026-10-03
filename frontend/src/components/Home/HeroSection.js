@@ -20,14 +20,6 @@ export default function HeroSection() {
 
       <div className="relative z-10 max-w-5xl mx-auto text-center px-4 sm:px-6 lg:px-10 flex flex-col items-center">
         
-        <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 backdrop-blur-md mb-8 shadow-xl">
-          <span className="flex h-2 w-2 relative">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary-400 opacity-75"></span>
-            <span className="relative inline-flex rounded-full h-2 w-2 bg-primary-500"></span>
-          </span>
-          <span className="text-xs font-bold tracking-wider text-slate-200 uppercase">Over 5,000 Verified Stays</span>
-        </div>
-
         <h1 className="text-5xl sm:text-7xl lg:text-8xl font-extrabold tracking-tight mb-6 lg:mb-8 leading-tight">
           Find Your Perfect<br/>
           <span className="bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400 bg-clip-text text-transparent drop-shadow-sm">

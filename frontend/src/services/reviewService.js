@@ -27,34 +27,6 @@ export const reviewService = {
       await new Promise((resolve) => setTimeout(resolve, 300));
       return MOCK_REVIEWS[pgId] || [];
     }
-  },
-
-  addReview: async (pgId, rating, comment, userId, username) => {
-    try {
-      const response = await api.post('/reviews', {
-        pgId: Number(pgId),
-        userId: Number(userId),
-        rating: Number(rating),
-        comment
-      });
-      return response.data;
-    } catch (error) {
-      console.warn("Add Review API failed, using mock fallback:", error);
-      await new Promise((resolve) => setTimeout(resolve, 500));
-      const newReview = {
-        id: Math.floor(Math.random() * 1000) + 500,
-        user: username || "Anonymous Guest",
-        rating: Number(rating),
-        comment,
-        createdAt: new Date().toISOString()
-      };
-
-      if (!MOCK_REVIEWS[pgId]) {
-        MOCK_REVIEWS[pgId] = [];
-      }
-      MOCK_REVIEWS[pgId].unshift(newReview);
-      return newReview;
-    }
   }
 };
 
