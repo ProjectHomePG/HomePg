@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import Link from 'next/link';
 import { Sparkles, Building2, Clock, MapPin } from 'lucide-react';
 import pgService from '../services/pgService';
@@ -9,6 +9,30 @@ import SearchSuggestions from '../components/Home/SearchSuggestions';
 import PGGrid from '../components/Search/PGGrid';
 import LoadingSkeleton from '../components/Shared/LoadingSkeleton';
 
+const NEARBY_RADIUS_KM = 50;
+const LISTING_COUNT = 6;
+
+/** Great-circle distance between two coordinates, in kilometres. */
+function distanceKm(lat1, lon1, lat2, lon2) {
+  const toRad = (deg) => (deg * Math.PI) / 180;
+  const dLat = toRad(lat2 - lat1);
+  const dLon = toRad(lon2 - lon1);
+  const a =
+    Math.sin(dLat / 2) ** 2 +
+    Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) * Math.sin(dLon / 2) ** 2;
+  return 6371 * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+}
+
+/** Unbiased in-place shuffle copy (Fisher-Yates). */
+function shuffle(items) {
+  const copy = [...items];
+  for (let i = copy.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [copy[i], copy[j]] = [copy[j], copy[i]];
+  }
+  return copy;
+}
+
 /**
  * Home page for Livio.
  * Integrates premium Hero banner, categories, and PG listings.
@@ -16,6 +40,7 @@ import LoadingSkeleton from '../components/Shared/LoadingSkeleton';
 export default function HomePage() {
   const [pgs, setPgs] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [coords, setCoords] = useState(null);
 
   useEffect(() => {
     async function loadData() {
@@ -31,8 +56,39 @@ export default function HomePage() {
     loadData();
   }, []);
 
+  useEffect(() => {
+    if (!('geolocation' in navigator)) return;
+
+    navigator.geolocation.getCurrentPosition(
+      (position) => setCoords({
+        lat: position.coords.latitude,
+        lng: position.coords.longitude
+      }),
+      () => setCoords(null),
+      { enableHighAccuracy: false, timeout: 8000, maximumAge: 10 * 60 * 1000 }
+    );
+  }, []);
+
   const featuredPgs = pgs.slice(0, 6);
-  const recentlyAdded = [...pgs].reverse().slice(0, 6);
+
+  const nearbyPgs = useMemo(() => {
+    if (!coords) return [];
+    return pgs
+      .filter((pg) => typeof pg.latitude === 'number' && typeof pg.longitude === 'number')
+      .map((pg) => ({
+        pg,
+        distance: distanceKm(coords.lat, coords.lng, pg.latitude, pg.longitude)
+      }))
+      .filter((entry) => entry.distance <= NEARBY_RADIUS_KM)
+      .sort((a, b) => a.distance - b.distance)
+      .slice(0, LISTING_COUNT)
+      .map((entry) => entry.pg);
+  }, [coords, pgs]);
+
+  const randomPgs = useMemo(() => shuffle(pgs).slice(0, LISTING_COUNT), [pgs]);
+
+  const isNearbyMode = nearbyPgs.length > 0;
+  const sectionPgs = isNearbyMode ? nearbyPgs : randomPgs;
 
   return (
     <div className="space-y-20 lg:space-y-32">
@@ -96,14 +152,20 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* 5. Recently Added */}
+      {/* 5. Nearby / Random Picks */}
       <section className="space-y-8">
         <div className="flex items-end justify-between border-b border-slate-200 dark:border-slate-800 pb-6">
           <div>
-            <span className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest block mb-2">New Listings</span>
+            <span className="text-xs font-bold text-primary-600 uppercase tracking-widest block mb-2">
+              {isNearbyMode ? 'Near You' : 'New Listings'}
+            </span>
             <h2 className="text-3xl lg:text-4xl font-extrabold text-slate-900 dark:text-white flex items-center">
-              Recently Added
-              <Clock className="w-6 h-6 ml-3 text-slate-400" />
+              {isNearbyMode ? 'PGs Near You' : 'Recently Added'}
+              {isNearbyMode ? (
+                <MapPin className="w-6 h-6 ml-3 text-primary-500" />
+              ) : (
+                <Clock className="w-6 h-6 ml-3 text-slate-400" />
+              )}
             </h2>
           </div>
           <Link href="/search" className="hidden sm:inline-flex items-center text-sm font-bold text-slate-500 hover:text-primary-600 dark:text-slate-400 dark:hover:text-primary-400 transition-colors">
@@ -115,7 +177,7 @@ export default function HomePage() {
         {loading ? (
           <LoadingSkeleton type="GRID" count={6} />
         ) : (
-          <PGGrid pgs={recentlyAdded} />
+          <PGGrid pgs={sectionPgs} />
         )}
       </section>
     </div>

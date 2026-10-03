@@ -122,13 +122,6 @@ export default function LoginPage() {
               Create an account
             </Link>
           </div>
-
-          <div className="text-center">
-            <p className="text-[10px] text-slate-400">
-              Demo: john@example.com / owner@example.com / admin@example.com<br />
-              Password: password123
-            </p>
-          </div>
         </div>
       </div>
     </div>
