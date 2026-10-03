@@ -1,16 +1,10 @@
-<<<<<<< HEAD
-# HomePg
-=======
 ﻿# 🏠 Livio (HomePg)
->>>>>>> 81e807318b7fef107e16f091c391f19aca639ea1
 
 A web project (frontend-first) with JavaScript and Java components.
 
-<<<<<<< HEAD
-Tech stack: JavaScript, Java, Docker
-=======
+## 🚀 About Livio
+
 Livio combines a **Next.js (React) frontend**, **Spring Boot (Java) backend**, and an **embedded H2/PostgreSQL database** to provide a scalable foundation for a property-focused digital platform.
->>>>>>> 81e807318b7fef107e16f091c391f19aca639ea1
 
 Purpose
 
@@ -36,7 +30,6 @@ Quick start
    docker build -t homepg .
    docker run -p 8080:8080 homepg
 
-<<<<<<< HEAD
 Recommended project structure
 
 - README.md
@@ -59,7 +52,9 @@ Notes
 License
 
 No license added. Add a LICENSE file if needed.
-=======
+
+## ✨ Key Features
+
 ### 🏡 PG Management
 * PG listing and management
 * PG information and details
@@ -208,4 +203,3 @@ The platform is being developed with a focus on:
 ---
 
 **Livio — Built to make property experiences simpler, smarter, and more accessible.**
->>>>>>> 81e807318b7fef107e16f091c391f19aca639ea1

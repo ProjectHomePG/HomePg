@@ -17,11 +17,7 @@ const outfit = Outfit({
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:8082";
 
 export const metadata = {
-<<<<<<< HEAD
   metadataBase: new URL(siteUrl),
-=======
-  metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000"),
->>>>>>> 16d18e3f86c17e9e28a829c01cf0864b5cb53ad0
   title: {
     default: "Livio | Premium PG & Co-Living Spaces",
     template: "%s | Livio",
@@ -32,11 +28,7 @@ export const metadata = {
   openGraph: {
     title: "Livio | Premium PG & Co-Living Spaces",
     description: "Find premium, verified PG rooms and co-living accommodations.",
-<<<<<<< HEAD
     url: siteUrl,
-=======
-    url: "/",
->>>>>>> 16d18e3f86c17e9e28a829c01cf0864b5cb53ad0
     siteName: "Livio",
     locale: "en_IN",
     type: "website",

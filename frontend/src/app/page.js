@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { Sparkles, Building2, Clock, ShieldCheck, MapPin } from 'lucide-react';
+import { Sparkles, Building2, Clock, MapPin } from 'lucide-react';
 import pgService from '../services/pgService';
 import HeroSection from '../components/Home/HeroSection';
 import SearchSuggestions from '../components/Home/SearchSuggestions';
@@ -45,18 +45,8 @@ export default function HomePage() {
       </section>
 
       {/* 3. Value Proposition Cards */}
-      <section className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12 bg-white dark:bg-slate-900 rounded-[2.5rem] p-10 lg:p-14 border border-slate-100 dark:border-slate-800 shadow-soft">
-        <div className="flex flex-col items-start space-y-4">
-          <div className="w-14 h-14 rounded-2xl bg-indigo-50 dark:bg-indigo-900/20 text-indigo-600 flex items-center justify-center flex-shrink-0 shadow-sm border border-indigo-100 dark:border-indigo-800/30">
-            <ShieldCheck className="w-7 h-7" strokeWidth={1.5} />
-          </div>
-          <div>
-            <h4 className="text-lg font-extrabold text-slate-900 dark:text-white">100% Verified Owners</h4>
-            <p className="text-sm text-slate-500 dark:text-slate-400 mt-2 font-medium leading-relaxed">Direct listings verified personally by our on-ground team. No brokers, no hidden fees.</p>
-          </div>
-        </div>
-        
-        <div className="flex flex-col items-start space-y-4 md:px-8 border-t md:border-t-0 md:border-x border-slate-100 dark:border-slate-800 pt-8 md:pt-0">
+      <section className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12 bg-white dark:bg-slate-900 rounded-[2.5rem] p-10 lg:p-14 border border-slate-100 dark:border-slate-800 shadow-soft">
+        <div className="flex flex-col items-start space-y-4 md:pr-8">
           <div className="w-14 h-14 rounded-2xl bg-emerald-50 dark:bg-emerald-900/20 text-emerald-600 flex items-center justify-center flex-shrink-0 shadow-sm border border-emerald-100 dark:border-emerald-800/30">
             <Building2 className="w-7 h-7" strokeWidth={1.5} />
           </div>
@@ -66,7 +56,7 @@ export default function HomePage() {
           </div>
         </div>
 
-        <div className="flex flex-col items-start space-y-4 pt-8 md:pt-0 md:pl-8 border-t md:border-t-0 border-slate-100 dark:border-slate-800">
+        <div className="flex flex-col items-start space-y-4 md:pl-8 border-t md:border-t-0 md:border-l border-slate-100 dark:border-slate-800 pt-8 md:pt-0">
           <div className="w-14 h-14 rounded-2xl bg-rose-50 dark:bg-rose-900/20 text-rose-600 flex items-center justify-center flex-shrink-0 shadow-sm border border-rose-100 dark:border-rose-800/30">
             <MapPin className="w-7 h-7" strokeWidth={1.5} />
           </div>
