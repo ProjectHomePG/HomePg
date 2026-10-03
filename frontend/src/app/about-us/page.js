@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { AUTH_ENABLED } from '../../config';
 import {
   Search,
   ShieldCheck,
@@ -147,13 +148,15 @@ export default function AboutUsPage() {
           and receive booking inquiries from verified seekers. It takes a few minutes to get started.
         </p>
         <div className="flex flex-wrap gap-3 pt-1">
-          <Link
-            href="/register"
-            className="inline-flex items-center gap-2 px-5 py-2.5 text-sm font-semibold text-primary-700 bg-white hover:bg-rose-50 rounded-xl transition-colors"
-          >
-            Become a host
-            <ArrowRight className="w-4 h-4" />
-          </Link>
+          {AUTH_ENABLED && (
+            <Link
+              href="/register"
+              className="inline-flex items-center gap-2 px-5 py-2.5 text-sm font-semibold text-primary-700 bg-white hover:bg-rose-50 rounded-xl transition-colors"
+            >
+              Become a host
+              <ArrowRight className="w-4 h-4" />
+            </Link>
+          )}
           <Link
             href="/contact-us"
             className="inline-flex items-center gap-2 px-5 py-2.5 text-sm font-semibold text-white border border-white/40 hover:bg-white/10 rounded-xl transition-colors"

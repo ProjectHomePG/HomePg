@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { Search, LogIn, UserPlus, LogOut, Menu, X, PlusCircle, Shield, Heart } from 'lucide-react';
 import authService from '../../services/authService';
+import { AUTH_ENABLED } from '../../config';
 import ThemeToggle from '../Shared/ThemeToggle';
 
 /**
@@ -81,19 +82,21 @@ export default function Navbar() {
                 </div>
               </>
             ) : (
-              <div className="flex items-center space-x-3 border-l border-slate-200 dark:border-slate-700 pl-6">
-                <Link href="/login" className="flex items-center text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-primary-600 dark:hover:text-primary-500 transition-colors">
-                  <LogIn className="w-5 h-5 mr-1" />
-                  Sign In
-                </Link>
-                <Link 
-                  href="/register" 
-                  className="inline-flex items-center px-4 py-2 rounded-full bg-primary-600 hover:bg-primary-700 text-white text-sm font-medium shadow-sm transition-all hover:shadow"
-                >
-                  <UserPlus className="w-5 h-5 mr-1.5" />
-                  Sign Up
-                </Link>
-              </div>
+              AUTH_ENABLED && (
+                <div className="flex items-center space-x-3 border-l border-slate-200 dark:border-slate-700 pl-6">
+                  <Link href="/login" className="flex items-center text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-primary-600 dark:hover:text-primary-500 transition-colors">
+                    <LogIn className="w-5 h-5 mr-1" />
+                    Sign In
+                  </Link>
+                  <Link 
+                    href="/register" 
+                    className="inline-flex items-center px-4 py-2 rounded-full bg-primary-600 hover:bg-primary-700 text-white text-sm font-medium shadow-sm transition-all hover:shadow"
+                  >
+                    <UserPlus className="w-5 h-5 mr-1.5" />
+                    Sign Up
+                  </Link>
+                </div>
+              )
             )}
 
             {/* Theme Toggle */}
@@ -168,24 +171,26 @@ export default function Navbar() {
               </div>
             </>
           ) : (
-            <div className="border-t border-slate-100 dark:border-slate-800 pt-3 mt-3 space-y-2">
-              <Link 
-                href="/login" 
-                onClick={() => setMobileMenuOpen(false)}
-                className="flex items-center justify-center w-full px-4 py-2.5 rounded-xl text-base font-medium text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700"
-              >
-                <LogIn className="w-5 h-5 mr-2 text-slate-500" />
-                Sign In
-              </Link>
-              <Link 
-                href="/register" 
-                onClick={() => setMobileMenuOpen(false)}
-                className="flex items-center justify-center w-full px-4 py-2.5 rounded-xl bg-primary-600 text-white font-semibold shadow-sm"
-              >
-                <UserPlus className="w-5 h-5 mr-2" />
-                Sign Up
-              </Link>
-            </div>
+            AUTH_ENABLED && (
+              <div className="border-t border-slate-100 dark:border-slate-800 pt-3 mt-3 space-y-2">
+                <Link 
+                  href="/login" 
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="flex items-center justify-center w-full px-4 py-2.5 rounded-xl text-base font-medium text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700"
+                >
+                  <LogIn className="w-5 h-5 mr-2 text-slate-500" />
+                  Sign In
+                </Link>
+                <Link 
+                  href="/register" 
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="flex items-center justify-center w-full px-4 py-2.5 rounded-xl bg-primary-600 text-white font-semibold shadow-sm"
+                >
+                  <UserPlus className="w-5 h-5 mr-2" />
+                  Sign Up
+                </Link>
+              </div>
+            )
           )}
         </div>
       )}
