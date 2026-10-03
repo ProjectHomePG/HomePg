@@ -1,6 +1,7 @@
 package com.livio.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -34,6 +35,9 @@ public class SecurityConfig {
     @Autowired
     private JwtAuthFilter jwtAuthFilter;
 
+    @Value("${spring.h2.console.enabled:false}")
+    private boolean h2ConsoleEnabled;
+
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
@@ -60,28 +64,36 @@ public class SecurityConfig {
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authenticationProvider(authenticationProvider())
             .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
-            .authorizeHttpRequests(auth -> auth
-                // Health and Base
-                .requestMatchers("/", "/health", "/ready", "/error").permitAll()
-                // Static Uploads
-                .requestMatchers("/uploads/**").permitAll()
-                // Public Authentication endpoints
-                .requestMatchers("/api/auth/**").permitAll()
-                // Public Search and Stays browsing
-                .requestMatchers("/api/search/**").permitAll()
-                .requestMatchers(HttpMethod.GET, "/api/pgs/**").permitAll()
-                .requestMatchers(HttpMethod.GET, "/api/reviews/**").permitAll()
-                .requestMatchers(HttpMethod.POST, "/api/inquiries/**").permitAll()
-                .requestMatchers(HttpMethod.GET, "/api/inquiries").hasRole("ADMIN")
-                .requestMatchers(HttpMethod.PUT, "/api/inquiries/**").hasRole("ADMIN")
-                // Owner endpoints - authenticated users with OWNER role
-                .requestMatchers("/api/owner/**").hasRole("OWNER")
-                // Admin specific endpoints
-                .requestMatchers("/api/admin/import/**").permitAll()
-                .requestMatchers("/api/admin/**").hasRole("ADMIN")
-                // All other endpoints require authentication
-                .anyRequest().authenticated()
-            );
+            .authorizeHttpRequests(auth -> {
+                auth
+                    // Health and Base
+                    .requestMatchers("/", "/health", "/ready", "/error").permitAll()
+                    // Static Uploads
+                    .requestMatchers("/uploads/**").permitAll()
+                    // Public Authentication endpoints
+                    .requestMatchers("/api/auth/**").permitAll()
+                    // Public Search and Stays browsing
+                    .requestMatchers("/api/search/**").permitAll()
+                    .requestMatchers(HttpMethod.GET, "/api/pgs/**").permitAll()
+                    .requestMatchers(HttpMethod.GET, "/api/reviews/**").permitAll()
+                    .requestMatchers(HttpMethod.POST, "/api/inquiries/**").permitAll()
+                    .requestMatchers(HttpMethod.GET, "/api/inquiries").hasRole("ADMIN")
+                    .requestMatchers(HttpMethod.PUT, "/api/inquiries/**").hasRole("ADMIN")
+                    // Owner endpoints - authenticated users with OWNER role
+                    .requestMatchers("/api/owner/**").hasRole("OWNER")
+                    // Admin specific endpoints
+                    .requestMatchers("/api/admin/import/**").permitAll()
+                    .requestMatchers("/api/admin/**").hasRole("ADMIN");
+
+                if (h2ConsoleEnabled) {
+                    auth.requestMatchers("/h2-console", "/h2-console/**").permitAll();
+                }
+
+                auth
+                    // All other endpoints require authentication
+                    .anyRequest().authenticated();
+            })
+            .headers(headers -> headers.frameOptions(frame -> frame.sameOrigin()));
 
         return http.build();
     }
