@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { Mail, Phone, MapPin, Clock } from 'lucide-react';
+import { Mail, Clock } from 'lucide-react';
 import ContactForm from './ContactForm';
 
 export const metadata = {
@@ -14,17 +14,6 @@ const CHANNELS = [
     label: 'Email',
     value: 'support@livio.com',
     href: 'mailto:support@livio.com',
-  },
-  {
-    icon: Phone,
-    label: 'Phone',
-    value: '+91 99999 88888',
-    href: 'tel:+919999988888',
-  },
-  {
-    icon: MapPin,
-    label: 'Office',
-    value: 'Koramangala 4th Block, Bangalore, India',
   },
   {
     icon: Clock,

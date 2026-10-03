@@ -1,6 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
-import { Mail, Phone, MapPin } from 'lucide-react';
+import { Mail } from 'lucide-react';
 
 const Twitter = (props) => (
   <svg
@@ -119,16 +119,8 @@ export default function Footer() {
             <h3 className="text-white text-sm font-semibold tracking-wider uppercase mb-4">Contact Us</h3>
             <ul className="space-y-3 text-sm">
               <li className="flex items-center text-slate-400">
-                <Phone className="w-4 h-4 mr-2.5 text-primary-500" />
-                <span>+91 99999 88888</span>
-              </li>
-              <li className="flex items-center text-slate-400">
                 <Mail className="w-4 h-4 mr-2.5 text-primary-500" />
                 <span>support@livio.com</span>
-              </li>
-              <li className="flex items-center text-slate-400">
-                <MapPin className="w-4 h-4 mr-2.5 text-primary-500" />
-                <span>Koramangala 4th Block, Bangalore, India</span>
               </li>
             </ul>
           </div>
