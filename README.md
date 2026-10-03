@@ -154,7 +154,7 @@ mvn spring-boot:run
 
 ### 2. Running the Frontend
 
-The frontend is a Next.js application. It runs on http://localhost:3000.
+The frontend is a Next.js application. It runs on http://localhost:8082.
 
 `ash
 cd frontend
@@ -168,7 +168,7 @@ To build and run the entire application (frontend + backend) using Docker:
 
 `ash
 docker build -t homepg .
-docker run -p 3000:3000 -p 8083:8083 homepg
+docker run -p 8082:8082 -p 8083:8083 homepg
 `
 
 ---
