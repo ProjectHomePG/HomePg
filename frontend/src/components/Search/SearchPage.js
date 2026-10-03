@@ -31,12 +31,7 @@ export default function SearchPage() {
     try {
       const data = await pgService.search(
         searchFilters.query || '',
-        searchFilters.city === 'ALL' ? '' : searchFilters.city,
-        searchFilters.gender === 'ALL' ? '' : searchFilters.gender,
-        searchFilters.sharing === 'ALL' ? '' : searchFilters.sharing,
-        searchFilters.minPrice || '',
-        searchFilters.maxPrice || '',
-        searchFilters.amenity === 'ALL' ? '' : searchFilters.amenity
+        searchFilters
       );
       setResults(data || []);
       setSearchPerformed(true);

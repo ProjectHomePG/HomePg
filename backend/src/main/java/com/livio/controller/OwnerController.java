@@ -91,7 +91,7 @@ public class OwnerController {
         try {
             return ResponseEntity.ok(pgService.update(id, pgDetails));
         } catch (Exception e) {
-            Map<String, String> error = new HashMap_;
+            Map<String, String> error = new HashMap<>();
             error.put("error", e.getMessage());
             return ResponseEntity.badRequest().body(error);
         }
@@ -101,24 +101,24 @@ public class OwnerController {
     public ResponseEntity<?> deleteMyPG(@PathVariable Long id, @RequestHeader(value = "Authorization", required = false) String authHeader) {
         Long userId = getUserIdFromToken(authHeader);
         if (userId == null) {
-            Map<String, String> error = new HashMap_;
+            Map<String, String> error = new HashMap<>();
             error.put("error", "Unauthorized");
             return ResponseEntity.status(401).body(error);
         }
 
         if (!pgService.isOwner(id, userId)) {
-            Map<String, String> error = new HashMap_;
+            Map<String, String> error = new HashMap<>();
             error.put("error", "Forbidden: You can only delete your own PGs");
             return ResponseEntity.status(403).body(error);
         }
 
         try {
             pgService.delete(id);
-            Map<String, String> message = new HashMap_;
+            Map<String, String> message = new HashMap<>();
             message.put("message", "PG Stay deleted successfully");
             return ResponseEntity.ok(message);
         } catch (Exception e) {
-            Map<String, String> error = new HashMap_;
+            Map<String, String> error = new HashMap<>();
             error.put("error", e.getMessage());
             return ResponseEntity.badRequest().body(error);
         }

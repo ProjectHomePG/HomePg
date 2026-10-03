@@ -3,39 +3,53 @@ import SearchBar from './SearchBar';
 
 /**
  * HeroSection component.
- * Displays a premium tagline and embeds the SearchBar to capture primary queries.
+ * Premium, vibrant hero with dynamic gradients and a stunning glassmorphism search area.
  */
 export default function HeroSection() {
   return (
-    <section className="relative overflow-hidden py-16 sm:py-24 lg:py-32 rounded-3xl bg-slate-900 text-white shadow-soft">
+    <section className="relative overflow-hidden py-20 sm:py-32 lg:py-40 rounded-[2.5rem] bg-slate-950 text-white shadow-2xl">
       {/* Background Gradients and Accents */}
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(244,63,94,0.18),rgba(255,255,255,0))]"></div>
-      <div className="absolute top-0 right-0 w-80 h-80 bg-primary-600 rounded-full blur-[140px] opacity-10"></div>
-      <div className="absolute bottom-0 left-0 w-80 h-80 bg-rose-500 rounded-full blur-[140px] opacity-10"></div>
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_70%_100%_at_50%_-10%,rgba(99,102,241,0.25),rgba(2,6,23,1))]"></div>
+      
+      {/* Glowing Orbs */}
+      <div className="absolute top-[-10%] right-[-5%] w-[40rem] h-[40rem] bg-indigo-600 rounded-full blur-[160px] opacity-20 animate-pulse-glow"></div>
+      <div className="absolute bottom-[-10%] left-[-5%] w-[35rem] h-[35rem] bg-purple-600 rounded-full blur-[140px] opacity-20 animate-pulse-glow" style={{ animationDelay: '1s' }}></div>
 
-      <div className="relative max-w-[1200px] mx-auto text-center px-4 sm:px-6 lg:px-10" style={{ justifySelf: 'center' }}>
-        <h1 className="text-4xl sm:text-6xl font-extrabold tracking-tight mb-6 lg:mb-8">
-          Find Your Perfect{" "}
-          <span className="bg-gradient-to-r from-primary-500 to-rose-500 bg-clip-text text-transparent">
+      {/* Grid Pattern Overlay */}
+      <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMiIgY3k9IjIiIHI9IjIiIGZpbGw9InJnYmEoMjU1LDI1NSwyNTUsMC4wMykiLz48L3N2Zz4=')] opacity-50"></div>
+
+      <div className="relative z-10 max-w-5xl mx-auto text-center px-4 sm:px-6 lg:px-10 flex flex-col items-center">
+        
+        <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 backdrop-blur-md mb-8 shadow-xl">
+          <span className="flex h-2 w-2 relative">
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary-400 opacity-75"></span>
+            <span className="relative inline-flex rounded-full h-2 w-2 bg-primary-500"></span>
+          </span>
+          <span className="text-xs font-bold tracking-wider text-slate-200 uppercase">Over 5,000 Verified Stays</span>
+        </div>
+
+        <h1 className="text-5xl sm:text-7xl lg:text-8xl font-extrabold tracking-tight mb-6 lg:mb-8 leading-tight">
+          Find Your Perfect<br/>
+          <span className="bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400 bg-clip-text text-transparent drop-shadow-sm">
             Paying Guest
           </span>{" "}
           Stay
         </h1>
-        <p className="text-base sm:text-lg lg:text-xl text-slate-300 mb-10 lg:mb-12 max-w-2xl mx-auto leading-relaxed" style={{ justifySelf: 'center' }}>
+        <p className="text-base sm:text-lg lg:text-xl text-slate-400 mb-12 max-w-2xl mx-auto leading-relaxed font-medium">
           Search from thousands of fully-managed co-living spaces, hostels, and rooms near your college, office, metro station, or hospital.
         </p>
 
-        {/* Embedded Search Component */}
-        <div className="w-full">
+        {/* Embedded Search Component - Glassmorphism Wrapper */}
+        <div className="w-full max-w-4xl glass-effect p-2 sm:p-3 rounded-2xl sm:rounded-[2rem] border border-white/10 shadow-2xl">
           <SearchBar />
         </div>
 
         {/* Quick Suggestion Categories */}
-        <div className="mt-8 flex flex-wrap justify-center items-center gap-2 text-xs font-semibold text-slate-400">
-          <span>Popular Searches:</span>
-          <a href="/search?query=Manyata+Tech+Park" className="px-3 py-1 rounded-full border border-slate-700 hover:border-primary-500 hover:text-white transition-colors">Manyata Tech Park</a>
-          <a href="/search?query=HSR+Layout" className="px-3 py-1 rounded-full border border-slate-700 hover:border-primary-500 hover:text-white transition-colors">HSR Layout</a>
-          <a href="/search?query=DU+North+Campus" className="px-3 py-1 rounded-full border border-slate-700 hover:border-primary-500 hover:text-white transition-colors">DU Campus</a>
+        <div className="mt-10 flex flex-wrap justify-center items-center gap-3 text-xs font-bold text-slate-400">
+          <span className="mr-2 uppercase tracking-widest text-[10px] text-slate-500">Popular:</span>
+          <a href="/search?query=Manyata+Tech+Park" className="px-4 py-2 rounded-full border border-slate-700 bg-slate-800/50 hover:bg-primary-600 hover:border-primary-500 hover:text-white transition-all shadow-sm">Manyata Tech Park</a>
+          <a href="/search?query=HSR+Layout" className="px-4 py-2 rounded-full border border-slate-700 bg-slate-800/50 hover:bg-primary-600 hover:border-primary-500 hover:text-white transition-all shadow-sm">HSR Layout</a>
+          <a href="/search?query=DU+North+Campus" className="px-4 py-2 rounded-full border border-slate-700 bg-slate-800/50 hover:bg-primary-600 hover:border-primary-500 hover:text-white transition-all shadow-sm">DU Campus</a>
         </div>
       </div>
     </section>
