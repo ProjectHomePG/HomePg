@@ -1,6 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { Mail } from 'lucide-react';
+import LogoMark from '../Shared/LogoMark';
 
 const Twitter = (props) => (
   <svg
@@ -62,9 +63,12 @@ export default function Footer() {
           
           {/* Brand Column */}
           <div className="space-y-4">
-            <span className="text-xl font-bold text-white bg-gradient-to-r from-primary-500 to-rose-400 bg-clip-text text-transparent">
-              Livio
-            </span>
+            <div className="flex items-center gap-2">
+              <LogoMark className="w-7 h-7" />
+              <span className="text-xl font-bold text-white bg-gradient-to-r from-primary-500 to-rose-400 bg-clip-text text-transparent">
+                Livio
+              </span>
+            </div>
             <p className="text-sm text-slate-400 leading-relaxed">
               Find premium, verified Paying Guest accommodations near you. We offer convenient coliving options close to major colleges, corporate offices, and transit hubs.
             </p>

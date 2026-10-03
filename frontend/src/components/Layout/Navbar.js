@@ -7,6 +7,7 @@ import { Search, LogIn, UserPlus, LogOut, Menu, X, PlusCircle, Shield, Heart } f
 import authService from '../../services/authService';
 import { AUTH_ENABLED } from '../../config';
 import ThemeToggle from '../Shared/ThemeToggle';
+import LogoMark from '../Shared/LogoMark';
 
 /**
  * Navbar component for Livio.
@@ -35,6 +36,7 @@ export default function Navbar() {
           {/* Logo */}
           <div className="flex-shrink-0">
             <Link href="/" className="flex items-center space-x-2">
+              <LogoMark className="w-7 h-7" />
               <span className="text-2xl font-bold bg-gradient-to-r from-primary-600 to-rose-500 bg-clip-text text-transparent">
                 Livio
               </span>

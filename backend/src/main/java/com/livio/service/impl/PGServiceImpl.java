@@ -6,6 +6,7 @@ import com.livio.repository.PGRepository;
 import com.livio.repository.ReviewRepository;
 import com.livio.service.PGService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,6 +21,9 @@ public class PGServiceImpl implements PGService {
 
     @Autowired
     private ReviewRepository reviewRepository;
+
+    @Autowired
+    private JdbcTemplate jdbcTemplate;
 
     @Override
     public PG create(PG pg) {
@@ -74,6 +78,9 @@ public class PGServiceImpl implements PGService {
     @Override
     public void delete(Long id) {
         PG pg = getById(id);
+        jdbcTemplate.update("DELETE FROM payments WHERE booking_id IN (SELECT id FROM bookings WHERE pg_id = ?)", id);
+        jdbcTemplate.update("DELETE FROM bookings WHERE pg_id = ?", id);
+        jdbcTemplate.update("DELETE FROM favorites WHERE pg_id = ?", id);
         pgRepository.delete(pg);
     }
 

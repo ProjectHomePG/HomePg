@@ -14,8 +14,10 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:8082";
+
 export const metadata = {
-  metadataBase: new URL("http://localhost:8082"),
+  metadataBase: new URL(siteUrl),
   title: {
     default: "Livio - Verified PG & Co-Living Accommodations",
     template: "%s | Livio",
@@ -27,7 +29,7 @@ export const metadata = {
   openGraph: {
     title: "Livio - Find Paying Guest Accommodations",
     description: "Find premium, verified PG rooms and co-living accommodations.",
-    url: "http://localhost:8082",
+    url: siteUrl,
     siteName: "Livio",
     locale: "en_IN",
     type: "website",
