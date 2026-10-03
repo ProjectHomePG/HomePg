@@ -91,11 +91,6 @@ function SearchPageContent() {
     router.push(`/search?${params.toString()}`);
   };
 
-  const handleResetAll = () => {
-    setSearchInput('');
-    router.push('/search');
-  };
-
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentItems = pgs.slice(indexOfFirstItem, indexOfLastItem);
@@ -104,24 +99,24 @@ function SearchPageContent() {
   const hasActiveFilters = query || filters.gender !== 'ALL' || filters.sharing !== 'ALL' || filters.minPrice || filters.maxPrice;
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-8">
       {/* Search Input Bar - only visible when no active query */}
       {!query && (
-        <form onSubmit={handleSearchSubmit} className="w-full bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700 flex items-center p-2 gap-2">
-          <div className="flex items-center flex-1 px-4 gap-3">
-            <Search className="w-5 h-5 text-primary-500 flex-shrink-0" />
+        <form onSubmit={handleSearchSubmit} className="w-full bg-white dark:bg-slate-900 rounded-[2rem] shadow-soft border border-slate-200 dark:border-slate-800 flex items-center p-3 gap-3 transition-shadow focus-within:shadow-lg focus-within:border-primary-500">
+          <div className="flex items-center flex-1 px-4 gap-4">
+            <Search className="w-6 h-6 text-primary-500 flex-shrink-0" />
             <input
               type="text"
               value={searchInput}
               onChange={(e) => setSearchInput(e.target.value)}
               placeholder="Search by city, area, PG name, landmark..."
-              className="w-full text-sm font-semibold text-slate-800 dark:text-slate-100 placeholder-slate-400 bg-transparent border-none outline-none focus:ring-0 p-2"
+              className="w-full text-base font-medium text-slate-900 dark:text-white placeholder-slate-400 bg-transparent border-none outline-none focus:ring-0 p-2"
               autoFocus
             />
           </div>
           <button
             type="submit"
-            className="px-6 py-2.5 rounded-xl bg-primary-600 hover:bg-primary-700 text-white text-sm font-bold shadow-sm transition-all cursor-pointer flex-shrink-0"
+            className="px-8 py-3.5 rounded-2xl bg-primary-600 hover:bg-primary-700 text-white text-sm font-bold shadow-lg shadow-primary-500/25 transition-all cursor-pointer flex-shrink-0"
           >
             Search
           </button>
@@ -129,35 +124,35 @@ function SearchPageContent() {
       )}
 
       {/* Search Header Info */}
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 bg-white dark:bg-slate-800 rounded-3xl p-6 border border-slate-100 dark:border-slate-700 shadow-sm">
+      <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 pb-6 border-b border-slate-200 dark:border-slate-800">
         <div>
-          <span className="text-[10px] font-extrabold text-primary-600 uppercase tracking-wider block">Search Results</span>
-          <h1 className="text-xl font-black text-slate-800 dark:text-slate-100 mt-0.5">
+          <span className="text-xs font-bold text-primary-600 uppercase tracking-widest block mb-2">Search Results</span>
+          <h1 className="text-3xl lg:text-4xl font-extrabold text-slate-900 dark:text-white mt-1">
             {query ? `PGs near "${query}"` : 'All PG Accommodations'}
           </h1>
-          <p className="text-xs text-slate-400 mt-1">
-            Found {pgs.length} verified co-living {pgs.length === 1 ? 'stay' : 'stays'}
+          <p className="text-sm font-medium text-slate-500 dark:text-slate-400 mt-2">
+            Found {pgs.length} verified co-living {pgs.length === 1 ? 'stay' : 'stays'} matching your criteria
           </p>
         </div>
 
-        <div className="flex items-center space-x-3">
+        <div className="flex flex-wrap items-center gap-4">
           <SortDropdown 
             sortBy={filters.sortBy} 
             onSortChange={(val) => handleFilterChange({ ...filters, sortBy: val })} 
           />
           <button
             onClick={() => setMapViewActive(!mapViewActive)}
-            className="flex items-center px-4 py-2 border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-700 text-xs font-bold text-slate-700 dark:text-slate-300 shadow-sm transition-all cursor-pointer"
+            className="flex items-center px-5 py-3 border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800 text-sm font-bold text-slate-700 dark:text-slate-300 shadow-sm transition-all cursor-pointer"
           >
             {mapViewActive ? (
               <>
-                <List className="w-4 h-4 mr-1.5 text-primary-500" />
-                Show List
+                <List className="w-5 h-5 mr-2 text-primary-500" />
+                List View
               </>
             ) : (
               <>
-                <Map className="w-4 h-4 mr-1.5 text-primary-500" />
-                Show Map
+                <Map className="w-5 h-5 mr-2 text-primary-500" />
+                Map View
               </>
             )}
           </button>
@@ -165,7 +160,7 @@ function SearchPageContent() {
       </div>
 
       {/* Main Grid Content */}
-      <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 items-start">
+      <div className="grid grid-cols-1 lg:grid-cols-4 gap-8 items-start">
         {/* Sidebar Filters */}
         <div className="lg:col-span-1">
           <FiltersSidebar 
@@ -176,30 +171,30 @@ function SearchPageContent() {
         </div>
 
         {/* Results List */}
-        <div className="lg:col-span-3 space-y-6">
+        <div className="lg:col-span-3 space-y-8">
           {loading ? (
             <LoadingSkeleton type="GRID" count={9} />
           ) : pgs.length === 0 ? (
-            <div className="flex flex-col items-center justify-center py-20 bg-white dark:bg-slate-800 rounded-3xl border border-slate-100 dark:border-slate-700 shadow-sm">
-              <div className="w-16 h-16 bg-slate-100 dark:bg-slate-700 rounded-full flex items-center justify-center mb-4">
-                <SearchX className="w-8 h-8 text-slate-400" />
+            <div className="flex flex-col items-center justify-center py-24 bg-white dark:bg-slate-900 rounded-[2rem] border border-slate-200 dark:border-slate-800 shadow-soft">
+              <div className="w-20 h-20 bg-slate-50 dark:bg-slate-800 rounded-full flex items-center justify-center mb-6 shadow-inner">
+                <SearchX className="w-10 h-10 text-slate-400" />
               </div>
-              <h3 className="text-lg font-bold text-slate-800 dark:text-slate-200 mb-1">No results found</h3>
-              <p className="text-xs text-slate-400 text-center max-w-sm mb-4">
-                We couldn&apos;t find any PG accommodations matching your criteria. Try adjusting your filters or search query.
+              <h3 className="text-xl font-extrabold text-slate-900 dark:text-white mb-2">No results found</h3>
+              <p className="text-sm font-medium text-slate-500 dark:text-slate-400 text-center max-w-md mb-6">
+                We couldn&apos;t find any PG accommodations matching your criteria. Try adjusting your filters or search query to find more stays.
               </p>
               {hasActiveFilters && (
                 <button
                   onClick={handleResetFilters}
-                  className="inline-flex items-center gap-2 px-4 py-2 bg-primary-600 hover:bg-primary-700 text-white text-xs font-bold rounded-xl shadow transition-all cursor-pointer"
+                  className="inline-flex items-center gap-2 px-6 py-3 bg-primary-600 hover:bg-primary-700 text-white text-sm font-bold rounded-xl shadow-lg shadow-primary-500/25 transition-all cursor-pointer"
                 >
-                  <RefreshCw className="w-3.5 h-3.5" />
+                  <RefreshCw className="w-4 h-4" />
                   Clear All Filters
                 </button>
               )}
             </div>
           ) : mapViewActive ? (
-            <div className="space-y-6">
+            <div className="space-y-8">
               <MapView pgs={pgs} height="h-[500px]" />
               <PGGrid pgs={currentItems} />
             </div>
@@ -223,9 +218,9 @@ function SearchPageContent() {
 export default function SearchPage() {
   return (
     <Suspense fallback={
-      <div className="w-full text-center py-12 text-sm font-semibold text-slate-500 animate-pulse">
-        <Compass className="w-8 h-8 text-primary-500 animate-spin mx-auto mb-2" />
-        Searching accommodations...
+      <div className="w-full text-center py-20 text-base font-bold text-slate-500 flex flex-col items-center">
+        <Compass className="w-12 h-12 text-primary-500 animate-spin mb-4" />
+        Discovering perfect stays...
       </div>
     }>
       <SearchPageContent />
