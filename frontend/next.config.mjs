@@ -5,17 +5,12 @@ const nextConfig = {
   typescript: {
     ignoreBuildErrors: true,
   },
-  async rewrites() {
-    return [
-      {
-        source: '/api/:path*',
-        destination: `${API_ORIGIN}/api/:path*`,
-      },
-      {
-        source: '/uploads/:path*',
-        destination: `${API_ORIGIN}/uploads/:path*`,
-      },
-    ];
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
+  output: 'export',
+  images: {
+    unoptimized: true,
   },
 };
 
