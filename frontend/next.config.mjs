@@ -1,6 +1,9 @@
 const API_ORIGIN = process.env.INTERNAL_API_URL || "http://127.0.0.1:8083";
 
-const isDev = process.env.NODE_ENV === "development";
+// Static export is only used by the root Dockerfile (Render single-port deployment),
+// where Spring Boot serves the built files. OpenNext (Cloudflare) and `next start`
+// need a normal SSR build instead.
+const isStaticExport = process.env.STATIC_EXPORT === "true";
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -10,13 +13,15 @@ const nextConfig = {
   eslint: {
     ignoreDuringBuilds: true,
   },
-  images: {
-    unoptimized: true,
-  },
 };
 
-if (isDev) {
-  // Dev: proxy API/upload requests to the Spring Boot backend (static export not used in dev).
+if (isStaticExport) {
+  nextConfig.output = "export";
+  nextConfig.images = {
+    unoptimized: true,
+  };
+} else {
+  // Dev server and SSR deployments: proxy API/upload requests to the backend.
   nextConfig.rewrites = async () => [
     {
       source: "/api/:path*",
@@ -27,9 +32,6 @@ if (isDev) {
       destination: `${API_ORIGIN}/uploads/:path*`,
     },
   ];
-} else {
-  // Production: static export served by Spring Boot on a single port.
-  nextConfig.output = "export";
 }
 
 export default nextConfig;

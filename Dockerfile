@@ -5,7 +5,7 @@ COPY frontend/package*.json ./
 RUN npm ci
 COPY frontend/ .
 # In export mode, the static files will be placed in the "out" directory
-RUN npm run build
+RUN STATIC_EXPORT=true npm run build
 
 # Stage 2: Build Backend (Java)
 FROM maven:3.8.5-openjdk-17-slim AS backend-builder
