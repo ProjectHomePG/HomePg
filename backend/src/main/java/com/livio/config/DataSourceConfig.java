@@ -64,13 +64,21 @@ public class DataSourceConfig {
 
         // Fallback to robust persistent file-based H2 database
         logger.info("Using embedded persistent H2 database (./data/livio_db)");
-        String h2Url = "jdbc:h2:file:./data/livio_db;DB_CLOSE_DELAY=-1;AUTO_SERVER=TRUE";
+        String h2Url = "jdbc:h2:file:./data/livio_db;DB_CLOSE_DELAY=-1" + (autoServerEnabled() ? ";AUTO_SERVER=TRUE" : "");
         return DataSourceBuilder.create()
                 .url(h2Url)
                 .username("sa")
                 .password("")
                 .driverClassName("org.h2.Driver")
                 .build();
+    }
+
+    private boolean autoServerEnabled() {
+        String override = System.getenv("H2_AUTO_SERVER");
+        if (override != null && !override.isBlank()) {
+            return Boolean.parseBoolean(override);
+        }
+        return System.getenv("RENDER") == null;
     }
 
     private ParsedDbInfo parseConnectionUrl(String rawUrl, String defaultUser, String defaultPass) {

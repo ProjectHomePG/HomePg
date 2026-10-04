@@ -9,3 +9,5 @@ services:
     envVars:
       - key: SPRING_PROFILES_ACTIVE
         value: prod
+      - key: H2_AUTO_SERVER
+        value: "false"
