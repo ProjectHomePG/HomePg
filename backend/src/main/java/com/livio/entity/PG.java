@@ -132,10 +132,8 @@ public class PG {
     @CollectionTable(name = "pg_nearby_places", joinColumns = @JoinColumn(name = "pg_id"))
     private List<NearbyPlace> nearbyPlaces = new ArrayList<>();
 
-    @Transient
     private Double rating;
 
-    @Transient
     private Integer reviewsCount;
 
     // Constructors

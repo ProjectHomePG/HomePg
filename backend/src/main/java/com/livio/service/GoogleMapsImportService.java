@@ -591,34 +591,7 @@ public class GoogleMapsImportService {
     }
 
     private Double estimatePrice(String city, String sharingType) {
-        String cityKey = city != null ? city.toLowerCase() : "bangalore";
-        String sharing = sharingType != null ? sharingType.toUpperCase() : "SINGLE";
-
-        Map<String, Double> basePrices = new HashMap<>();
-        basePrices.put("mumbai", 15000.0);
-        basePrices.put("bangalore", 10000.0);
-        basePrices.put("bengaluru", 10000.0);
-        basePrices.put("delhi", 12000.0);
-        basePrices.put("pune", 8000.0);
-        basePrices.put("hyderabad", 9000.0);
-        basePrices.put("chennai", 8500.0);
-        basePrices.put("kolkata", 7000.0);
-        basePrices.put("gurugram", 14000.0);
-        basePrices.put("gurgaon", 14000.0);
-        basePrices.put("noida", 9000.0);
-        basePrices.put("ghaziabad", 7000.0);
-
-        double base = basePrices.getOrDefault(cityKey, 10000.0);
-
-        double multiplier = switch (sharing) {
-            case "SINGLE" -> 1.3;
-            case "DOUBLE" -> 1.0;
-            case "TRIPLE" -> 0.75;
-            case "QUAD" -> 0.6;
-            default -> 1.0;
-        };
-
-        return Math.round(base * multiplier / 500.0) * 500.0;
+        return com.livio.util.PriceEstimator.estimate(city, sharingType);
     }
 
     private String safeGet(String[] row, int index) {

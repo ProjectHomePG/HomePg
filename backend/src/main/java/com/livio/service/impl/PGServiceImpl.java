@@ -121,6 +121,7 @@ public class PGServiceImpl implements PGService {
     }
 
     private void populateRatingsAndReviews(PG pg) {
+        com.livio.util.PriceEstimator.applyIfMissing(pg);
         List<Object[]> summaryList = reviewRepository.getRatingSummaryForPg(pg.getId());
         if (summaryList != null && !summaryList.isEmpty() && summaryList.get(0)[0] != null) {
             Object[] summary = summaryList.get(0);
@@ -146,6 +147,7 @@ public class PGServiceImpl implements PGService {
                 ));
 
         for (PG pg : pgs) {
+            com.livio.util.PriceEstimator.applyIfMissing(pg);
             Object[] summary = summaryMap.get(pg.getId());
             if (summary != null) {
                 Double avgRating = (Double) summary[1];

@@ -66,6 +66,7 @@ public class SearchServiceImpl implements SearchService {
                 ));
 
         for (PG pg : pgs) {
+            com.livio.util.PriceEstimator.applyIfMissing(pg);
             Object[] summary = summaryMap.get(pg.getId());
             if (summary != null) {
                 Double avgRating = (Double) summary[1];
