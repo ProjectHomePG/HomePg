@@ -1,3 +1,5 @@
+const API_ORIGIN = process.env.INTERNAL_API_URL || "http://127.0.0.1:8083";
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   typescript: {
@@ -7,11 +9,11 @@ const nextConfig = {
     return [
       {
         source: '/api/:path*',
-        destination: 'http://127.0.0.1:8083/api/:path*',
+        destination: `${API_ORIGIN}/api/:path*`,
       },
       {
         source: '/uploads/:path*',
-        destination: 'http://127.0.0.1:8083/uploads/:path*',
+        destination: `${API_ORIGIN}/uploads/:path*`,
       },
     ];
   },

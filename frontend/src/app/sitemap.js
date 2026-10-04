@@ -23,7 +23,7 @@ function toDate(value) {
 
 async function getListingEntries() {
   try {
-    const res = await fetch(`${apiBaseUrl}/api/pgs`, { next: { revalidate: 86400 } });
+    const res = await fetch(`${apiBaseUrl}/api/pgs`, { signal: AbortSignal.timeout(15000) });
     if (!res.ok) return [];
     const pgs = await res.json();
     return pgs
