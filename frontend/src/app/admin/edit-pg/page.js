@@ -1,21 +1,19 @@
 "use client";
 
 import React, { useState, useEffect, use } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { ShieldAlert, Loader2 } from 'lucide-react';
-import pgService from '../../../../services/pgService';
-import authService from '../../../../services/authService';
-import AdminHeader from '../../../../components/Admin/AdminHeader';
-import PGForm from '../../../../components/Admin/PGForm';
+import pgService from '../../../services/pgService';
+import authService from '../../../services/authService';
+import AdminHeader from '../../../components/Admin/AdminHeader';
+import PGForm from '../../../components/Admin/PGForm';
+import { Suspense } from 'react';
 
-/**
- * AdminEditPG page.
- * Loads and edits details of an existing PG stay based on route ID parameters.
- * Owners use /api/owner/pgs/{id}; Admins use /api/pgs/{id}
- */
-export default function AdminEditPGPage({ params }) {
-  const resolvedParams = use(params);
+function EditPGContent() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const id = searchParams.get('id');
+  
   const [pg, setPg] = useState(null);
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
@@ -23,8 +21,6 @@ export default function AdminEditPGPage({ params }) {
   const [userRole, setUserRole] = useState(null);
   const [userId, setUserId] = useState(null);
   const [initialized, setInitialized] = useState(false);
-
-  const { id } = resolvedParams;
 
   useEffect(() => {
     const user = authService.getCurrentUser();
@@ -123,5 +119,13 @@ export default function AdminEditPGPage({ params }) {
         />
       )}
     </div>
+  );
+}
+
+export default function AdminEditPGPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen flex items-center justify-center"><Loader2 className="w-8 h-8 animate-spin text-primary-600" /></div>}>
+      <EditPGContent />
+    </Suspense>
   );
 }

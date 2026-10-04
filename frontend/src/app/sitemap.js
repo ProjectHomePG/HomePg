@@ -1,6 +1,7 @@
 const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:8082";
 const apiBaseUrl = process.env.INTERNAL_API_URL || "http://127.0.0.1:8083";
 
+export const dynamic = "force-static";
 export const revalidate = 86400;
 
 const staticPages = [
@@ -29,7 +30,7 @@ async function getListingEntries() {
     return pgs
       .filter((pg) => pg && pg.slug)
       .map((pg) => ({
-        url: `${baseUrl}/pg/${pg.slug}`,
+        url: `${baseUrl}/pg?slug=${pg.slug}`,
         lastModified: toDate(pg.updatedAt ?? pg.createdAt),
         changeFrequency: "weekly",
         priority: 0.7,
