@@ -3,7 +3,7 @@ import Link from 'next/link';
 export const metadata = {
   title: 'Privacy Policy',
   description:
-    'How Livio collects, uses, stores, and protects your personal information when you search, list, or contact us.',
+    'How PG Near Me collects, uses, stores, and protects your personal information when you search, list, or contact us.',
 };
 
 const SECTIONS = [
@@ -45,7 +45,7 @@ const SECTIONS = [
   {
     heading: '4. Cookies and local storage',
     body: [
-      'Livio uses local storage to remember your theme preference (light or dark) and to keep you signed in with a session token. We use cookies only where necessary for authentication and basic analytics. You can clear these through your browser settings at any time; doing so will sign you out and reset your preferences.',
+      'PG Near Me uses local storage to remember your theme preference (light or dark) and to keep you signed in with a session token. We use cookies only where necessary for authentication and basic analytics. You can clear these through your browser settings at any time; doing so will sign you out and reset your preferences.',
     ],
   },
   {
@@ -73,13 +73,13 @@ const SECTIONS = [
   {
     heading: '8. Children\'s privacy',
     body: [
-      'Livio is not directed at children under 18, and we do not knowingly collect personal information from them. If you believe a child has provided us with data, contact us and we will delete it.',
+      'PG Near Me is not directed at children under 18, and we do not knowingly collect personal information from them. If you believe a child has provided us with data, contact us and we will delete it.',
     ],
   },
   {
     heading: '9. Changes to this policy',
     body: [
-      'We may update this Privacy Policy from time to time. The "Last updated" date below shows when it was last revised. Continued use of Livio after changes means you accept the updated policy.',
+      'We may update this Privacy Policy from time to time. The "Last updated" date below shows when it was last revised. Continued use of PG Near Me after changes means you accept the updated policy.',
     ],
   },
 ];
@@ -96,7 +96,7 @@ export default function PrivacyPolicyPage() {
         </h1>
         <p className="text-xs text-slate-400">Last updated: 3 October 2026</p>
         <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
-          This policy explains what we collect when you use Livio, how we use it, and the choices
+          This policy explains what we collect when you use PG Near Me, how we use it, and the choices
           you have. By using the platform, you agree to the practices described here.
         </p>
       </header>
@@ -131,8 +131,8 @@ export default function PrivacyPolicyPage() {
           </h2>
           <p className="text-sm leading-relaxed text-slate-600 dark:text-slate-400">
             Questions about this policy or your data? Email us at{' '}
-            <a href="mailto:support@livio.com" className="text-primary-600 hover:underline">
-              support@livio.com
+            <a href="mailto:support@bestpgnearme.com" className="text-primary-600 hover:underline">
+              support@bestpgnearme.com
             </a>{' '}
             or use the{' '}
             <Link href="/contact-us" className="text-primary-600 hover:underline">

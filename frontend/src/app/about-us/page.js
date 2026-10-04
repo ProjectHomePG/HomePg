@@ -14,7 +14,7 @@ import {
 export const metadata = {
   title: 'About Us',
   description:
-    'Livio helps students and professionals find verified PG and co-living accommodations near colleges, tech parks, and metro stations across India.',
+    'PG Near Me helps students and professionals find verified PG and co-living accommodations near colleges, tech parks, and metro stations across India.',
 };
 
 const STEPS = [
@@ -64,13 +64,13 @@ export default function AboutUsPage() {
       {/* Hero */}
       <header className="bg-white dark:bg-slate-800 rounded-3xl border border-slate-100 dark:border-slate-800 shadow-sm p-8 sm:p-12 space-y-4">
         <span className="text-xs font-bold uppercase tracking-widest text-primary-600 dark:text-primary-400">
-          About Livio
+          About PG Near Me
         </span>
         <h1 className="text-3xl sm:text-4xl font-black text-slate-900 dark:text-white leading-tight">
           Finding a place to live should not take months.
         </h1>
         <p className="text-sm sm:text-base text-slate-600 dark:text-slate-400 leading-relaxed max-w-3xl">
-          Livio is a listing platform for paying guest (PG) and co-living accommodations across India.
+          PG Near Me is a listing platform for paying guest (PG) and co-living accommodations across India.
           We connect seekers with verified hosts, so students and working professionals can find a room
           near their college or workplace without paying a broker.
         </p>
@@ -94,7 +94,7 @@ export default function AboutUsPage() {
       {/* How it works */}
       <section className="bg-white dark:bg-slate-800 rounded-3xl border border-slate-100 dark:border-slate-800 shadow-sm p-8 sm:p-12 space-y-6">
         <div>
-          <h2 className="text-xl font-black text-slate-900 dark:text-white">How Livio works</h2>
+          <h2 className="text-xl font-black text-slate-900 dark:text-white">How PG Near Me works</h2>
           <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">
             Three steps between you and your next room.
           </p>
@@ -118,7 +118,7 @@ export default function AboutUsPage() {
       {/* Values */}
       <section className="bg-white dark:bg-slate-800 rounded-3xl border border-slate-100 dark:border-slate-800 shadow-sm p-8 sm:p-12 space-y-6">
         <div>
-          <h2 className="text-xl font-black text-slate-900 dark:text-white">Why seekers pick Livio</h2>
+          <h2 className="text-xl font-black text-slate-900 dark:text-white">Why seekers pick PG Near Me</h2>
           <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">
             What we optimise for on every listing.
           </p>
@@ -142,7 +142,7 @@ export default function AboutUsPage() {
 
       {/* For hosts */}
       <section className="bg-gradient-to-r from-primary-600 to-rose-500 rounded-3xl shadow-sm p-8 sm:p-12 text-white space-y-4">
-        <h2 className="text-xl font-black">List your property on Livio</h2>
+        <h2 className="text-xl font-black">List your property on PG Near Me</h2>
         <p className="text-sm text-white/85 leading-relaxed max-w-3xl">
           Hosts and property owners can create a dashboard, publish listings with photos and amenities,
           and receive booking inquiries from verified seekers. It takes a few minutes to get started.

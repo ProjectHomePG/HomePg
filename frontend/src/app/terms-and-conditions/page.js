@@ -3,26 +3,26 @@ import Link from 'next/link';
 export const metadata = {
   title: 'Terms & Conditions',
   description:
-    'The terms that govern your use of Livio, including accounts, listings, inquiries, and acceptable conduct.',
+    'The terms that govern your use of PG Near Me, including accounts, listings, inquiries, and acceptable conduct.',
 };
 
 const SECTIONS = [
   {
     heading: '1. Acceptance of terms',
     body: [
-      'By accessing or using Livio, you agree to these Terms & Conditions and our Privacy Policy. If you do not agree, please do not use the platform.',
+      'By accessing or using PG Near Me, you agree to these Terms & Conditions and our Privacy Policy. If you do not agree, please do not use the platform.',
     ],
   },
   {
     heading: '2. Eligibility and accounts',
     body: [
-      'You must be at least 18 years old to use Livio. You are responsible for maintaining the confidentiality of your login credentials and for all activity under your account. Provide accurate information during registration and keep it up to date. Notify us immediately if you suspect unauthorized use of your account.',
+      'You must be at least 18 years old to use PG Near Me. You are responsible for maintaining the confidentiality of your login credentials and for all activity under your account. Provide accurate information during registration and keep it up to date. Notify us immediately if you suspect unauthorized use of your account.',
     ],
   },
   {
     heading: '3. Our role',
     body: [
-      'Livio is a listing and discovery platform. We do not own, operate, or manage any PG or co-living property listed on the site, and we are not a party to any agreement between a seeker and a host. Listings, pricing, availability, and house rules are provided by the hosts themselves.',
+      'PG Near Me is a listing and discovery platform. We do not own, operate, or manage any PG or co-living property listed on the site, and we are not a party to any agreement between a seeker and a host. Listings, pricing, availability, and house rules are provided by the hosts themselves.',
     ],
   },
   {
@@ -36,7 +36,7 @@ const SECTIONS = [
     body: ['You agree not to:'],
     list: [
       'Post false, fraudulent, or infringing listings or inquiries.',
-      'Use Livio for spam, phishing, or unsolicited marketing.',
+      'Use PG Near Me for spam, phishing, or unsolicited marketing.',
       'Attempt to gain unauthorized access to other accounts, systems, or data.',
       'Scrape, copy, or resell platform content without written permission.',
       'Interfere with the platform\'s operation, including introducing malware or overloading our systems.',
@@ -46,31 +46,31 @@ const SECTIONS = [
   {
     heading: '6. Intellectual property',
     body: [
-      'The Livio name, logo, design, and software are owned by us and protected by applicable intellectual property laws. Hosts retain ownership of the content they upload but grant Livio a worldwide, non-exclusive licence to display, reproduce, and promote that content on the platform.',
+      'The PG Near Me name, logo, design, and software are owned by us and protected by applicable intellectual property laws. Hosts retain ownership of the content they upload but grant PG Near Me a worldwide, non-exclusive licence to display, reproduce, and promote that content on the platform.',
     ],
   },
   {
     heading: '7. Termination',
     body: [
-      'We may suspend or terminate your access to Livio at any time if you breach these terms, create risk for other users, or if required by law. You may close your account at any time by contacting us.',
+      'We may suspend or terminate your access to PG Near Me at any time if you breach these terms, create risk for other users, or if required by law. You may close your account at any time by contacting us.',
     ],
   },
   {
     heading: '8. Disclaimers',
     body: [
-      'Livio is provided on an "as is" and "as available" basis. We do not warrant that listings are complete or accurate, that the platform will be uninterrupted or error-free, or that any property will meet your expectations. Any visit, agreement, or payment arranged through a listing is at your own risk.',
+      'PG Near Me is provided on an "as is" and "as available" basis. We do not warrant that listings are complete or accurate, that the platform will be uninterrupted or error-free, or that any property will meet your expectations. Any visit, agreement, or payment arranged through a listing is at your own risk.',
     ],
   },
   {
     heading: '9. Limitation of liability',
     body: [
-      'To the maximum extent permitted by law, Livio and its team shall not be liable for indirect, incidental, or consequential damages, or for any loss of profits, data, or goodwill arising from your use of the platform. Our total liability for any claim relating to the platform shall not exceed the amount you paid us in the twelve months before the claim.',
+      'To the maximum extent permitted by law, PG Near Me and its team shall not be liable for indirect, incidental, or consequential damages, or for any loss of profits, data, or goodwill arising from your use of the platform. Our total liability for any claim relating to the platform shall not exceed the amount you paid us in the twelve months before the claim.',
     ],
   },
   {
     heading: '10. Indemnity',
     body: [
-      'You agree to indemnify and hold Livio harmless from claims, losses, and expenses arising from your listings, your content, your misuse of the platform, or your breach of these terms.',
+      'You agree to indemnify and hold PG Near Me harmless from claims, losses, and expenses arising from your listings, your content, your misuse of the platform, or your breach of these terms.',
     ],
   },
   {
@@ -82,7 +82,7 @@ const SECTIONS = [
   {
     heading: '12. Changes to these terms',
     body: [
-      'We may revise these terms from time to time. The "Last updated" date below reflects the latest revision. Continued use of Livio after changes means you accept the revised terms.',
+      'We may revise these terms from time to time. The "Last updated" date below reflects the latest revision. Continued use of PG Near Me after changes means you accept the revised terms.',
     ],
   },
 ];
@@ -99,7 +99,7 @@ export default function TermsAndConditionsPage() {
         </h1>
         <p className="text-xs text-slate-400">Last updated: 3 October 2026</p>
         <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
-          These terms govern your use of Livio. Please read them carefully before creating an
+          These terms govern your use of PG Near Me. Please read them carefully before creating an
           account, publishing a listing, or submitting an inquiry.
         </p>
       </header>
@@ -134,8 +134,8 @@ export default function TermsAndConditionsPage() {
           </h2>
           <p className="text-sm leading-relaxed text-slate-600 dark:text-slate-400">
             Questions about these terms? Email{' '}
-            <a href="mailto:support@livio.com" className="text-primary-600 hover:underline">
-              support@livio.com
+            <a href="mailto:support@bestpgnearme.com" className="text-primary-600 hover:underline">
+              support@bestpgnearme.com
             </a>{' '}
             or reach us through the{' '}
             <Link href="/contact-us" className="text-primary-600 hover:underline">

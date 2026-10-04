@@ -10,7 +10,7 @@ import ThemeToggle from '../Shared/ThemeToggle';
 import LogoMark from '../Shared/LogoMark';
 
 /**
- * Navbar component for Livio.
+ * Navbar component for PG Near Me.
  * Provides sticky header navigation, role-based controls, theme toggle, and responsive layout.
  */
 export default function Navbar() {
@@ -38,7 +38,7 @@ export default function Navbar() {
             <Link href="/" className="flex items-center space-x-2">
               <LogoMark className="w-7 h-7" />
               <span className="text-2xl font-bold bg-gradient-to-r from-primary-600 to-rose-500 bg-clip-text text-transparent">
-                Livio
+                PG Near Me
               </span>
             </Link>
           </div>

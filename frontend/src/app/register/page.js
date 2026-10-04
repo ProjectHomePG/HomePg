@@ -62,7 +62,7 @@ export default function RegisterPage() {
         <div className="bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700 rounded-3xl p-8 shadow-sm space-y-6">
           <div className="text-center space-y-2">
             <span className="text-2xl font-bold bg-gradient-to-r from-primary-600 to-rose-500 bg-clip-text text-transparent block">
-              Livio
+              PG Near Me
             </span>
             <h2 className="text-lg font-black text-slate-800 dark:text-slate-100">Create Account</h2>
             <p className="text-xs text-slate-400">Join us to find or list premium accommodations.</p>

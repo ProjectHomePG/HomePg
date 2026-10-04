@@ -18,7 +18,7 @@ public class HomeController {
     public Map<String, Object> home() {
         Map<String, Object> response = new HashMap<>();
         response.put("status", "UP");
-        response.put("message", "Livio Backend API is running successfully on port " + port + "!");
+        response.put("message", "PG Near Me Backend API is running successfully on port " + port + "!");
         
         Map<String, String> endpoints = new HashMap<>();
         endpoints.put("Authentication", "/api/auth");

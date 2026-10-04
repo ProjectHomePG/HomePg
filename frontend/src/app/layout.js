@@ -19,23 +19,23 @@ const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:8082";
 export const metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: "Livio | Premium PG & Co-Living Spaces",
-    template: "%s | Livio",
+    default: "PG Near Me | Premium PG & Co-Living Spaces",
+    template: "%s | PG Near Me",
   },
   description: "Find premium, verified PG (Paying Guest) rooms and co-living accommodations near tech parks, colleges, metro stations, and hospitals.",
   keywords: ["PG", "Paying Guest", "Co-living", "Hostel", "Student Accommodation", "Rooms for rent"],
-  authors: [{ name: "Livio" }],
+  authors: [{ name: "PG Near Me" }],
   openGraph: {
-    title: "Livio | Premium PG & Co-Living Spaces",
+    title: "PG Near Me | Premium PG & Co-Living Spaces",
     description: "Find premium, verified PG rooms and co-living accommodations.",
     url: siteUrl,
-    siteName: "Livio",
+    siteName: "PG Near Me",
     locale: "en_IN",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Livio | Premium PG & Co-Living Spaces",
+    title: "PG Near Me | Premium PG & Co-Living Spaces",
     description: "Find premium, verified PG rooms and co-living accommodations.",
   },
 };

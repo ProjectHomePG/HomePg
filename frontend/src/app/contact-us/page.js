@@ -5,15 +5,15 @@ import ContactForm from './ContactForm';
 export const metadata = {
   title: 'Contact Us',
   description:
-    'Get in touch with the Livio team about listings, support, partnerships, or anything else.',
+    'Get in touch with the PG Near Me team about listings, support, partnerships, or anything else.',
 };
 
 const CHANNELS = [
   {
     icon: Mail,
     label: 'Email',
-    value: 'support@livio.com',
-    href: 'mailto:support@livio.com',
+    value: 'support@bestpgnearme.com',
+    href: 'mailto:support@bestpgnearme.com',
   },
   {
     icon: Clock,
@@ -85,7 +85,7 @@ export default function ContactUsPage() {
             <ul className="space-y-2 text-xs font-semibold text-slate-600 dark:text-slate-400">
               <li>
                 <Link href="/about-us" className="hover:text-primary-600 transition-colors">
-                  About Livio
+                  About PG Near Me
                 </Link>
               </li>
               <li>

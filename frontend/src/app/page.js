@@ -34,7 +34,7 @@ function shuffle(items) {
 }
 
 /**
- * Home page for Livio.
+ * Home page for PG Near Me.
  * Integrates premium Hero banner, categories, and PG listings.
  */
 export default function HomePage() {

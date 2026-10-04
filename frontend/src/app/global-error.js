@@ -7,7 +7,7 @@ export default function GlobalError({ error, reset }) {
   return (
     <html lang="en">
       <head>
-        <title>Server Error | Livio</title>
+        <title>Server Error | PG Near Me</title>
       </head>
       <body className="min-h-screen flex flex-col items-center justify-center bg-slate-50 text-slate-800 px-4">
         <div className="w-full max-w-lg bg-white rounded-3xl border border-slate-100 shadow-sm p-8 sm:p-12 text-center space-y-5">

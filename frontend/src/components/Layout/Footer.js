@@ -66,7 +66,7 @@ export default function Footer() {
             <div className="flex items-center gap-2">
               <LogoMark className="w-7 h-7" />
               <span className="text-xl font-bold text-white bg-gradient-to-r from-primary-500 to-rose-400 bg-clip-text text-transparent">
-                Livio
+                PG Near Me
               </span>
             </div>
             <p className="text-sm text-slate-400 leading-relaxed">
@@ -124,7 +124,7 @@ export default function Footer() {
             <ul className="space-y-3 text-sm">
               <li className="flex items-center text-slate-400">
                 <Mail className="w-4 h-4 mr-2.5 text-primary-500" />
-                <span>support@livio.com</span>
+                <span>support@bestpgnearme.com</span>
               </li>
             </ul>
           </div>
@@ -134,7 +134,7 @@ export default function Footer() {
         {/* Bottom Socials & Copyright */}
         <div className="mt-12 pt-8 border-t border-slate-800 flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0 text-xs">
           <div className="text-slate-500">
-            &copy; {currentYear} Livio. All rights reserved. Made for PG hunting made easy.
+            &copy; {currentYear} PG Near Me. All rights reserved. Made for PG hunting made easy.
           </div>
           
           <div className="flex space-x-5">
