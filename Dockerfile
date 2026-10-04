@@ -1,47 +1,34 @@
-# Stage 1: Build Backend (Java)
-FROM maven:3.8.5-openjdk-17-slim AS backend-builder
-WORKDIR /build/backend
-COPY backend/pom.xml .
-RUN mvn dependency:go-offline -B
-COPY backend/src ./src
-RUN mvn clean package -DskipTests
-
-# Stage 2: Build Frontend (Next.js)
+# Stage 1: Build Frontend (Next.js)
 FROM node:20-alpine AS frontend-builder
 WORKDIR /build/frontend
 COPY frontend/package*.json ./
 RUN npm ci
 COPY frontend/ .
-ENV NEXT_PUBLIC_API_URL=/api
+# In export mode, the static files will be placed in the "out" directory
 RUN npm run build
 
-# Stage 3: Runner (Java + Node)
-FROM eclipse-temurin:17-jdk-alpine
-RUN apk add --no-cache nodejs npm curl
+# Stage 2: Build Backend (Java)
+FROM maven:3.8.5-openjdk-17-slim AS backend-builder
+WORKDIR /build/backend
+COPY backend/pom.xml .
+RUN mvn dependency:go-offline -B
+COPY backend/src ./src
 
+# Copy the statically exported frontend files into Spring Boot's static resources directory
+COPY --from=frontend-builder /build/frontend/out ./src/main/resources/static
+
+# Package the application into a single executable JAR
+RUN mvn clean package -DskipTests
+
+# Stage 3: Runner (Java Only)
+FROM eclipse-temurin:17-jdk-alpine
 WORKDIR /app
 
-# Create data directory with proper permissions
+# Create data directory with proper permissions for SQLite DB
 RUN mkdir -p /app/data
 
-# Copy Backend files
-COPY --from=backend-builder /build/backend/target/livio-backend-0.0.1-SNAPSHOT.jar backend.jar
+# Copy the single JAR which now contains both backend and frontend
+COPY --from=backend-builder /build/backend/target/livio-backend-0.0.1-SNAPSHOT.jar app.jar
 
-# Copy Frontend files
-COPY --from=frontend-builder /build/frontend/package*.json ./
-COPY --from=frontend-builder /build/frontend/node_modules ./node_modules
-COPY --from=frontend-builder /build/frontend/.next ./.next
-COPY --from=frontend-builder /build/frontend/public ./public
-COPY --from=frontend-builder /build/frontend/next.config.mjs ./next.config.mjs
-
-# Copy shared database if it exists
-COPY data/ /app/data/
-
-# Expose Next.js port (single port deployment)
-EXPOSE 8082
-
-# Script to start both
-COPY start.sh .
-RUN chmod +x start.sh
-
-CMD ["./start.sh"]
+# Start the Spring Boot application directly (no separate Node process needed)
+CMD ["java", "-Djava.net.preferIPv4Stack=true", "-jar", "app.jar"]

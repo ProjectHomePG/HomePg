@@ -128,7 +128,7 @@ export default function PGCard({ pg }) {
 
           {/* Title */}
           <h3 className="font-extrabold text-xl text-slate-900 dark:text-white group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors mb-2 line-clamp-1">
-            <Link href={`/pg/${pg.slug}`} className="focus:outline-none">
+            <Link href={`/pg?slug=${pg.slug}`} className="focus:outline-none">
               {pg.title}
             </Link>
           </h3>
@@ -154,7 +154,7 @@ export default function PGCard({ pg }) {
           </div>
 
           <Link
-            href={`/pg/${pg.slug}`}
+            href={`/pg?slug=${pg.slug}`}
             className="inline-flex items-center justify-center p-3 rounded-2xl bg-primary-50 hover:bg-primary-600 text-primary-600 hover:text-white dark:bg-primary-900/30 dark:hover:bg-primary-600 dark:text-primary-400 dark:hover:text-white transition-all duration-300 group-hover:shadow-lg group-hover:shadow-primary-500/25"
           >
             <ChevronRight className="w-5 h-5" strokeWidth={2.5} />

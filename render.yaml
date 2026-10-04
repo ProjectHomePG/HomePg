@@ -1,5 +1,5 @@
 services:
-  # Unified Frontend + Backend Web Service
+  # Unified Web Service (Spring Boot serving Next.js and using embedded SQLite)
   - type: web
     name: livio-app
     runtime: docker
@@ -7,25 +7,5 @@ services:
     dockerfilePath: Dockerfile
     plan: free
     envVars:
-      # Optional: Connect to PostgreSQL if it is created, else falls back to H2
-      - key: SPRING_DATASOURCE_URL
-        fromDatabase:
-          name: livio-db
-          property: connectionString
-      - key: SPRING_DATASOURCE_USERNAME
-        fromDatabase:
-          name: livio-db
-          property: user
-      - key: SPRING_DATASOURCE_PASSWORD
-        fromDatabase:
-          name: livio-db
-          property: password
-      - key: SPRING_JPA_HIBERNATE_DDL_AUTO
-        value: update
       - key: SPRING_PROFILES_ACTIVE
         value: prod
-
-databases:
-  # Managed PostgreSQL Database
-  - name: livio-db
-    plan: free

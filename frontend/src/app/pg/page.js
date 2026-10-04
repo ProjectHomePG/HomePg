@@ -2,26 +2,24 @@
 
 import React, { useState, useEffect, use } from 'react';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
-import { ChevronLeft, Info, Calendar, DollarSign, ShieldAlert, Award, MapPin, Star, Trash2, Pencil } from 'lucide-react';
-import pgService from '../../../services/pgService';
-import authService from '../../../services/authService';
-import ImageGallery from '../../../components/Details/ImageGallery';
-import Amenities from '../../../components/Details/Amenities';
-import ReviewList from '../../../components/Details/ReviewList';
-import NearbyPlaces from '../../../components/Details/NearbyPlaces';
-import ContactOwner from '../../../components/Details/ContactOwner';
-import MapView from '../../../components/Search/MapView';
-import LoadingSkeleton from '../../../components/Shared/LoadingSkeleton';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { ChevronLeft, Info, Calendar, DollarSign, ShieldAlert, Award, MapPin, Star, Trash2, Pencil, Loader2 } from 'lucide-react';
+import pgService from '../../services/pgService';
+import authService from '../../services/authService';
+import ImageGallery from '../../components/Details/ImageGallery';
+import Amenities from '../../components/Details/Amenities';
+import ReviewList from '../../components/Details/ReviewList';
+import NearbyPlaces from '../../components/Details/NearbyPlaces';
+import ContactOwner from '../../components/Details/ContactOwner';
+import MapView from '../../components/Search/MapView';
+import LoadingSkeleton from '../../components/Shared/LoadingSkeleton';
+import { Suspense } from 'react';
 
-/**
- * PG Details Page.
- * Displays extensive details of a single property listing.
- */
-export default function PGDetailsPage({ params }) {
-  // Unwrap dynamic params promise
-  const resolvedParams = use(params);
+function PGDetailsContent() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const slug = searchParams.get('slug');
+  
   const [pg, setPg] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -46,7 +44,8 @@ export default function PGDetailsPage({ params }) {
   useEffect(() => {
     async function loadDetails() {
       try {
-        const data = await pgService.getBySlug(resolvedParams.slug);
+        if (!slug) return;
+        const data = await pgService.getBySlug(slug);
         setPg(data);
       } catch (err) {
         setError(err.message || "Failed to load stay details");
@@ -55,7 +54,7 @@ export default function PGDetailsPage({ params }) {
       }
     }
     loadDetails();
-  }, [resolvedParams.slug]);
+  }, [slug]);
 
   if (loading) {
     return (
@@ -232,7 +231,7 @@ export default function PGDetailsPage({ params }) {
           {isAdmin && (
             <div className="bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-800 rounded-3xl p-4 shadow-sm flex gap-3">
               <Link
-                href={`/admin/edit-pg/${pg.id}`}
+                href={`/admin/edit-pg?id=${pg.id}`}
                 className="flex-1 inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 text-xs font-bold text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors"
               >
                 <Pencil className="w-3.5 h-3.5" />
@@ -266,5 +265,13 @@ export default function PGDetailsPage({ params }) {
 
       </div>
     </div>
+  );
+}
+
+export default function PGDetailsPage() {
+  return (
+    <Suspense fallback={<div className="max-w-7xl mx-auto px-4 sm:px-6 py-12 space-y-6"><div className="h-64 bg-slate-100 dark:bg-slate-800 rounded-3xl animate-pulse"></div></div>}>
+      <PGDetailsContent />
+    </Suspense>
   );
 }

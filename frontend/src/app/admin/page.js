@@ -190,7 +190,7 @@ export default function AdminDashboardPage() {
                 {pgs.map((pg) => (
                   <tr key={pg.id} className="hover:bg-slate-50/50 dark:hover:bg-slate-700/20 transition-colors">
                     <td className="p-4 pl-6 font-bold text-slate-900 dark:text-slate-200">
-                      <Link href={`/pg/${pg.slug}`} className="hover:underline">
+                      <Link href={`/pg?slug=${pg.slug}`} className="hover:underline">
                         {pg.title}
                       </Link>
                     </td>
@@ -201,7 +201,7 @@ export default function AdminDashboardPage() {
                     <td className="p-4 font-extrabold text-slate-800 dark:text-slate-100">₹{pg.price.toLocaleString('en-IN')}</td>
                     <td className="p-4 pr-6 text-right flex justify-end items-center space-x-2">
                       <Link
-                        href={`/admin/edit-pg/${pg.id}`}
+                        href={`/admin/edit-pg?id=${pg.id}`}
                         className="p-1.5 rounded-lg border border-slate-200 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-900 text-slate-500 hover:text-primary-600 transition-colors cursor-pointer"
                         title="Edit Stay"
                       >
