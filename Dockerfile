@@ -27,6 +27,9 @@ WORKDIR /app
 # Create data directory with proper permissions for SQLite DB
 RUN mkdir -p /app/data
 
+# Seed the embedded H2 database and uploaded images from the git-tracked snapshot
+COPY data ./data
+
 # Copy the single JAR which now contains both backend and frontend
 COPY --from=backend-builder /build/backend/target/livio-backend-0.0.1-SNAPSHOT.jar app.jar
 

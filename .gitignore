@@ -28,6 +28,8 @@ backend/.mvn/wrapper/maven-wrapper.jar
 
 # H2 Local Data files
 backend/data/
+data/*.trace.db
+data/*.lock.db
 
 # IDE and Editor Ignores
 .idea/
