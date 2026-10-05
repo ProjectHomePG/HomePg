@@ -1,205 +1,158 @@
-﻿# 🏠 Livio (HomePg)
+<div align="center">
+  <h1>🏠 Livio (HomePg)</h1>
+  <p><strong>A Modern, Scalable Platform for PG & Room Discovery</strong></p>
+  
+  <p>
+    <img src="https://img.shields.io/badge/Frontend-Next.js-black?style=for-the-badge&logo=next.js" alt="Next.js" />
+    <img src="https://img.shields.io/badge/Backend-Spring_Boot-6DB33F?style=for-the-badge&logo=spring" alt="Spring Boot" />
+    <img src="https://img.shields.io/badge/Database-PostgreSQL-316192?style=for-the-badge&logo=postgresql" alt="PostgreSQL" />
+    <img src="https://img.shields.io/badge/Deployment-Vercel_%7C_Render-blueviolet?style=for-the-badge" alt="Deployment" />
+  </p>
+</div>
 
-A web project (frontend-first) with JavaScript and Java components.
+---
 
 ## 🚀 About Livio
 
-Livio combines a **Next.js (React) frontend**, **Spring Boot (Java) backend**, and an **embedded H2/PostgreSQL database** to provide a scalable foundation for a property-focused digital platform.
+Livio is a robust, production-grade platform designed to streamline the discovery and management of PGs (Paying Guests) and rental rooms. Engineered as a modern full-stack application, it pairs a lightning-fast **Next.js frontend** with a highly scalable, secure **Spring Boot backend**. 
 
-Purpose
+Built for performance, scalability, and an exceptional user experience, Livio is the foundation of a modern property tech startup.
 
-HomePg appears to be a web application with a primary JavaScript frontend and a Java-based backend/service. This README standardizes setup and structure.
-
-Quick start
-
-1. Clone
-   git clone https://github.com/ProjectHomePG/HomePg.git
-   cd HomePg
-
-2. If there is a frontend folder
-   cd frontend
-   npm install
-   npm run dev
-
-3. Java backend
-   cd ../backend
-   mvn clean package
-   java -jar target/your-backend.jar
-
-4. Docker (optional)
-   docker build -t homepg .
-   docker run -p 8080:8080 homepg
-
-Recommended project structure
-
-- README.md
-- frontend/
-  - package.json
-  - src/
-- backend/
-  - pom.xml
-  - src/main/java/
-- docker/
-  - Dockerfile
-- docs/
-- scripts/
-
-Notes
-
-- If Dockerfile exists at repo root, adjust above accordingly.
-- Add environment-specific configuration under /config or via .env files (and .env.sample in the repo).
-
-License
-
-No license added. Add a LICENSE file if needed.
+---
 
 ## ✨ Key Features
 
-### 🏡 PG Management
-* PG listing and management
-* PG information and details
-* Structured PG data
-* PG availability/status management
-* Create, update, view, and manage PG information
+### 🏡 PG & Property Management
+* **Rich Listings:** Detailed PG data including amenities, pricing, availability, and images.
+* **Property Administration:** Intuitive flow to create, update, and manage PG portfolios.
+* **Status Tracking:** Real-time availability and capacity tracking.
 
-### 🔎 PG/Rooms Discovery
-* Browse available PG/Rooms
-* Search PG/Rooms
-* Filter PG/Rooms based on relevant criteria
-* View detailed PG/Rooms information
-* Organized PG/Rooms listings for easier discovery
+### 🔎 Advanced Discovery & Search
+* **Smart Filtering:** Find rooms based on budget, location, and specific preferences.
+* **Interactive UI:** A highly responsive, Tailwind-styled interface for seamless browsing.
+* **Organized Categorization:** Simplifies the decision-making process for users.
 
-### 👤 User Management
-* User registration and login (JWT Authentication)
-* User profile management
-* User-specific property interactions
-* Secure backend-driven user data management
-
-### 💬 User Interaction
-* Property-related interactions
-* Save/favorite properties
-* Manage user preferences
-* Track relevant user activity
+### 🔐 User & Security Management
+* **JWT Authentication:** Secure, stateless token-based authentication.
+* **Role-Based Access Control:** Distinct roles for property owners vs. tenants.
+* **Personalized Profiles:** Users can manage their preferences and saved properties.
 
 ---
 
 ## 🏗️ System Architecture
 
-HomePg follows a modern full-stack architecture:
+Livio follows a decoupled microservices-inspired architecture:
 
-`	ext
-                         ┌──────────────────┐
-                         │      Users       │
-                         └────────┬─────────┘
-                                  │
-                                  ▼
-                         ┌──────────────────┐
-                         │   Next.js React  │
-                         │    Frontend      │
-                         └────────┬─────────┘
-                                  │
-                              REST APIs
-                                  │
-                                  ▼
-                         ┌──────────────────┐
-                         │   Spring Boot    │
-                         │   Java Backend   │
-                         └────────┬─────────┘
-                                  │
-                                  ▼
-                         ┌──────────────────┐
-                         │ H2 / PostgreSQL  │
-                         │     Database     │
-                         └──────────────────┘
-`
+```text
+                           ┌─────────────────────────┐
+                           │      Web Clients        │
+                           └───────────┬─────────────┘
+                                       │
+                                       ▼
+  [ Vercel Edge Network ]  ┌─────────────────────────┐
+                           │    Next.js Frontend     │ (React, Tailwind)
+                           └───────────┬─────────────┘
+                                       │ REST APIs (JSON)
+                                       ▼
+  [ Render Container ]     ┌─────────────────────────┐
+                           │   Spring Boot Backend   │ (Java, Spring Security)
+                           └───────────┬─────────────┘
+                                       │
+                                       ▼
+  [ Persistent Volume ]    ┌─────────────────────────┐
+                           │    Database Storage     │ (PostgreSQL / H2)
+                           └─────────────────────────┘
+```
 
 ---
 
 ## 🛠️ Technology Stack
 
-| Layer            | Technology |
-| ---------------- | ---------- |
-| **Frontend**     | Next.js, React, Tailwind CSS |
-| **Backend**      | Java, Spring Boot, Spring Security, Hibernate |
-| **Database**     | Embedded H2 (Dev), PostgreSQL (Prod) |
-| **Container**    | Docker, Docker Compose |
-| **Build Tool**   | Maven (Backend), npm (Frontend) |
+| Layer | Technologies |
+| :--- | :--- |
+| **Frontend** | React, Next.js 14+, Tailwind CSS, Lucide Icons |
+| **Backend** | Java 17, Spring Boot, Spring Security, Hibernate ORM |
+| **Database** | PostgreSQL (Production), Embedded H2 (Development) |
+| **Containerization** | Docker, Docker Compose |
+| **Build Tools** | npm (Frontend), Maven (Backend) |
+| **Hosting** | Vercel (Frontend), Render (Backend API) |
 
 ---
 
-## 🚀 Getting Started
+## 🚀 Deployment Strategy (Production)
+
+Livio uses a highly optimized **Hybrid Deployment Strategy** to maximize performance and minimize costs:
+
+1. **Frontend (Vercel):** The Next.js application is deployed on Vercel's Edge Network for global CDN distribution, automatic caching, and lightning-fast page loads.
+2. **Backend (Render):** The Spring Boot Java API and Database run as a containerized service on Render, handling heavy lifting, background tasks, and data persistence.
+3. **Seamless Integration:** Vercel automatically proxies `/api/*` requests directly to the Render backend, entirely bypassing CORS issues and securing the API.
+
+---
+
+## 💻 Local Development Setup
 
 ### Prerequisites
+* **Node.js** (v18 or higher)
+* **Java JDK** (v17 or higher)
+* **Maven** (v3.8+)
+* **Docker** (optional)
 
-* Node.js & npm
-* Java JDK 17
-* Maven
-* Docker (optional, for containerized deployment)
+### 1. Start the Spring Boot Backend
 
-### 1. Running the Backend
+The backend will start and connect to a local embedded H2 database automatically for development.
 
-The backend is a standard Spring Boot application. It runs on http://localhost:8083.
-
-`ash
+```bash
 cd backend
-mvn clean package -DskipTests
-java -jar target/livio-backend-0.0.1-SNAPSHOT.jar
-`
-
-Alternatively, you can run it using the Maven wrapper or plugin:
-`ash
-cd backend
+mvn clean install
 mvn spring-boot:run
-`
+```
+> The API will be available at `http://localhost:8083`
 
-### 2. Running the Frontend
+### 2. Start the Next.js Frontend
 
-The frontend is a Next.js application. It runs on http://localhost:8082.
+Open a new terminal window:
 
-`ash
+```bash
 cd frontend
 npm install
 npm run dev
-`
-
-### 3. Docker Deployment
-
-To build and run the entire application (frontend + backend) using Docker:
-
-`ash
-docker build -t homepg .
-docker run -p 8082:8082 -p 8083:8083 homepg
-`
+```
+> The web interface will be available at `http://localhost:8082`
 
 ---
 
-## 🔐 Authentication & Security
+## 🔐 Environment Variables
 
-Livio uses JWT-based authentication for securing endpoints. Security-sensitive configuration, such as database credentials and application secrets, should be provided through environment variables rather than stored directly in source code.
+To run the application in a production-like environment (e.g., using PostgreSQL), create an `.env` file in the backend root:
 
-Example .env configuration (if using PostgreSQL):
-`env
+```env
+SPRING_PROFILES_ACTIVE=prod
 SPRING_DATASOURCE_URL=jdbc:postgresql://localhost:5432/homepg
 SPRING_DATASOURCE_USERNAME=postgres
-SPRING_DATASOURCE_PASSWORD=your_password
-`
-
-By default, the application runs on an embedded H2 database located at ./data/livio_db.mv.db.
+SPRING_DATASOURCE_PASSWORD=your_secure_password
+```
 
 ---
 
-## 📌 Project Status
+## 📁 Repository Structure
 
-**HomePg is under active development.**
-
-The platform is being developed with a focus on:
-* Product usability
-* Scalable architecture
-* Reliable data management
-* Clean frontend/backend separation
-* API-driven development
-* Production-ready deployment
+```text
+HomePg/
+├── backend/                  # Java Spring Boot API source code
+│   ├── src/                  # Controllers, Services, Models, Security
+│   └── pom.xml               # Maven dependencies
+├── frontend/                 # Next.js React application
+│   ├── src/app/              # Next.js App Router pages
+│   ├── src/components/       # Reusable UI components
+│   ├── vercel.json           # Vercel deployment & rewrite rules
+│   └── package.json          # Node dependencies
+├── data/                     # Local H2 database persistent storage
+├── render.yaml               # Render Infrastructure-as-Code config
+└── Dockerfile                # Production backend container build steps
+```
 
 ---
 
-**Livio — Built to make property experiences simpler, smarter, and more accessible.**
+<div align="center">
+  <p>Built with ❤️ to make property experiences simpler, smarter, and more accessible.</p>
+</div>
