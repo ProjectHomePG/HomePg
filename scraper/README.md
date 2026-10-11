@@ -42,49 +42,14 @@ for city in mumbai bangalore delhi pune; do
 done
 ```
 
-### Import scraped data to backend
+### Importing scraped data
 
-```bash
-# Start the backend server
-cd ../backend
-mvn spring-boot:run
-
-# Import CSV (in another terminal)
-curl -X POST http://localhost:8083/api/admin/import/google-maps \
-  -F "file=@../scraper/output/mumbai_20260910_120000.csv" \
-  -F "city=Mumbai"
-```
-
-The import endpoint needs no auth. Place IDs are used for deduplication, so
-re-importing the same CSV skips PGs that already exist.
-
-Verify the import locally:
-
-```bash
-curl -s http://localhost:8083/api/pgs | python3 -c "import json,sys; print(len(json.load(sys.stdin)))"
-```
-
-Imported PGs land in `backend/data/` (local dev database, git-ignored) and
-images are downloaded to `backend/data/images/`. They are **not live yet**.
-
-### Publish new PGs to the live site
-
-The Render deployment serves the git-tracked `data/` snapshot (database +
-images), so local imports must be copied into it and pushed:
-
-```bash
-# From the repo root
-cp backend/data/livio_db.mv.db data/livio_db.mv.db
-rsync -a backend/data/images/ data/images/
-
-git add data/
-git commit -m "add scraped pgs"
-git push
-```
-
-Render auto-deploys on push (~5-10 minutes), after which the site at
-workers.dev lists the new PGs. Every deploy resets to the last committed
-`data/` snapshot, so always commit after importing.
+> **Note:** The legacy Spring Boot import endpoints (`/api/admin/import/...`)
+> and the Render `data/` snapshot flow have been removed. The site now reads
+> directly from **Supabase** (Postgres + Storage), so scraped CSVs must be
+> transformed and upserted there instead — see `scripts/supabase/` for the
+> existing load tooling (`load.mjs`, `upload-images.mjs`) and
+> `supabase/migrations/0001_init.sql` for the schema.
 
 
 ## CSV Output Format
