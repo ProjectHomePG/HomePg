@@ -1,4 +1,5 @@
 import { supabase } from '../lib/supabase';
+import authService from './authService';
 
 export const reviewService = {
   getByPgId: async (pgId) => {
@@ -21,6 +22,32 @@ export const reviewService = {
       return [];
     }
   },
+
+  create: async (pgId, rating, comment) => {
+    const user = authService.getCurrentUser();
+    if (!user) throw new Error('You must be signed in to submit a review.');
+
+    const { data, error } = await supabase
+      .from('reviews')
+      .insert({
+        pg_id: pgId,
+        user_id: user.id,
+        rating: Number(rating),
+        comment: comment || '',
+      })
+      .select('id, rating, comment, created_at, user:profiles(id, name)')
+      .single();
+
+    if (error) throw new Error(error.message);
+    return {
+      id: data.id,
+      rating: data.rating,
+      comment: data.comment,
+      createdAt: data.created_at,
+      user: data.user,
+    };
+  },
 };
 
 export default reviewService;
+
