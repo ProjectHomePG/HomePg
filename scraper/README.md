@@ -58,7 +58,7 @@ node --env-file=../../.env.migrate import-scraper.mjs ../../scraper/output --dry
 node --env-file=../../.env.migrate import-scraper.mjs ../../scraper/output --new-only
 
 # Import a single city file
-node --env-file=../../.env.migrate import-scraper.mjs ../../scraper/output/mumbai_20260910_154747.csv --new-only
+node --env-file=../../.env.migrate import-scraper.mjs ../../scraper/output/noida_20261011_205637.csv --new-only
 ```
 
 Notes:
