@@ -42,14 +42,32 @@ for city in mumbai bangalore delhi pune; do
 done
 ```
 
-### Importing scraped data
+### Import scraped data to Supabase
 
-> **Note:** The legacy Spring Boot import endpoints (`/api/admin/import/...`)
-> and the Render `data/` snapshot flow have been removed. The site now reads
-> directly from **Supabase** (Postgres + Storage), so scraped CSVs must be
-> transformed and upserted there instead — see `scripts/supabase/` for the
-> existing load tooling (`load.mjs`, `upload-images.mjs`) and
-> `supabase/migrations/0001_init.sql` for the schema.
+The old Spring Boot import endpoints are gone — use the Supabase importer instead
+(keeps the same heuristics: city-based price estimates, gender inference from
+title, place-ID dedupe, Google-reviews import):
+
+```bash
+cd scripts/supabase
+
+# Dry run: see what would be imported/updated
+node --env-file=../../.env.migrate import-scraper.mjs ../../scraper/output --dry-run
+
+# Import only NEW PGs (skip anything already in the DB — recommended)
+node --env-file=../../.env.migrate import-scraper.mjs ../../scraper/output --new-only
+
+# Import a single city file
+node --env-file=../../.env.migrate import-scraper.mjs ../../scraper/output/mumbai_20260910_154747.csv --new-only
+```
+
+Notes:
+- **Always use `--new-only`** for re-runs — without it, existing PGs are updated
+  (prices/description reset from CSV).
+- Flags: `--city <fallback>`, `--owner <email>`, `--status APPROVED|PENDING_VERIFICATION`,
+  `--place-ids a,b,c` (targeted), `--limit <n>`, `--dry-run`.
+- Images download straight into the Supabase `pg-images` bucket (public URLs).
+- PGs land owned by `owner@example.com`; edit them later in the admin UI (`/admin`).
 
 
 ## CSV Output Format

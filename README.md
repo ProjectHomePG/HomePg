@@ -140,6 +140,7 @@ npm install
 node --env-file=../../.env.migrate apply-schema.mjs    # apply supabase/migrations/0001_init.sql
 node --env-file=../../.env.migrate load.mjs            # profiles, pgs, images, reviews, favorites + auth users
 node --env-file=../../.env.migrate upload-images.mjs   # 5,347 images -> public `pg-images` bucket (resumable)
+node --env-file=../../.env.migrate import-scraper.mjs  # ongoing: import new scraped CSVs (see scraper/README.md)
 node --env-file=../../.env.migrate verify.mjs          # live RLS + data checks as an anonymous visitor
 ```
 
