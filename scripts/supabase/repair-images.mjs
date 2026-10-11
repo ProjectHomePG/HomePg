@@ -10,6 +10,9 @@
  *
  * Options:
  *   --csv-dir <dir>   Scraper CSV directory (default: ../../scraper/output)
+ *   --origins <file>  JSON [{id,url}] of original row URLs; rows whose current
+ *                     filename is missing its _thumb/_N suffix are rebuilt
+ *                     under the correct storage name (suffix-loss recovery)
  *   --dry-run         Report what would be repaired, no writes
  *   --limit <n>       Only repair first n broken rows (testing)
  */
@@ -89,7 +92,33 @@ const broken = [];
 }
 broken.sort((a, b) => a.id - b.id);
 console.log(`Broken: ${broken.length} rows across ${new Set(broken.map((b) => b.pg_id)).size} PGs`);
-if (!broken.length) process.exit(0);
+
+// ---------------------------------------------------------------------------
+// Origins-based rebuild: rows whose current filename lost its _thumb/_N suffix
+// ---------------------------------------------------------------------------
+const forced = [];
+const origUrlById = new Map();
+if (flags.origins) {
+  const origins = JSON.parse(fs.readFileSync(flags.origins, 'utf8'));
+  for (const o of origins) origUrlById.set(o.id, o.url);
+  const brokenIds = new Set(broken.map((b) => b.id));
+  for (const im of all) {
+    if (parseName(im.url).suffix !== 'bare') continue;
+    const orig = origUrlById.get(im.id);
+    if (!orig) { console.log(`  ? img=${im.id} bare filename, no origin record`); continue; }
+    if (parseName(orig).suffix === 'bare') continue;
+    if (brokenIds.has(im.id)) continue;
+    forced.push({ ...im, origUrl: orig });
+  }
+  console.log(`Misnamed (suffix lost): ${forced.length} rows`);
+  for (const b of broken) {
+    const orig = origUrlById.get(b.id);
+    if (orig && parseName(orig).suffix !== 'bare') b.origUrl = orig;
+  }
+}
+
+const queue = [...broken, ...forced].sort((a, b) => a.id - b.id);
+if (!queue.length) { console.log('Nothing to repair.'); process.exit(0); }
 
 // ---------------------------------------------------------------------------
 // Repair
@@ -134,8 +163,7 @@ async function download(url) {
 }
 
 async function repairOne(im) {
-  const parsed = parseName(im.url);
-  if (!parsed) return { im, ok: false, reason: 'unparseable filename' };
+  const parsed = parseName(im.origUrl || im.url);
   const src = sources.get(parsed.base);
   if (!src) return { im, ok: false, reason: 'place not found in CSVs' };
 
@@ -149,7 +177,8 @@ async function repairOne(im) {
   }
   if (!dl.ok) return { im, ok: false, reason: `source download ${dl.status}` };
 
-  const storageName = `${parsed.base}.${dl.ext}`;
+  const suffix = parsed.suffix === 'bare' ? '' : `_${parsed.suffix}`;
+  const storageName = `${parsed.base}${suffix}.${dl.ext}`;
   const newUrl = `${PUBLIC_URL}/${storageName}`;
 
   const up = await withRetry(async () => {
@@ -176,24 +205,26 @@ async function repairOne(im) {
 }
 
 if (DRY) {
-  const plan = broken.map((im) => {
-    const parsed = parseName(im.url);
-    const n = parsed ? sourceCandidatesFor(parsed, sources.get(parsed.base)).length : 0;
-    return `${im.url} -> ${n} source candidate(s)`;
+  const plan = queue.map((im) => {
+    const parsed = parseName(im.origUrl || im.url);
+    const n = sourceCandidatesFor(parsed, sources.get(parsed.base)).length;
+    const target = `${parsed.base}${parsed.suffix === 'bare' ? '' : '_' + parsed.suffix}`;
+    return `img=${im.id} -> ${target} (${n} source candidate(s))`;
   });
-  console.log(`[DRY RUN] would repair:\n${plan.join('\n')}`);
+  console.log(`[DRY RUN] would repair ${queue.length} rows:\n${plan.join('\n')}`);
   process.exit(0);
 }
 
 const results = [];
 {
   let next = 0;
+  const total = queue.length;
   await Promise.all(Array.from({ length: CONCURRENCY }, async () => {
     while (true) {
       const i = next++;
-      if (i >= Math.min(broken.length, LIMIT)) return;
-      results.push(await repairOne(broken[i]));
-      process.stdout.write(`  repaired ${results.filter((r) => r.ok).length}/${Math.min(broken.length, LIMIT)}\r`);
+      if (i >= Math.min(total, LIMIT)) return;
+      results.push(await repairOne(queue[i]));
+      process.stdout.write(`  repaired ${results.filter((r) => r.ok).length}/${Math.min(total, LIMIT)}\r`);
     }
   }));
 }
