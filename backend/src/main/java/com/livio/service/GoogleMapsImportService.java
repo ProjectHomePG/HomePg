@@ -181,6 +181,7 @@ public class GoogleMapsImportService {
         return result;
     }
 
+    @Transactional
     public ImportResult importReviewsFromCsv(MultipartFile file) {
         ImportResult result = new ImportResult();
 

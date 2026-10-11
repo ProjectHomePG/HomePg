@@ -6,6 +6,10 @@
     {
       "source": "/api/:path*",
       "destination": "https://pgnearme.onrender.com/api/:path*"
+    },
+    {
+      "source": "/uploads/:path*",
+      "destination": "https://pgnearme.onrender.com/uploads/:path*"
     }
   ]
 }

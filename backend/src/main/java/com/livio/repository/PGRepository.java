@@ -1,6 +1,7 @@
 package com.livio.repository;
 
 import com.livio.entity.PG;
+import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import org.springframework.data.jpa.repository.Query;
@@ -17,8 +18,15 @@ public interface PGRepository extends JpaRepository<PG, Long> {
     List<PG> findByGenderType(String genderType);
     List<PG> findByPriceLessThanEqual(Double price);
     List<PG> findBySource(String source);
+
+    @EntityGraph(attributePaths = {"images"})
     List<PG> findByOwnerId(Long ownerId);
 
+    @EntityGraph(attributePaths = {"images"})
+    @Override
+    List<PG> findAll();
+
+    @EntityGraph(attributePaths = {"images"})
     @Query("SELECT DISTINCT p FROM PG p " +
            "WHERE " +
            "(:query IS NULL OR :query = '' OR " +
@@ -40,6 +48,7 @@ public interface PGRepository extends JpaRepository<PG, Long> {
      * @param query
      * @return
      */
+    @EntityGraph(attributePaths = {"images"})
     @Query("SELECT DISTINCT p FROM PG p " +
            "LEFT JOIN p.amenities a " +
            "WHERE " +

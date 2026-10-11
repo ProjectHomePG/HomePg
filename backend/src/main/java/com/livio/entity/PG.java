@@ -108,11 +108,11 @@ public class PG {
     @com.fasterxml.jackson.annotation.JsonIgnore
     private List<Room> rooms = new ArrayList<>();
 
-    @OneToMany(mappedBy = "pg", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
+    @OneToMany(mappedBy = "pg", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     @JsonIgnoreProperties("pg")
     private List<Image> images = new ArrayList<>();
 
-    @OneToMany(mappedBy = "pg", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
+    @OneToMany(mappedBy = "pg", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     @JsonIgnoreProperties("pg")
     private List<Review> reviews = new ArrayList<>();
 
@@ -120,7 +120,7 @@ public class PG {
     @com.fasterxml.jackson.annotation.JsonIgnore
     private List<Inquiry> inquiries = new ArrayList<>();
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
         name = "pg_amenities",
         joinColumns = @JoinColumn(name = "pg_id"),
@@ -128,7 +128,7 @@ public class PG {
     )
     private List<Amenity> amenities = new ArrayList<>();
 
-    @ElementCollection(fetch = FetchType.EAGER)
+    @ElementCollection(fetch = FetchType.LAZY)
     @CollectionTable(name = "pg_nearby_places", joinColumns = @JoinColumn(name = "pg_id"))
     private List<NearbyPlace> nearbyPlaces = new ArrayList<>();
 

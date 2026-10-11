@@ -5,9 +5,11 @@ import com.livio.entity.PG;
 import com.livio.repository.PGRepository;
 import com.livio.repository.ReviewRepository;
 import com.livio.service.PGService;
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Map;
@@ -26,6 +28,7 @@ public class PGServiceImpl implements PGService {
     private JdbcTemplate jdbcTemplate;
 
     @Override
+    @Transactional
     public PG create(PG pg) {
         if (pg.getSlug() == null || pg.getSlug().isEmpty()) {
             pg.setSlug(pg.getTitle().toLowerCase()
@@ -41,6 +44,7 @@ public class PGServiceImpl implements PGService {
     }
 
     @Override
+    @Transactional
     public PG update(Long id, PG pgDetails) {
         PG pg = getById(id);
         pg.setTitle(pgDetails.getTitle());
@@ -76,6 +80,7 @@ public class PGServiceImpl implements PGService {
     }
 
     @Override
+    @Transactional
     public void delete(Long id) {
         PG pg = getById(id);
         jdbcTemplate.update("DELETE FROM payments WHERE booking_id IN (SELECT id FROM bookings WHERE pg_id = ?)", id);
@@ -85,17 +90,21 @@ public class PGServiceImpl implements PGService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public PG getById(Long id) {
         PG pg = pgRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("PG stay not found with id: " + id));
+        initializeDetailCollections(pg);
         populateRatingsAndReviews(pg);
         return pg;
     }
 
     @Override
+    @Transactional(readOnly = true)
     public PG getBySlug(String slug) {
         PG pg = pgRepository.findBySlug(slug)
                 .orElseThrow(() -> new RuntimeException("PG stay not found with slug: " + slug));
+        initializeDetailCollections(pg);
         populateRatingsAndReviews(pg);
         return pg;
     }
@@ -118,6 +127,13 @@ public class PGServiceImpl implements PGService {
     public boolean isOwner(Long pgId, Long userId) {
         PG pg = pgRepository.findById(pgId).orElse(null);
         return pg != null && pg.getOwner() != null && pg.getOwner().getId().equals(userId);
+    }
+
+    private void initializeDetailCollections(PG pg) {
+        Hibernate.initialize(pg.getImages());
+        Hibernate.initialize(pg.getAmenities());
+        Hibernate.initialize(pg.getNearbyPlaces());
+        Hibernate.initialize(pg.getReviews());
     }
 
     private void populateRatingsAndReviews(PG pg) {
