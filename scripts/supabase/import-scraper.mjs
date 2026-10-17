@@ -51,11 +51,13 @@ const CITY_STATE_MAP = {
   delhi: 'Delhi', 'new delhi': 'Delhi', pune: 'Maharashtra', hyderabad: 'Telangana',
   chennai: 'Tamil Nadu', kolkata: 'West Bengal', gurugram: 'Haryana',
   gurgaon: 'Haryana', noida: 'Uttar Pradesh', ghaziabad: 'Uttar Pradesh',
+  ahmedabad: 'Gujarat', indore: 'Madhya Pradesh', jaipur: 'Rajasthan',
+  kochi: 'Kerala', nagpur: 'Maharashtra',
 };
 const BASE_PRICES = {
   mumbai: 15000, bangalore: 10000, bengaluru: 10000, delhi: 12000, pune: 8000,
   hyderabad: 9000, chennai: 8500, kolkata: 7000, gurugram: 14000,
-  gurgaon: 14000, noida: 9000, ghaziabad: 7000,
+  gurgaon: 14000, noida: 9000, ghaziabad: 7000, ahmedabad: 8000,
 };
 const MULTIPLIERS = { SINGLE: 1.3, DOUBLE: 1.0, TRIPLE: 0.75, QUAD: 0.6 };
 
